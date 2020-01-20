@@ -4,7 +4,7 @@ redirect_from:
 interact_link: content/Chapter1.ipynb
 kernel_name: python3
 kernel_path: content
-has_widgets: false
+has_widgets: true
 title: |-
   Introduction
 pagenum: 0
@@ -179,9 +179,9 @@ $$<p>Of course, this representation requires that the series be infinite for the
 </div>
 </div>
 
-<div class="jb_cell">
+<div class="jb_cell tag_hide_input tag_interactive">
 
-<div class="cell border-box-sizing code_cell rendered">
+<div class="cell border-box-sizing code_cell rendered tag_hide_input tag_interactive">
 <div class="input">
 
 <div class="inner_cell">
@@ -205,7 +205,7 @@ $$<p>Of course, this representation requires that the series be infinite for the
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">taylor_sin</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">N</span><span class="o">=</span><span class="mi">5</span><span class="p">:</span> <span class="n">sympy</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">sympy</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">x</span><span class="p">,</span><span class="n">n</span><span class="o">=</span><span class="n">N</span><span class="p">);</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">taylor_sin</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">N</span><span class="o">=</span><span class="mi">9</span><span class="p">:</span> <span class="n">sympy</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">sympy</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">x</span><span class="p">,</span><span class="n">n</span><span class="o">=</span><span class="n">N</span><span class="p">);</span>
 <span class="n">taylor_sin</span><span class="p">()</span>
 </pre></div>
 
@@ -222,7 +222,7 @@ $$<p>Of course, this representation requires that the series be infinite for the
 
 
 <div class="output_latex output_subarea output_execute_result">
-$\displaystyle x - \frac{x^{3}}{6} + O\left(x^{5}\right)$
+$\displaystyle x - \frac{x^{3}}{6} + \frac{x^{5}}{120} - \frac{x^{7}}{5040} + O\left(x^{9}\right)$
 </div>
 
 </div>
@@ -244,9 +244,9 @@ $\displaystyle x - \frac{x^{3}}{6} + O\left(x^{5}\right)$
 </div>
 </div>
 
-<div class="jb_cell">
+<div class="jb_cell tag_hide_input tag_interactive">
 
-<div class="cell border-box-sizing code_cell rendered">
+<div class="cell border-box-sizing code_cell rendered tag_hide_input tag_interactive">
 <div class="input">
 
 <div class="inner_cell">
@@ -273,24 +273,22 @@ $\displaystyle x - \frac{x^{3}}{6} + O\left(x^{5}\right)$
 <div class="output_wrapper">
 <div class="output">
 
-<div class="jb_output_wrapper }}">
+<div class="jb_output_wrapper output_widget_view  }}">
 <div class="output_area">
 
 
 
-<div class="output_latex output_subarea ">
-$\displaystyle 1$
-</div>
 
-</div>
-</div>
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-
-<div class="output_markdown rendered_html output_subarea ">
-<p>Error = $1$</p>
-
+ 
+ 
+<div id="e5122d3e-8b17-417b-9703-f55b11e1d7a6"></div>
+<div class="output_subarea output_widget_view ">
+<script type="text/javascript">
+var element = $('#e5122d3e-8b17-417b-9703-f55b11e1d7a6');
+</script>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "f763c658929342b9a8f440ca6bab8272", "version_major": 2, "version_minor": 0}
+</script>
 </div>
 
 </div>
@@ -403,7 +401,18 @@ $\displaystyle 1$
 
 <div class="jb_cell">
 
-<div class="cell border-box-sizing code_cell rendered">
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Visualizing the results of these two methods.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell tag_hide_input tag_interactive">
+
+<div class="cell border-box-sizing code_cell rendered tag_hide_input tag_interactive">
 <div class="input">
 
 <div class="inner_cell">
@@ -432,398 +441,14 @@ $\displaystyle 1$
 <div class="output_wrapper">
 <div class="output">
 
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Error in callback &lt;function install_repl_displayhook.&lt;locals&gt;.post_execute at 0x7f27bb39e440&gt; (for post_execute):
-</pre>
-</div>
-</div>
-</div>
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">FileNotFoundError</span>                         Traceback (most recent call last)
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/texmanager.py</span> in <span class="ansi-cyan-fg">_run_checked_subprocess</span><span class="ansi-blue-fg">(self, command, tex)</span>
-<span class="ansi-green-intense-fg ansi-bold">    303</span>                                              cwd<span class="ansi-blue-fg">=</span>self<span class="ansi-blue-fg">.</span>texcache<span class="ansi-blue-fg">,</span>
-<span class="ansi-green-fg">--&gt; 304</span><span class="ansi-red-fg">                                              stderr=subprocess.STDOUT)
-</span><span class="ansi-green-intense-fg ansi-bold">    305</span>         <span class="ansi-green-fg">except</span> FileNotFoundError <span class="ansi-green-fg">as</span> exc<span class="ansi-blue-fg">:</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/subprocess.py</span> in <span class="ansi-cyan-fg">check_output</span><span class="ansi-blue-fg">(timeout, *popenargs, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">    410</span>     return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
-<span class="ansi-green-fg">--&gt; 411</span><span class="ansi-red-fg">                **kwargs).stdout
-</span><span class="ansi-green-intense-fg ansi-bold">    412</span> 
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/subprocess.py</span> in <span class="ansi-cyan-fg">run</span><span class="ansi-blue-fg">(input, capture_output, timeout, check, *popenargs, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">    487</span> 
-<span class="ansi-green-fg">--&gt; 488</span><span class="ansi-red-fg">     </span><span class="ansi-green-fg">with</span> Popen<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">*</span>popenargs<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">as</span> process<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    489</span>         <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/subprocess.py</span> in <span class="ansi-cyan-fg">__init__</span><span class="ansi-blue-fg">(self, args, bufsize, executable, stdin, stdout, stderr, preexec_fn, close_fds, shell, cwd, env, universal_newlines, startupinfo, creationflags, restore_signals, start_new_session, pass_fds, encoding, errors, text)</span>
-<span class="ansi-green-intense-fg ansi-bold">    799</span>                                 errread<span class="ansi-blue-fg">,</span> errwrite<span class="ansi-blue-fg">,</span>
-<span class="ansi-green-fg">--&gt; 800</span><span class="ansi-red-fg">                                 restore_signals, start_new_session)
-</span><span class="ansi-green-intense-fg ansi-bold">    801</span>         <span class="ansi-green-fg">except</span><span class="ansi-blue-fg">:</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/subprocess.py</span> in <span class="ansi-cyan-fg">_execute_child</span><span class="ansi-blue-fg">(self, args, executable, preexec_fn, close_fds, pass_fds, cwd, env, startupinfo, creationflags, shell, p2cread, p2cwrite, c2pread, c2pwrite, errread, errwrite, restore_signals, start_new_session)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1550</span>                             err_msg <span class="ansi-blue-fg">+=</span> <span class="ansi-blue-fg">&#39;: &#39;</span> <span class="ansi-blue-fg">+</span> repr<span class="ansi-blue-fg">(</span>err_filename<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-fg">-&gt; 1551</span><span class="ansi-red-fg">                     </span><span class="ansi-green-fg">raise</span> child_exception_type<span class="ansi-blue-fg">(</span>errno_num<span class="ansi-blue-fg">,</span> err_msg<span class="ansi-blue-fg">,</span> err_filename<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1552</span>                 <span class="ansi-green-fg">raise</span> child_exception_type<span class="ansi-blue-fg">(</span>err_msg<span class="ansi-blue-fg">)</span>
-
-<span class="ansi-red-fg">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;latex&#39;: &#39;latex&#39;
-
-The above exception was the direct cause of the following exception:
-
-<span class="ansi-red-fg">RuntimeError</span>                              Traceback (most recent call last)
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/pyplot.py</span> in <span class="ansi-cyan-fg">post_execute</span><span class="ansi-blue-fg">()</span>
-<span class="ansi-green-intense-fg ansi-bold">    107</span>             <span class="ansi-green-fg">def</span> post_execute<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    108</span>                 <span class="ansi-green-fg">if</span> matplotlib<span class="ansi-blue-fg">.</span>is_interactive<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">--&gt; 109</span><span class="ansi-red-fg">                     </span>draw_all<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    110</span> 
-<span class="ansi-green-intense-fg ansi-bold">    111</span>             <span class="ansi-red-fg"># IPython &gt;= 2</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/_pylab_helpers.py</span> in <span class="ansi-cyan-fg">draw_all</span><span class="ansi-blue-fg">(cls, force)</span>
-<span class="ansi-green-intense-fg ansi-bold">    126</span>         <span class="ansi-green-fg">for</span> f_mgr <span class="ansi-green-fg">in</span> cls<span class="ansi-blue-fg">.</span>get_all_fig_managers<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    127</span>             <span class="ansi-green-fg">if</span> force <span class="ansi-green-fg">or</span> f_mgr<span class="ansi-blue-fg">.</span>canvas<span class="ansi-blue-fg">.</span>figure<span class="ansi-blue-fg">.</span>stale<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">--&gt; 128</span><span class="ansi-red-fg">                 </span>f_mgr<span class="ansi-blue-fg">.</span>canvas<span class="ansi-blue-fg">.</span>draw_idle<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    129</span> 
-<span class="ansi-green-intense-fg ansi-bold">    130</span> atexit<span class="ansi-blue-fg">.</span>register<span class="ansi-blue-fg">(</span>Gcf<span class="ansi-blue-fg">.</span>destroy_all<span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/backend_bases.py</span> in <span class="ansi-cyan-fg">draw_idle</span><span class="ansi-blue-fg">(self, *args, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1912</span>         <span class="ansi-green-fg">if</span> <span class="ansi-green-fg">not</span> self<span class="ansi-blue-fg">.</span>_is_idle_drawing<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">   1913</span>             <span class="ansi-green-fg">with</span> self<span class="ansi-blue-fg">.</span>_idle_draw_cntx<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">-&gt; 1914</span><span class="ansi-red-fg">                 </span>self<span class="ansi-blue-fg">.</span>draw<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">*</span>args<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1915</span> 
-<span class="ansi-green-intense-fg ansi-bold">   1916</span>     <span class="ansi-green-fg">def</span> draw_cursor<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> event<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/backends/backend_agg.py</span> in <span class="ansi-cyan-fg">draw</span><span class="ansi-blue-fg">(self)</span>
-<span class="ansi-green-intense-fg ansi-bold">    386</span>         self<span class="ansi-blue-fg">.</span>renderer <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>get_renderer<span class="ansi-blue-fg">(</span>cleared<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">True</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    387</span>         <span class="ansi-green-fg">with</span> RendererAgg<span class="ansi-blue-fg">.</span>lock<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">--&gt; 388</span><span class="ansi-red-fg">             </span>self<span class="ansi-blue-fg">.</span>figure<span class="ansi-blue-fg">.</span>draw<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>renderer<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    389</span>             <span class="ansi-red-fg"># A GUI class may be need to update a window using this draw, so</span>
-<span class="ansi-green-intense-fg ansi-bold">    390</span>             <span class="ansi-red-fg"># don&#39;t forget to call the superclass.</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/artist.py</span> in <span class="ansi-cyan-fg">draw_wrapper</span><span class="ansi-blue-fg">(artist, renderer, *args, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">     36</span>                 renderer<span class="ansi-blue-fg">.</span>start_filter<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     37</span> 
-<span class="ansi-green-fg">---&gt; 38</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">return</span> draw<span class="ansi-blue-fg">(</span>artist<span class="ansi-blue-fg">,</span> renderer<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">*</span>args<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     39</span>         <span class="ansi-green-fg">finally</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">     40</span>             <span class="ansi-green-fg">if</span> artist<span class="ansi-blue-fg">.</span>get_agg_filter<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/figure.py</span> in <span class="ansi-cyan-fg">draw</span><span class="ansi-blue-fg">(self, renderer)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1707</span>             self<span class="ansi-blue-fg">.</span>patch<span class="ansi-blue-fg">.</span>draw<span class="ansi-blue-fg">(</span>renderer<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1708</span>             mimage._draw_list_compositing_images(
-<span class="ansi-green-fg">-&gt; 1709</span><span class="ansi-red-fg">                 renderer, self, artists, self.suppressComposite)
-</span><span class="ansi-green-intense-fg ansi-bold">   1710</span> 
-<span class="ansi-green-intense-fg ansi-bold">   1711</span>             renderer<span class="ansi-blue-fg">.</span>close_group<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;figure&#39;</span><span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/image.py</span> in <span class="ansi-cyan-fg">_draw_list_compositing_images</span><span class="ansi-blue-fg">(renderer, parent, artists, suppress_composite)</span>
-<span class="ansi-green-intense-fg ansi-bold">    133</span>     <span class="ansi-green-fg">if</span> not_composite <span class="ansi-green-fg">or</span> <span class="ansi-green-fg">not</span> has_images<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    134</span>         <span class="ansi-green-fg">for</span> a <span class="ansi-green-fg">in</span> artists<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">--&gt; 135</span><span class="ansi-red-fg">             </span>a<span class="ansi-blue-fg">.</span>draw<span class="ansi-blue-fg">(</span>renderer<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    136</span>     <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    137</span>         <span class="ansi-red-fg"># Composite any adjacent images together</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/artist.py</span> in <span class="ansi-cyan-fg">draw_wrapper</span><span class="ansi-blue-fg">(artist, renderer, *args, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">     36</span>                 renderer<span class="ansi-blue-fg">.</span>start_filter<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     37</span> 
-<span class="ansi-green-fg">---&gt; 38</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">return</span> draw<span class="ansi-blue-fg">(</span>artist<span class="ansi-blue-fg">,</span> renderer<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">*</span>args<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     39</span>         <span class="ansi-green-fg">finally</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">     40</span>             <span class="ansi-green-fg">if</span> artist<span class="ansi-blue-fg">.</span>get_agg_filter<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/axes/_base.py</span> in <span class="ansi-cyan-fg">draw</span><span class="ansi-blue-fg">(self, renderer, inframe)</span>
-<span class="ansi-green-intense-fg ansi-bold">   2645</span>             renderer<span class="ansi-blue-fg">.</span>stop_rasterizing<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   2646</span> 
-<span class="ansi-green-fg">-&gt; 2647</span><span class="ansi-red-fg">         </span>mimage<span class="ansi-blue-fg">.</span>_draw_list_compositing_images<span class="ansi-blue-fg">(</span>renderer<span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">,</span> artists<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   2648</span> 
-<span class="ansi-green-intense-fg ansi-bold">   2649</span>         renderer<span class="ansi-blue-fg">.</span>close_group<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;axes&#39;</span><span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/image.py</span> in <span class="ansi-cyan-fg">_draw_list_compositing_images</span><span class="ansi-blue-fg">(renderer, parent, artists, suppress_composite)</span>
-<span class="ansi-green-intense-fg ansi-bold">    133</span>     <span class="ansi-green-fg">if</span> not_composite <span class="ansi-green-fg">or</span> <span class="ansi-green-fg">not</span> has_images<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    134</span>         <span class="ansi-green-fg">for</span> a <span class="ansi-green-fg">in</span> artists<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">--&gt; 135</span><span class="ansi-red-fg">             </span>a<span class="ansi-blue-fg">.</span>draw<span class="ansi-blue-fg">(</span>renderer<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    136</span>     <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    137</span>         <span class="ansi-red-fg"># Composite any adjacent images together</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/artist.py</span> in <span class="ansi-cyan-fg">draw_wrapper</span><span class="ansi-blue-fg">(artist, renderer, *args, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">     36</span>                 renderer<span class="ansi-blue-fg">.</span>start_filter<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     37</span> 
-<span class="ansi-green-fg">---&gt; 38</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">return</span> draw<span class="ansi-blue-fg">(</span>artist<span class="ansi-blue-fg">,</span> renderer<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">*</span>args<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     39</span>         <span class="ansi-green-fg">finally</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">     40</span>             <span class="ansi-green-fg">if</span> artist<span class="ansi-blue-fg">.</span>get_agg_filter<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/axis.py</span> in <span class="ansi-cyan-fg">draw</span><span class="ansi-blue-fg">(self, renderer, *args, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1203</span>         ticks_to_draw <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>_update_ticks<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1204</span>         ticklabelBoxes, ticklabelBoxes2 = self._get_tick_bboxes(ticks_to_draw,
-<span class="ansi-green-fg">-&gt; 1205</span><span class="ansi-red-fg">                                                                 renderer)
-</span><span class="ansi-green-intense-fg ansi-bold">   1206</span> 
-<span class="ansi-green-intense-fg ansi-bold">   1207</span>         <span class="ansi-green-fg">for</span> tick <span class="ansi-green-fg">in</span> ticks_to_draw<span class="ansi-blue-fg">:</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/axis.py</span> in <span class="ansi-cyan-fg">_get_tick_bboxes</span><span class="ansi-blue-fg">(self, ticks, renderer)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1148</span>         <span class="ansi-blue-fg">&#34;&#34;&#34;Return lists of bboxes for ticks&#39; label1&#39;s and label2&#39;s.&#34;&#34;&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">   1149</span>         return ([tick.label1.get_window_extent(renderer)
-<span class="ansi-green-fg">-&gt; 1150</span><span class="ansi-red-fg">                  for tick in ticks if tick.label1.get_visible()],
-</span><span class="ansi-green-intense-fg ansi-bold">   1151</span>                 [tick.label2.get_window_extent(renderer)
-<span class="ansi-green-intense-fg ansi-bold">   1152</span>                  for tick in ticks if tick.label2.get_visible()])
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/axis.py</span> in <span class="ansi-cyan-fg">&lt;listcomp&gt;</span><span class="ansi-blue-fg">(.0)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1148</span>         <span class="ansi-blue-fg">&#34;&#34;&#34;Return lists of bboxes for ticks&#39; label1&#39;s and label2&#39;s.&#34;&#34;&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">   1149</span>         return ([tick.label1.get_window_extent(renderer)
-<span class="ansi-green-fg">-&gt; 1150</span><span class="ansi-red-fg">                  for tick in ticks if tick.label1.get_visible()],
-</span><span class="ansi-green-intense-fg ansi-bold">   1151</span>                 [tick.label2.get_window_extent(renderer)
-<span class="ansi-green-intense-fg ansi-bold">   1152</span>                  for tick in ticks if tick.label2.get_visible()])
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/text.py</span> in <span class="ansi-cyan-fg">get_window_extent</span><span class="ansi-blue-fg">(self, renderer, dpi)</span>
-<span class="ansi-green-intense-fg ansi-bold">    888</span>             <span class="ansi-green-fg">raise</span> RuntimeError<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;Cannot get window extent w/o renderer&#39;</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    889</span> 
-<span class="ansi-green-fg">--&gt; 890</span><span class="ansi-red-fg">         </span>bbox<span class="ansi-blue-fg">,</span> info<span class="ansi-blue-fg">,</span> descent <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>_get_layout<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>_renderer<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    891</span>         x<span class="ansi-blue-fg">,</span> y <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>get_unitless_position<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    892</span>         x<span class="ansi-blue-fg">,</span> y <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>get_transform<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>transform_point<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">,</span> y<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/text.py</span> in <span class="ansi-cyan-fg">_get_layout</span><span class="ansi-blue-fg">(self, renderer)</span>
-<span class="ansi-green-intense-fg ansi-bold">    289</span>         _, lp_h, lp_d = renderer.get_text_width_height_descent(
-<span class="ansi-green-intense-fg ansi-bold">    290</span>             <span class="ansi-blue-fg">&#34;lp&#34;</span><span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">.</span>_fontproperties<span class="ansi-blue-fg">,</span>
-<span class="ansi-green-fg">--&gt; 291</span><span class="ansi-red-fg">             ismath=&#34;TeX&#34; if self.get_usetex() else False)
-</span><span class="ansi-green-intense-fg ansi-bold">    292</span>         min_dy <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">(</span>lp_h <span class="ansi-blue-fg">-</span> lp_d<span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">*</span> self<span class="ansi-blue-fg">.</span>_linespacing
-<span class="ansi-green-intense-fg ansi-bold">    293</span> 
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/backends/backend_agg.py</span> in <span class="ansi-cyan-fg">get_text_width_height_descent</span><span class="ansi-blue-fg">(self, s, prop, ismath)</span>
-<span class="ansi-green-intense-fg ansi-bold">    199</span>             fontsize <span class="ansi-blue-fg">=</span> prop<span class="ansi-blue-fg">.</span>get_size_in_points<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    200</span>             w, h, d = texmanager.get_text_width_height_descent(
-<span class="ansi-green-fg">--&gt; 201</span><span class="ansi-red-fg">                 s, fontsize, renderer=self)
-</span><span class="ansi-green-intense-fg ansi-bold">    202</span>             <span class="ansi-green-fg">return</span> w<span class="ansi-blue-fg">,</span> h<span class="ansi-blue-fg">,</span> d
-<span class="ansi-green-intense-fg ansi-bold">    203</span> 
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/texmanager.py</span> in <span class="ansi-cyan-fg">get_text_width_height_descent</span><span class="ansi-blue-fg">(self, tex, fontsize, renderer)</span>
-<span class="ansi-green-intense-fg ansi-bold">    446</span>         <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    447</span>             <span class="ansi-red-fg"># use dviread. It sometimes returns a wrong descent.</span>
-<span class="ansi-green-fg">--&gt; 448</span><span class="ansi-red-fg">             </span>dvifile <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>make_dvi<span class="ansi-blue-fg">(</span>tex<span class="ansi-blue-fg">,</span> fontsize<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    449</span>             <span class="ansi-green-fg">with</span> dviread<span class="ansi-blue-fg">.</span>Dvi<span class="ansi-blue-fg">(</span>dvifile<span class="ansi-blue-fg">,</span> <span class="ansi-cyan-fg">72</span> <span class="ansi-blue-fg">*</span> dpi_fraction<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">as</span> dvi<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    450</span>                 page<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">=</span> dvi
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/texmanager.py</span> in <span class="ansi-cyan-fg">make_dvi</span><span class="ansi-blue-fg">(self, tex, fontsize)</span>
-<span class="ansi-green-intense-fg ansi-bold">    336</span>                 self._run_checked_subprocess(
-<span class="ansi-green-intense-fg ansi-bold">    337</span>                     [&#34;latex&#34;, &#34;-interaction=nonstopmode&#34;, &#34;--halt-on-error&#34;,
-<span class="ansi-green-fg">--&gt; 338</span><span class="ansi-red-fg">                      texfile], tex)
-</span><span class="ansi-green-intense-fg ansi-bold">    339</span>             <span class="ansi-green-fg">for</span> fname <span class="ansi-green-fg">in</span> glob<span class="ansi-blue-fg">.</span>glob<span class="ansi-blue-fg">(</span>basefile <span class="ansi-blue-fg">+</span> <span class="ansi-blue-fg">&#39;*&#39;</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    340</span>                 <span class="ansi-green-fg">if</span> <span class="ansi-green-fg">not</span> fname<span class="ansi-blue-fg">.</span>endswith<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;dvi&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;tex&#39;</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/texmanager.py</span> in <span class="ansi-cyan-fg">_run_checked_subprocess</span><span class="ansi-blue-fg">(self, command, tex)</span>
-<span class="ansi-green-intense-fg ansi-bold">    306</span>             raise RuntimeError(
-<span class="ansi-green-intense-fg ansi-bold">    307</span>                 <span class="ansi-blue-fg">&#39;Failed to process string with tex because {} could not be &#39;</span>
-<span class="ansi-green-fg">--&gt; 308</span><span class="ansi-red-fg">                 &#39;found&#39;.format(command[0])) from exc
-</span><span class="ansi-green-intense-fg ansi-bold">    309</span>         <span class="ansi-green-fg">except</span> subprocess<span class="ansi-blue-fg">.</span>CalledProcessError <span class="ansi-green-fg">as</span> exc<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    310</span>             raise RuntimeError(
-
-<span class="ansi-red-fg">RuntimeError</span>: Failed to process string with tex because latex could not be found</pre>
-</div>
-</div>
-</div>
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">FileNotFoundError</span>                         Traceback (most recent call last)
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/texmanager.py</span> in <span class="ansi-cyan-fg">_run_checked_subprocess</span><span class="ansi-blue-fg">(self, command, tex)</span>
-<span class="ansi-green-intense-fg ansi-bold">    303</span>                                              cwd<span class="ansi-blue-fg">=</span>self<span class="ansi-blue-fg">.</span>texcache<span class="ansi-blue-fg">,</span>
-<span class="ansi-green-fg">--&gt; 304</span><span class="ansi-red-fg">                                              stderr=subprocess.STDOUT)
-</span><span class="ansi-green-intense-fg ansi-bold">    305</span>         <span class="ansi-green-fg">except</span> FileNotFoundError <span class="ansi-green-fg">as</span> exc<span class="ansi-blue-fg">:</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/subprocess.py</span> in <span class="ansi-cyan-fg">check_output</span><span class="ansi-blue-fg">(timeout, *popenargs, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">    410</span>     return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
-<span class="ansi-green-fg">--&gt; 411</span><span class="ansi-red-fg">                **kwargs).stdout
-</span><span class="ansi-green-intense-fg ansi-bold">    412</span> 
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/subprocess.py</span> in <span class="ansi-cyan-fg">run</span><span class="ansi-blue-fg">(input, capture_output, timeout, check, *popenargs, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">    487</span> 
-<span class="ansi-green-fg">--&gt; 488</span><span class="ansi-red-fg">     </span><span class="ansi-green-fg">with</span> Popen<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">*</span>popenargs<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">as</span> process<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    489</span>         <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/subprocess.py</span> in <span class="ansi-cyan-fg">__init__</span><span class="ansi-blue-fg">(self, args, bufsize, executable, stdin, stdout, stderr, preexec_fn, close_fds, shell, cwd, env, universal_newlines, startupinfo, creationflags, restore_signals, start_new_session, pass_fds, encoding, errors, text)</span>
-<span class="ansi-green-intense-fg ansi-bold">    799</span>                                 errread<span class="ansi-blue-fg">,</span> errwrite<span class="ansi-blue-fg">,</span>
-<span class="ansi-green-fg">--&gt; 800</span><span class="ansi-red-fg">                                 restore_signals, start_new_session)
-</span><span class="ansi-green-intense-fg ansi-bold">    801</span>         <span class="ansi-green-fg">except</span><span class="ansi-blue-fg">:</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/subprocess.py</span> in <span class="ansi-cyan-fg">_execute_child</span><span class="ansi-blue-fg">(self, args, executable, preexec_fn, close_fds, pass_fds, cwd, env, startupinfo, creationflags, shell, p2cread, p2cwrite, c2pread, c2pwrite, errread, errwrite, restore_signals, start_new_session)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1550</span>                             err_msg <span class="ansi-blue-fg">+=</span> <span class="ansi-blue-fg">&#39;: &#39;</span> <span class="ansi-blue-fg">+</span> repr<span class="ansi-blue-fg">(</span>err_filename<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-fg">-&gt; 1551</span><span class="ansi-red-fg">                     </span><span class="ansi-green-fg">raise</span> child_exception_type<span class="ansi-blue-fg">(</span>errno_num<span class="ansi-blue-fg">,</span> err_msg<span class="ansi-blue-fg">,</span> err_filename<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1552</span>                 <span class="ansi-green-fg">raise</span> child_exception_type<span class="ansi-blue-fg">(</span>err_msg<span class="ansi-blue-fg">)</span>
-
-<span class="ansi-red-fg">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;latex&#39;: &#39;latex&#39;
-
-The above exception was the direct cause of the following exception:
-
-<span class="ansi-red-fg">RuntimeError</span>                              Traceback (most recent call last)
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/IPython/core/formatters.py</span> in <span class="ansi-cyan-fg">__call__</span><span class="ansi-blue-fg">(self, obj)</span>
-<span class="ansi-green-intense-fg ansi-bold">    339</span>                 <span class="ansi-green-fg">pass</span>
-<span class="ansi-green-intense-fg ansi-bold">    340</span>             <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">--&gt; 341</span><span class="ansi-red-fg">                 </span><span class="ansi-green-fg">return</span> printer<span class="ansi-blue-fg">(</span>obj<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    342</span>             <span class="ansi-red-fg"># Finally look for special method names</span>
-<span class="ansi-green-intense-fg ansi-bold">    343</span>             method <span class="ansi-blue-fg">=</span> get_real_method<span class="ansi-blue-fg">(</span>obj<span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">.</span>print_method<span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/IPython/core/pylabtools.py</span> in <span class="ansi-cyan-fg">&lt;lambda&gt;</span><span class="ansi-blue-fg">(fig)</span>
-<span class="ansi-green-intense-fg ansi-bold">    242</span> 
-<span class="ansi-green-intense-fg ansi-bold">    243</span>     <span class="ansi-green-fg">if</span> <span class="ansi-blue-fg">&#39;png&#39;</span> <span class="ansi-green-fg">in</span> formats<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">--&gt; 244</span><span class="ansi-red-fg">         </span>png_formatter<span class="ansi-blue-fg">.</span>for_type<span class="ansi-blue-fg">(</span>Figure<span class="ansi-blue-fg">,</span> <span class="ansi-green-fg">lambda</span> fig<span class="ansi-blue-fg">:</span> print_figure<span class="ansi-blue-fg">(</span>fig<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;png&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    245</span>     <span class="ansi-green-fg">if</span> <span class="ansi-blue-fg">&#39;retina&#39;</span> <span class="ansi-green-fg">in</span> formats <span class="ansi-green-fg">or</span> <span class="ansi-blue-fg">&#39;png2x&#39;</span> <span class="ansi-green-fg">in</span> formats<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    246</span>         png_formatter<span class="ansi-blue-fg">.</span>for_type<span class="ansi-blue-fg">(</span>Figure<span class="ansi-blue-fg">,</span> <span class="ansi-green-fg">lambda</span> fig<span class="ansi-blue-fg">:</span> retina_figure<span class="ansi-blue-fg">(</span>fig<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/IPython/core/pylabtools.py</span> in <span class="ansi-cyan-fg">print_figure</span><span class="ansi-blue-fg">(fig, fmt, bbox_inches, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">    126</span> 
-<span class="ansi-green-intense-fg ansi-bold">    127</span>     bytes_io <span class="ansi-blue-fg">=</span> BytesIO<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-fg">--&gt; 128</span><span class="ansi-red-fg">     </span>fig<span class="ansi-blue-fg">.</span>canvas<span class="ansi-blue-fg">.</span>print_figure<span class="ansi-blue-fg">(</span>bytes_io<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kw<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    129</span>     data <span class="ansi-blue-fg">=</span> bytes_io<span class="ansi-blue-fg">.</span>getvalue<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    130</span>     <span class="ansi-green-fg">if</span> fmt <span class="ansi-blue-fg">==</span> <span class="ansi-blue-fg">&#39;svg&#39;</span><span class="ansi-blue-fg">:</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/backend_bases.py</span> in <span class="ansi-cyan-fg">print_figure</span><span class="ansi-blue-fg">(self, filename, dpi, facecolor, edgecolor, orientation, format, bbox_inches, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">   2061</span>                         orientation<span class="ansi-blue-fg">=</span>orientation<span class="ansi-blue-fg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">   2062</span>                         dryrun<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">True</span><span class="ansi-blue-fg">,</span>
-<span class="ansi-green-fg">-&gt; 2063</span><span class="ansi-red-fg">                         **kwargs)
-</span><span class="ansi-green-intense-fg ansi-bold">   2064</span>                     renderer <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>figure<span class="ansi-blue-fg">.</span>_cachedRenderer
-<span class="ansi-green-intense-fg ansi-bold">   2065</span>                     bbox_artists <span class="ansi-blue-fg">=</span> kwargs<span class="ansi-blue-fg">.</span>pop<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#34;bbox_extra_artists&#34;</span><span class="ansi-blue-fg">,</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/backends/backend_agg.py</span> in <span class="ansi-cyan-fg">print_png</span><span class="ansi-blue-fg">(self, filename_or_obj, metadata, pil_kwargs, *args, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">    525</span> 
-<span class="ansi-green-intense-fg ansi-bold">    526</span>         <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">--&gt; 527</span><span class="ansi-red-fg">             </span>FigureCanvasAgg<span class="ansi-blue-fg">.</span>draw<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    528</span>             renderer <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>get_renderer<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    529</span>             <span class="ansi-green-fg">with</span> cbook<span class="ansi-blue-fg">.</span>_setattr_cm<span class="ansi-blue-fg">(</span>renderer<span class="ansi-blue-fg">,</span> dpi<span class="ansi-blue-fg">=</span>self<span class="ansi-blue-fg">.</span>figure<span class="ansi-blue-fg">.</span>dpi<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span><span class="ansi-red-fg"> </span><span class="ansi-red-fg">\</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/backends/backend_agg.py</span> in <span class="ansi-cyan-fg">draw</span><span class="ansi-blue-fg">(self)</span>
-<span class="ansi-green-intense-fg ansi-bold">    386</span>         self<span class="ansi-blue-fg">.</span>renderer <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>get_renderer<span class="ansi-blue-fg">(</span>cleared<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">True</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    387</span>         <span class="ansi-green-fg">with</span> RendererAgg<span class="ansi-blue-fg">.</span>lock<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">--&gt; 388</span><span class="ansi-red-fg">             </span>self<span class="ansi-blue-fg">.</span>figure<span class="ansi-blue-fg">.</span>draw<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>renderer<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    389</span>             <span class="ansi-red-fg"># A GUI class may be need to update a window using this draw, so</span>
-<span class="ansi-green-intense-fg ansi-bold">    390</span>             <span class="ansi-red-fg"># don&#39;t forget to call the superclass.</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/artist.py</span> in <span class="ansi-cyan-fg">draw_wrapper</span><span class="ansi-blue-fg">(artist, renderer, *args, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">     36</span>                 renderer<span class="ansi-blue-fg">.</span>start_filter<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     37</span> 
-<span class="ansi-green-fg">---&gt; 38</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">return</span> draw<span class="ansi-blue-fg">(</span>artist<span class="ansi-blue-fg">,</span> renderer<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">*</span>args<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     39</span>         <span class="ansi-green-fg">finally</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">     40</span>             <span class="ansi-green-fg">if</span> artist<span class="ansi-blue-fg">.</span>get_agg_filter<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/figure.py</span> in <span class="ansi-cyan-fg">draw</span><span class="ansi-blue-fg">(self, renderer)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1707</span>             self<span class="ansi-blue-fg">.</span>patch<span class="ansi-blue-fg">.</span>draw<span class="ansi-blue-fg">(</span>renderer<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1708</span>             mimage._draw_list_compositing_images(
-<span class="ansi-green-fg">-&gt; 1709</span><span class="ansi-red-fg">                 renderer, self, artists, self.suppressComposite)
-</span><span class="ansi-green-intense-fg ansi-bold">   1710</span> 
-<span class="ansi-green-intense-fg ansi-bold">   1711</span>             renderer<span class="ansi-blue-fg">.</span>close_group<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;figure&#39;</span><span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/image.py</span> in <span class="ansi-cyan-fg">_draw_list_compositing_images</span><span class="ansi-blue-fg">(renderer, parent, artists, suppress_composite)</span>
-<span class="ansi-green-intense-fg ansi-bold">    133</span>     <span class="ansi-green-fg">if</span> not_composite <span class="ansi-green-fg">or</span> <span class="ansi-green-fg">not</span> has_images<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    134</span>         <span class="ansi-green-fg">for</span> a <span class="ansi-green-fg">in</span> artists<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">--&gt; 135</span><span class="ansi-red-fg">             </span>a<span class="ansi-blue-fg">.</span>draw<span class="ansi-blue-fg">(</span>renderer<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    136</span>     <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    137</span>         <span class="ansi-red-fg"># Composite any adjacent images together</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/artist.py</span> in <span class="ansi-cyan-fg">draw_wrapper</span><span class="ansi-blue-fg">(artist, renderer, *args, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">     36</span>                 renderer<span class="ansi-blue-fg">.</span>start_filter<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     37</span> 
-<span class="ansi-green-fg">---&gt; 38</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">return</span> draw<span class="ansi-blue-fg">(</span>artist<span class="ansi-blue-fg">,</span> renderer<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">*</span>args<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     39</span>         <span class="ansi-green-fg">finally</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">     40</span>             <span class="ansi-green-fg">if</span> artist<span class="ansi-blue-fg">.</span>get_agg_filter<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/axes/_base.py</span> in <span class="ansi-cyan-fg">draw</span><span class="ansi-blue-fg">(self, renderer, inframe)</span>
-<span class="ansi-green-intense-fg ansi-bold">   2645</span>             renderer<span class="ansi-blue-fg">.</span>stop_rasterizing<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   2646</span> 
-<span class="ansi-green-fg">-&gt; 2647</span><span class="ansi-red-fg">         </span>mimage<span class="ansi-blue-fg">.</span>_draw_list_compositing_images<span class="ansi-blue-fg">(</span>renderer<span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">,</span> artists<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   2648</span> 
-<span class="ansi-green-intense-fg ansi-bold">   2649</span>         renderer<span class="ansi-blue-fg">.</span>close_group<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;axes&#39;</span><span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/image.py</span> in <span class="ansi-cyan-fg">_draw_list_compositing_images</span><span class="ansi-blue-fg">(renderer, parent, artists, suppress_composite)</span>
-<span class="ansi-green-intense-fg ansi-bold">    133</span>     <span class="ansi-green-fg">if</span> not_composite <span class="ansi-green-fg">or</span> <span class="ansi-green-fg">not</span> has_images<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    134</span>         <span class="ansi-green-fg">for</span> a <span class="ansi-green-fg">in</span> artists<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">--&gt; 135</span><span class="ansi-red-fg">             </span>a<span class="ansi-blue-fg">.</span>draw<span class="ansi-blue-fg">(</span>renderer<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    136</span>     <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    137</span>         <span class="ansi-red-fg"># Composite any adjacent images together</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/artist.py</span> in <span class="ansi-cyan-fg">draw_wrapper</span><span class="ansi-blue-fg">(artist, renderer, *args, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">     36</span>                 renderer<span class="ansi-blue-fg">.</span>start_filter<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     37</span> 
-<span class="ansi-green-fg">---&gt; 38</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">return</span> draw<span class="ansi-blue-fg">(</span>artist<span class="ansi-blue-fg">,</span> renderer<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">*</span>args<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     39</span>         <span class="ansi-green-fg">finally</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">     40</span>             <span class="ansi-green-fg">if</span> artist<span class="ansi-blue-fg">.</span>get_agg_filter<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/axis.py</span> in <span class="ansi-cyan-fg">draw</span><span class="ansi-blue-fg">(self, renderer, *args, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1203</span>         ticks_to_draw <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>_update_ticks<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1204</span>         ticklabelBoxes, ticklabelBoxes2 = self._get_tick_bboxes(ticks_to_draw,
-<span class="ansi-green-fg">-&gt; 1205</span><span class="ansi-red-fg">                                                                 renderer)
-</span><span class="ansi-green-intense-fg ansi-bold">   1206</span> 
-<span class="ansi-green-intense-fg ansi-bold">   1207</span>         <span class="ansi-green-fg">for</span> tick <span class="ansi-green-fg">in</span> ticks_to_draw<span class="ansi-blue-fg">:</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/axis.py</span> in <span class="ansi-cyan-fg">_get_tick_bboxes</span><span class="ansi-blue-fg">(self, ticks, renderer)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1148</span>         <span class="ansi-blue-fg">&#34;&#34;&#34;Return lists of bboxes for ticks&#39; label1&#39;s and label2&#39;s.&#34;&#34;&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">   1149</span>         return ([tick.label1.get_window_extent(renderer)
-<span class="ansi-green-fg">-&gt; 1150</span><span class="ansi-red-fg">                  for tick in ticks if tick.label1.get_visible()],
-</span><span class="ansi-green-intense-fg ansi-bold">   1151</span>                 [tick.label2.get_window_extent(renderer)
-<span class="ansi-green-intense-fg ansi-bold">   1152</span>                  for tick in ticks if tick.label2.get_visible()])
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/axis.py</span> in <span class="ansi-cyan-fg">&lt;listcomp&gt;</span><span class="ansi-blue-fg">(.0)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1148</span>         <span class="ansi-blue-fg">&#34;&#34;&#34;Return lists of bboxes for ticks&#39; label1&#39;s and label2&#39;s.&#34;&#34;&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">   1149</span>         return ([tick.label1.get_window_extent(renderer)
-<span class="ansi-green-fg">-&gt; 1150</span><span class="ansi-red-fg">                  for tick in ticks if tick.label1.get_visible()],
-</span><span class="ansi-green-intense-fg ansi-bold">   1151</span>                 [tick.label2.get_window_extent(renderer)
-<span class="ansi-green-intense-fg ansi-bold">   1152</span>                  for tick in ticks if tick.label2.get_visible()])
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/text.py</span> in <span class="ansi-cyan-fg">get_window_extent</span><span class="ansi-blue-fg">(self, renderer, dpi)</span>
-<span class="ansi-green-intense-fg ansi-bold">    888</span>             <span class="ansi-green-fg">raise</span> RuntimeError<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;Cannot get window extent w/o renderer&#39;</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    889</span> 
-<span class="ansi-green-fg">--&gt; 890</span><span class="ansi-red-fg">         </span>bbox<span class="ansi-blue-fg">,</span> info<span class="ansi-blue-fg">,</span> descent <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>_get_layout<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>_renderer<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    891</span>         x<span class="ansi-blue-fg">,</span> y <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>get_unitless_position<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    892</span>         x<span class="ansi-blue-fg">,</span> y <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>get_transform<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>transform_point<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">,</span> y<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/text.py</span> in <span class="ansi-cyan-fg">_get_layout</span><span class="ansi-blue-fg">(self, renderer)</span>
-<span class="ansi-green-intense-fg ansi-bold">    289</span>         _, lp_h, lp_d = renderer.get_text_width_height_descent(
-<span class="ansi-green-intense-fg ansi-bold">    290</span>             <span class="ansi-blue-fg">&#34;lp&#34;</span><span class="ansi-blue-fg">,</span> self<span class="ansi-blue-fg">.</span>_fontproperties<span class="ansi-blue-fg">,</span>
-<span class="ansi-green-fg">--&gt; 291</span><span class="ansi-red-fg">             ismath=&#34;TeX&#34; if self.get_usetex() else False)
-</span><span class="ansi-green-intense-fg ansi-bold">    292</span>         min_dy <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">(</span>lp_h <span class="ansi-blue-fg">-</span> lp_d<span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">*</span> self<span class="ansi-blue-fg">.</span>_linespacing
-<span class="ansi-green-intense-fg ansi-bold">    293</span> 
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/backends/backend_agg.py</span> in <span class="ansi-cyan-fg">get_text_width_height_descent</span><span class="ansi-blue-fg">(self, s, prop, ismath)</span>
-<span class="ansi-green-intense-fg ansi-bold">    199</span>             fontsize <span class="ansi-blue-fg">=</span> prop<span class="ansi-blue-fg">.</span>get_size_in_points<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    200</span>             w, h, d = texmanager.get_text_width_height_descent(
-<span class="ansi-green-fg">--&gt; 201</span><span class="ansi-red-fg">                 s, fontsize, renderer=self)
-</span><span class="ansi-green-intense-fg ansi-bold">    202</span>             <span class="ansi-green-fg">return</span> w<span class="ansi-blue-fg">,</span> h<span class="ansi-blue-fg">,</span> d
-<span class="ansi-green-intense-fg ansi-bold">    203</span> 
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/texmanager.py</span> in <span class="ansi-cyan-fg">get_text_width_height_descent</span><span class="ansi-blue-fg">(self, tex, fontsize, renderer)</span>
-<span class="ansi-green-intense-fg ansi-bold">    446</span>         <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    447</span>             <span class="ansi-red-fg"># use dviread. It sometimes returns a wrong descent.</span>
-<span class="ansi-green-fg">--&gt; 448</span><span class="ansi-red-fg">             </span>dvifile <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>make_dvi<span class="ansi-blue-fg">(</span>tex<span class="ansi-blue-fg">,</span> fontsize<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    449</span>             <span class="ansi-green-fg">with</span> dviread<span class="ansi-blue-fg">.</span>Dvi<span class="ansi-blue-fg">(</span>dvifile<span class="ansi-blue-fg">,</span> <span class="ansi-cyan-fg">72</span> <span class="ansi-blue-fg">*</span> dpi_fraction<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">as</span> dvi<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    450</span>                 page<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">=</span> dvi
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/texmanager.py</span> in <span class="ansi-cyan-fg">make_dvi</span><span class="ansi-blue-fg">(self, tex, fontsize)</span>
-<span class="ansi-green-intense-fg ansi-bold">    336</span>                 self._run_checked_subprocess(
-<span class="ansi-green-intense-fg ansi-bold">    337</span>                     [&#34;latex&#34;, &#34;-interaction=nonstopmode&#34;, &#34;--halt-on-error&#34;,
-<span class="ansi-green-fg">--&gt; 338</span><span class="ansi-red-fg">                      texfile], tex)
-</span><span class="ansi-green-intense-fg ansi-bold">    339</span>             <span class="ansi-green-fg">for</span> fname <span class="ansi-green-fg">in</span> glob<span class="ansi-blue-fg">.</span>glob<span class="ansi-blue-fg">(</span>basefile <span class="ansi-blue-fg">+</span> <span class="ansi-blue-fg">&#39;*&#39;</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    340</span>                 <span class="ansi-green-fg">if</span> <span class="ansi-green-fg">not</span> fname<span class="ansi-blue-fg">.</span>endswith<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;dvi&#39;</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;tex&#39;</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-
-<span class="ansi-green-fg">~/miniconda/envs/book/lib/python3.7/site-packages/matplotlib/texmanager.py</span> in <span class="ansi-cyan-fg">_run_checked_subprocess</span><span class="ansi-blue-fg">(self, command, tex)</span>
-<span class="ansi-green-intense-fg ansi-bold">    306</span>             raise RuntimeError(
-<span class="ansi-green-intense-fg ansi-bold">    307</span>                 <span class="ansi-blue-fg">&#39;Failed to process string with tex because {} could not be &#39;</span>
-<span class="ansi-green-fg">--&gt; 308</span><span class="ansi-red-fg">                 &#39;found&#39;.format(command[0])) from exc
-</span><span class="ansi-green-intense-fg ansi-bold">    309</span>         <span class="ansi-green-fg">except</span> subprocess<span class="ansi-blue-fg">.</span>CalledProcessError <span class="ansi-green-fg">as</span> exc<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    310</span>             raise RuntimeError(
-
-<span class="ansi-red-fg">RuntimeError</span>: Failed to process string with tex because latex could not be found</pre>
-</div>
-</div>
-</div>
-<div class="jb_output_wrapper }}">
+<div class="jb_output_wrapper output_widget_view  }}">
 <div class="output_area">
 
 
 
-<div class="output_text output_subarea ">
-<pre>&lt;Figure size 432x288 with 1 Axes&gt;</pre>
+<div class="output_png output_subarea ">
+<img src="images/Chapter1_19_0.png"
+>
 </div>
 
 </div>
@@ -1035,7 +660,7 @@ i is not equal to 1, i is 2
  
 
 <script type="application/vnd.jupyter.widget-state+json">
-{"state": {"7623e062dd3141d5a9c366021b99cf00": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "ac160b9f3d9c42048fd294e63d4c4388": {"model_name": "SliderStyleModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "SliderStyleModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "StyleView", "description_width": "", "handle_color": null}}, "a6b0ca06415046288ca7f859eb8685ef": {"model_name": "IntSliderModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "IntSliderModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "IntSliderView", "continuous_update": true, "description": "No. of Terms:", "description_tooltip": null, "disabled": false, "layout": "IPY_MODEL_7623e062dd3141d5a9c366021b99cf00", "max": 20, "min": 1, "orientation": "horizontal", "readout": true, "readout_format": "d", "step": 1, "style": "IPY_MODEL_ac160b9f3d9c42048fd294e63d4c4388", "value": 1}}, "c5a20251d128430fba6aa5bd7a5b06f6": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": null, "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "d9b8d88a366c471ba09e208de19452ee": {"model_name": "VBoxModel", "model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "state": {"_dom_classes": ["widget-interact"], "_model_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_model_name": "VBoxModel", "_view_count": null, "_view_module": "@jupyter-widgets/controls", "_view_module_version": "1.5.0", "_view_name": "VBoxView", "box_style": "", "children": ["IPY_MODEL_a6b0ca06415046288ca7f859eb8685ef", "IPY_MODEL_5567aa290ee64eada6fcc6e6d77fe4a6"], "layout": "IPY_MODEL_c5a20251d128430fba6aa5bd7a5b06f6"}}, "95c62efa72034c52a4900f6d91a8d194": {"model_name": "LayoutModel", "model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "state": {"_model_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_model_name": "LayoutModel", "_view_count": null, "_view_module": "@jupyter-widgets/base", "_view_module_version": "1.2.0", "_view_name": "LayoutView", "align_content": null, "align_items": null, "align_self": null, "border": null, "bottom": null, "display": null, "flex": null, "flex_flow": null, "grid_area": null, "grid_auto_columns": null, "grid_auto_flow": null, "grid_auto_rows": null, "grid_column": null, "grid_gap": null, "grid_row": null, "grid_template_areas": null, "grid_template_columns": null, "grid_template_rows": null, "height": "75px", "justify_content": null, "justify_items": null, "left": null, "margin": null, "max_height": null, "max_width": null, "min_height": null, "min_width": null, "object_fit": null, "object_position": null, "order": null, "overflow": null, "overflow_x": null, "overflow_y": null, "padding": null, "right": null, "top": null, "visibility": null, "width": null}}, "5567aa290ee64eada6fcc6e6d77fe4a6": {"model_name": "OutputModel", "model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "state": {"_dom_classes": [], "_model_module": "@jupyter-widgets/output", "_model_module_version": "1.0.0", "_model_name": "OutputModel", "_view_count": null, "_view_module": "@jupyter-widgets/output", "_view_module_version": "1.0.0", "_view_name": "OutputView", "layout": "IPY_MODEL_95c62efa72034c52a4900f6d91a8d194", "msg_id": "", "outputs": []}}}, "version_major": 2, "version_minor": 0}
+{"state": {"107b95d81fee404a9fd557accd82f583": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "2574c9790bf54af8a539a72174978639": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "IntSliderModel", "state": {"description": "No. of Terms:", "layout": "IPY_MODEL_6f85cf62313d45b091cfa7955d382dba", "max": 20, "min": 1, "style": "IPY_MODEL_77eff4943c9f454399ca3ab25f13eb4c", "value": 8}}, "27a9d5013cd845ffaad931f9a8d43605": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "VBoxModel", "state": {"_dom_classes": ["widget-interact"], "children": ["IPY_MODEL_2574c9790bf54af8a539a72174978639", "IPY_MODEL_b0b3e19a07db458c9554e6c6015b7b87"], "layout": "IPY_MODEL_107b95d81fee404a9fd557accd82f583"}}, "3814169d676849649b4eaaade85de0ea": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"height": "75px"}}, "3bce9882e0d542329e33760ee1bba1ea": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"description_width": ""}}, "45a6895dbbbe48aab83ab2b5d356d2fc": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"layout": "IPY_MODEL_8236498f8bcf4892b2e1d69d08e305d7", "outputs": [{"data": {"image/png": "iVBORw0KGgoAAAANSUhEUgAAAAgAAAAPCAYAAADZCo4zAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAX0lEQVQYGWP8//8/Az7AhCzJyMgYAsTvgVgAJs4C5cwGCrwDYiEghkuCFYGsgGGgQBkQg+wUgImhWAHWgUaMKoAECCMoxIDBPRPIBQWzCxCDgvocEN8D4t1gBUAGTgAAQFIgDGUiF8EAAAAASUVORK5CYII=\n", "text/latex": "$\\displaystyle 1$", "text/plain": "1"}, "metadata": {}, "output_type": "display_data"}, {"data": {"text/markdown": "Error = $1$", "text/plain": "<IPython.core.display.Markdown object>"}, "metadata": {}, "output_type": "display_data"}]}}, "5c76c93a646a433694defffe2a38c2b1": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "VBoxModel", "state": {"_dom_classes": ["widget-interact"], "children": ["IPY_MODEL_62469f7958c24472b2e3af3bd96471df", "IPY_MODEL_45a6895dbbbe48aab83ab2b5d356d2fc"], "layout": "IPY_MODEL_5ccea3cec4514e2cbe722740449c3f88"}}, "5ccea3cec4514e2cbe722740449c3f88": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "62469f7958c24472b2e3af3bd96471df": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "IntSliderModel", "state": {"description": "No. of Terms:", "layout": "IPY_MODEL_d989cb73ee15452eb6cafbd1ccc6b444", "max": 20, "min": 1, "style": "IPY_MODEL_3bce9882e0d542329e33760ee1bba1ea", "value": 1}}, "6f85cf62313d45b091cfa7955d382dba": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}, "77eff4943c9f454399ca3ab25f13eb4c": {"model_module": "@jupyter-widgets/controls", "model_module_version": "1.5.0", "model_name": "SliderStyleModel", "state": {"description_width": ""}}, "8236498f8bcf4892b2e1d69d08e305d7": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {"height": "75px"}}, "b0b3e19a07db458c9554e6c6015b7b87": {"model_module": "@jupyter-widgets/output", "model_module_version": "1.0.0", "model_name": "OutputModel", "state": {"layout": "IPY_MODEL_3814169d676849649b4eaaade85de0ea", "outputs": [{"data": {"image/png": "iVBORw0KGgoAAAANSUhEUgAAAOUAAAAwCAYAAADuOr2KAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAJMElEQVR4Ae2di5HUOBCGd68IgOMyWDIANoJbMoAjgoMMoIiAYjMAIuCRARABBxlABgubAfd/Qq2SbdljzWCvLaurNNbLsvpXtx4t2XP88+fPoynp+Pj4ucr/JPchfo6eexmHS/cLh1vi8ancMzl4P5M7Eg4vuZZCvr0vxM9NuRty/26trQ9tyz8OLWDE/SfK81buR+zUeO9H3FtSFgT0ntxnua9ydwtUyBfwJr7O5R7J/12Otq+UgcC1jLyHZL3buvmJwvdbcVsIwvM3XMGjByOkER3QQwvU6zgE5lDK1xLAMHXVCMlo8bxgoRxC/lJ8fxnKsOY08cboGNNtBULbxwnV34/A5Eqphnpnj5dCXpf/VHGMlFuk+8KAtSXEiPJEWBS5tvZt/Y94/BtmK41H4FhCMT73gTnVUKwvNrnwF++srU+Etxs5FGZad1/h9tT+QJSv/nbx9li1eCDHLOn86mu0rhrMppRqKEYIpq3FCeE+Te7xYM11U5iwziyOxCOGHzqi2uYZrTuH9dWqQ89ZpPAZg0NXCehbOabvRoYFI2ipxHbYmfjGjlBpJAJzKiX7ckWun0ZiDf9sixiZ/z+LWPOVDkfuh5ytmWN2jNc4rvp7EJhTKRkR2J/bKnFIgH07IyyVLzW1K6Kj8nzAX8wPIyThN3KVRiKwl/WVXlHl2/7TqfxYU1E6esm/5C7USO0FPg1mUzZ51085OAiPJ8r/XA7GwY/tkfYWwuJAyeFRlWcf9pHu4UQPcoBM3PYKK2+lUQgIMI56jXYqFIHCYOPukR/lZAR8TJz3f7b0Uq/is3gctsDjEuVzn5HSzm+igBD7bfSIdoaTUbPYDXLxZrQFHLbAo7XnYq7ZWyJMZ9S7XBoHCmPW/664TZm9t4DDFng0OV7S9Y/cysQK6e9lHbm1w+VM3UPHVCoOW+AxV/7nyJ+tlHGl1JOa+XvT5xu3gMMWeIxl+yr92Uqpxrknh5EDYu+NUSOsIZX2OEonuUjaAg5b4HGJwpmllGoklJDzq04ZdW2sI5V+ojhM/e2pnaLLoS3gsAUelyqRWYYeNRQj5Cu5T54hLK5siWCBxeDDqGlWWIJF0hZw2AKPSxXOLKVcKhO1XhWBkhDImr6WxHjlpSKwBAQ0I8FGw5lhs9Mc7XN4YAm81DrsQIDGVhZem2ofd9xxZ00eg8Ah+HoFZBnI0VMO6weF5Nl1pASFShWBGRHAECrHC+6cfTb7TKhBVcoARfVUBJaBQJ2+LqMdai0mRMBPF3PfapqwRsNFV6UcxqemrhwBr5BPNVXkRYkjhVFOjoW+UNy5wrzhxL76YtbeVSnVGpWKRmB1b7rwxu18n7M7oO3Vq7m3g/uK8D3iR6U3LFl9+RVP78iX9cIRwVRelXul+Izg230HJ1F3cMCyl3qxnI9BD34Meyq+h/iZog0pU8+krR0pnPVWk/JPgm9UH778xzP+tHrWwwOGTmFXCVPdEkm0qXChk+V7uwdNV38Xviqno5TV+ppouBpVJgJSgFW81VSVskz5q1x5BBjR5GxJc0a0RsmwZGGkitIXgVtVykU0Q63EFAhI2VDC1b3VVK2vU0hDLXMpCPBNXf7L5oQRUVeMWw/lf6Hrlb7V5OuAIc6N3rp+VBxGufdBKRVBJV/LuW+RKsz8m2NA7zXct/+kB2sRFi32eHhti/+MCFMChTtk5Slf57OKSmN6kV1m5yELiBAvJ6qG2xPTFT+EYaGBTwk8iwfaDLqQ45OSO+WAzHORMEdG21bmgww8v6vuKT0IZSuROTZh/tQVT+zCpySjfCjvvSiMQqGcHH52ZaWuPg8K3smjtL3KTJU1dZzqilUTrDC1N3ghTu5tHK8wggumZ634SXnW86jLYJvE9cnx+7Kpf+BJfjf65JSz5rweg2nwNWD0EEBGgJiDM9R3Hqg4TkP8sHvsqjju6/3Wq9IoD0HuKKXi9irTnj3HVXV0yqYrggc+KFlKKUlLxbt/sba6Ks/ieba6pq6qv52ICZ2Sj+u0b+r+GtfszNt4xKA2evh2RsIe+E4+xTN69AkqUziEEKXvNBpxclllpuo2V5zqSgfTxyvKx9+LB1w9bqbIt3x4VTzH/Ig/1kDw3+m043zV35SBHDxyra+2KFWbNOjSh1Lpj1ShoU+EpO6huKEyGw9fUICFOkYFRtYhWjPPrJcv1aapk0JDPNe0kQhci/NJmBjRIIQKAw6Hdp2BIhK072ToITNsuGRfHlO+JO1TZrKghUQKK/5OPEW2af2tAJ7pUL6ID3h6IHchh6ww29n0p0aFwW+hWClRxDcC1o1QAh0F+6rrXQ825lvIpf/yhl9TVCxwjrzwsb4a6lGzyrSy13QVDggxWJ6DrccVFkbhSMalkG9Tq84d8WNWZt6+4JMWnCUOlnrLWK95CITpq8BE+YKgyI8y0fO1R7rrIx/B6zJjzc9jyxz56EVlA793wiIIsK/dmnlmlHzTQpnwq5bitrLU4BgEglL2ZLY1Ej29jYaprDbiMZWh18Tw8zqVsRU3uszWfasICgcU8oMUMt4rWy3P4sM6bd4yMb+1BYY8Opo7FlGv+yHglFLCw19/A2qbDHgsbeY3BYzz0hiQrZlOlf/Lr6j+37Fl9pew3BThiZUWK2zjsEQBPNNRmyykGoAOvNIBCNiaknVPau1nysZxJYjprMW5CP9jikq6W0Oh6HEG+ZnysKYi/pOE06a2Y8psFbXsoHhkpnAzVkjFOWFVnC0LduG4VCbpbGnjPkrJUV/eGp9CQEJCNFbWxt6aj+ekTjgUIH/fpjfTtJCvp6zcwwM7y0w9Z+o48dm7T+kxo/Pp4Onvc3t78u+N49T87SpfdYe/zj6t4mivzsGSXeXV9ITeAYqIXrwhSAo7wSEtBk5hFLV9zA6Fcxvjcd7Yr3Qe1Dk84J+/V5lx+XP5xUOvUioNHOGFE07mEFZmB41DBYTlsnGci8+h53h+whFMhRn1kYHAz9D9Na2riDEm4csDfnrlNoYFLsKFQYKD1Je6BlI+GuCpnDPq6Hoq90z5kmtI5Uc46V1tyoPJHOUMBwpyy9T9s5PqiHLdkIMPMIBfpmqBF+VhXQ6vKcI4wn6eozXwbHVNXVV/2hUcIHDplQGXo/6MRiAo5eg7asaKQEVgUgT+B5cA+msz1+3aAAAAAElFTkSuQmCC\n", "text/latex": "$\\displaystyle \\frac{x^{7}}{5040} - \\frac{x^{5}}{120} + \\frac{x^{3}}{6} - x + 1$", "text/plain": "  7      5    3        \n x      x    x         \n\u2500\u2500\u2500\u2500 - \u2500\u2500\u2500 + \u2500\u2500 - x + 1\n5040   120   6         "}, "metadata": {}, "output_type": "display_data"}, {"data": {"text/markdown": "Error = $0.000156898600501276$", "text/plain": "<IPython.core.display.Markdown object>"}, "metadata": {}, "output_type": "display_data"}]}}, "d989cb73ee15452eb6cafbd1ccc6b444": {"model_module": "@jupyter-widgets/base", "model_module_version": "1.2.0", "model_name": "LayoutModel", "state": {}}}, "version_major": 2, "version_minor": 0}
 </script>
 
 
