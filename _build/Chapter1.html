@@ -4,22 +4,22 @@ redirect_from:
 interact_link: content/Chapter1.ipynb
 kernel_name: python3
 kernel_path: content
-has_widgets: false
+has_widgets: true
 title: |-
-  Chapter1
+  Introduction
 pagenum: 0
 prev_page:
   url: 
 next_page:
   url: 
 suffix: .ipynb
-search: error phi n x frac called point numerical series floating m epsilon roundoff taylor loops numbers function truncation different bit machine between example sin exact terms lets calculate recusion recursion used computer computers infinite approximation usually analysts integer times using something algorithm evaluate difference powers sqrt relationship statements precision into fixed bits sign representing mantissa exponent might s b base sometimes result etc adding epsilonm returns however algorithms desired solution cannot therefore take answer pi evaluating add stability unstable want power psuedocode conventional programming structures preliminaries descriptors unfortunately cant store instead packed arranged represent data types integers importance us represented
+search: error phi n x frac called point numerical series floating m epsilon roundoff taylor loops numbers function truncation different bit machine between example sin exact terms lets calculate recusion recursion used computer computers infinite approximation usually analysts integer times using something algorithm evaluate difference powers sqrt relationship statements precision into fixed bits sign representing mantissa exponent might s b base sometimes result etc adding epsilonm returns however algorithms desired solution cannot therefore take answer pi evaluating add placeholder graphic stability unstable want power psuedocode conventional programming structures introduction preliminaries descriptors unfortunately cant store instead packed arranged represent data types integers
 
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
 
     <main class="jupyter-page">
-    <div id="page-info"><div id="page-title">Chapter1</div>
+    <div id="page-info"><div id="page-title">Introduction</div>
 </div>
     <div class="jb_cell">
 
@@ -179,9 +179,9 @@ $$<p>Of course, this representation requires that the series be infinite for the
 </div>
 </div>
 
-<div class="jb_cell">
+<div class="jb_cell tag_hide_input">
 
-<div class="cell border-box-sizing code_cell rendered">
+<div class="cell border-box-sizing code_cell rendered tag_hide_input">
 <div class="input">
 
 <div class="inner_cell">
@@ -205,7 +205,7 @@ $$<p>Of course, this representation requires that the series be infinite for the
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">taylor_sin</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">N</span><span class="o">=</span><span class="mi">5</span><span class="p">:</span> <span class="n">sympy</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">sympy</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">x</span><span class="p">,</span><span class="n">n</span><span class="o">=</span><span class="n">N</span><span class="p">);</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">taylor_sin</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">N</span><span class="o">=</span><span class="mi">9</span><span class="p">:</span> <span class="n">sympy</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">sympy</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">x</span><span class="p">,</span><span class="n">n</span><span class="o">=</span><span class="n">N</span><span class="p">);</span>
 <span class="n">taylor_sin</span><span class="p">()</span>
 </pre></div>
 
@@ -222,7 +222,7 @@ $$<p>Of course, this representation requires that the series be infinite for the
 
 
 <div class="output_latex output_subarea output_execute_result">
-$\displaystyle x - \frac{x^{3}}{6} + O\left(x^{5}\right)$
+$\displaystyle x - \frac{x^{3}}{6} + \frac{x^{5}}{120} - \frac{x^{7}}{5040} + O\left(x^{9}\right)$
 </div>
 
 </div>
@@ -244,9 +244,9 @@ $\displaystyle x - \frac{x^{3}}{6} + O\left(x^{5}\right)$
 </div>
 </div>
 
-<div class="jb_cell">
+<div class="jb_cell tag_hide_input tag_interactive">
 
-<div class="cell border-box-sizing code_cell rendered">
+<div class="cell border-box-sizing code_cell rendered tag_hide_input tag_interactive">
 <div class="input">
 
 <div class="inner_cell">
@@ -273,7 +273,7 @@ $\displaystyle x - \frac{x^{3}}{6} + O\left(x^{5}\right)$
 <div class="output_wrapper">
 <div class="output">
 
-<div class="jb_output_wrapper }}">
+<div class="jb_output_wrapper output_widget_view  }}">
 <div class="output_area">
 
 
@@ -281,13 +281,13 @@ $\displaystyle x - \frac{x^{3}}{6} + O\left(x^{5}\right)$
 
  
  
-<div id="0eeb91a6-0fed-4d5f-8c89-afca3411ff77"></div>
+<div id="dfe3a8c5-3adf-4a2f-86df-537f897b543e"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#0eeb91a6-0fed-4d5f-8c89-afca3411ff77');
+var element = $('#dfe3a8c5-3adf-4a2f-86df-537f897b543e');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "27a9d5013cd845ffaad931f9a8d43605", "version_major": 2, "version_minor": 0}
+{"model_id": "43fed5bdd3b64b9abc50f91540051dff", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -312,18 +312,12 @@ var element = $('#0eeb91a6-0fed-4d5f-8c89-afca3411ff77');
 
 <div class="jb_cell">
 
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong><em> PLACEHOLDER FOR GRAPHIC </em></strong></p>
 
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">***</span> <span class="n">PLACEHOLDER</span> <span class="n">FOR</span> <span class="n">GRAPHIC</span> <span class="o">***</span>
-</pre></div>
-
-    </div>
 </div>
 </div>
-
 </div>
 </div>
 
@@ -365,18 +359,12 @@ $$
 
 <div class="jb_cell">
 
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong><em> PLACEHOLDER FOR GRAPHIC </em></strong></p>
 
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">***</span> <span class="n">PLACEHOLDER</span> <span class="n">FOR</span> <span class="n">GRAPHIC</span> <span class="o">***</span>
-</pre></div>
-
-    </div>
 </div>
 </div>
-
 </div>
 </div>
 
