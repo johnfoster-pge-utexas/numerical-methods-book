@@ -4,7 +4,7 @@ redirect_from:
 interact_link: content/Chapter1.ipynb
 kernel_name: python3
 kernel_path: content
-has_widgets: true
+has_widgets: false
 title: |-
   Introduction
 pagenum: 0
@@ -13,7 +13,7 @@ prev_page:
 next_page:
   url: 
 suffix: .ipynb
-search: error phi n x frac called point numerical series floating m epsilon roundoff taylor loops numbers function truncation different bit machine between example sin exact terms lets calculate recusion recursion used computer computers infinite approximation usually analysts integer times using something algorithm evaluate difference powers sqrt relationship statements precision into fixed bits sign representing mantissa exponent might s b base sometimes result etc adding epsilonm returns however algorithms desired solution cannot therefore take answer pi evaluating add placeholder graphic stability unstable want power psuedocode conventional programming structures introduction preliminaries descriptors unfortunately cant store instead packed arranged represent data types integers
+search: error phi x called point numerical series frac n floating m epsilon roundoff taylor loops numbers function truncation different bit machine between example sin terms lets calculate recusion recursion used computer computers infinite approximation usually analysts integer times using something algorithm exact evaluate difference powers relationship statements precision into fixed bits sign representing mantissa exponent might s b base sometimes result etc adding epsilonm returns however algorithms desired solution cannot therefore take answer pi evaluating add stability unstable want sqrt power psuedocode conventional programming structures introduction preliminaries descriptors unfortunately cant store instead packed arranged represent data types integers importance us
 
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
@@ -25,17 +25,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Introduction">Introduction<a class="anchor-link" href="#Introduction"> </a></h1>
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Computer-Preliminaries-and-Error-Descriptors">Computer Preliminaries and Error Descriptors<a class="anchor-link" href="#Computer-Preliminaries-and-Error-Descriptors"> </a></h2><p>Unfortunately computers can't store numbers with infinite precision, but instead use an approximation that can be packed into a fixed number of bits.  These bits can be arranged to represent different data types usually called fixed point numbers or integers and floating point numbers.  Of most importance to us as numerical analysts are floating point numbers.</p>
+<h1 id="Introduction">Introduction<a class="anchor-link" href="#Introduction"> </a></h1><h2 id="Computer-Preliminaries-and-Error-Descriptors">Computer Preliminaries and Error Descriptors<a class="anchor-link" href="#Computer-Preliminaries-and-Error-Descriptors"> </a></h2><p>Unfortunately computers can't store numbers with infinite precision, but instead use an approximation that can be packed into a fixed number of bits.  These bits can be arranged to represent different data types usually called fixed point numbers or integers and floating point numbers.  Of most importance to us as numerical analysts are floating point numbers.</p>
 <p>A floating point number is represented within the computer as a bit sign (positive or negative), an integer number representing the number of significant digits called the significand or mantissa, and an integer exponent.  Symbolically, we might write:</p>
 $$
 s \times M \times B^{sE}
@@ -189,15 +179,15 @@ $$<p>Of course, this representation requires that the series be infinite for the
 </div>
 </div>
 
-<div class="jb_cell tag_hide_input">
+<div class="jb_cell">
 
-<div class="cell border-box-sizing code_cell rendered tag_hide_input">
+<div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">sympy</span>
-<span class="n">sympy</span><span class="o">.</span><span class="n">init_printing</span><span class="p">(</span><span class="n">use_latex</span><span class="o">=</span><span class="s1">&#39;mathjax&#39;</span><span class="p">)</span>
+<span class="n">sympy</span><span class="o">.</span><span class="n">init_printing</span><span class="p">()</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
 </pre></div>
 
@@ -215,7 +205,7 @@ $$<p>Of course, this representation requires that the series be infinite for the
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">taylor_sin</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">N</span><span class="o">=</span><span class="mi">9</span><span class="p">:</span> <span class="n">sympy</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">sympy</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">x</span><span class="p">,</span><span class="n">n</span><span class="o">=</span><span class="n">N</span><span class="p">);</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">taylor_sin</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">N</span><span class="o">=</span><span class="mi">5</span><span class="p">:</span> <span class="n">sympy</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">sympy</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">x</span><span class="p">,</span><span class="n">n</span><span class="o">=</span><span class="n">N</span><span class="p">);</span>
 <span class="n">taylor_sin</span><span class="p">()</span>
 </pre></div>
 
@@ -232,7 +222,7 @@ $$<p>Of course, this representation requires that the series be infinite for the
 
 
 <div class="output_latex output_subarea output_execute_result">
-$\displaystyle x - \frac{x^{3}}{6} + \frac{x^{5}}{120} - \frac{x^{7}}{5040} + O\left(x^{9}\right)$
+$\displaystyle x - \frac{x^{3}}{6} + O\left(x^{5}\right)$
 </div>
 
 </div>
@@ -254,9 +244,9 @@ $\displaystyle x - \frac{x^{3}}{6} + \frac{x^{5}}{120} - \frac{x^{7}}{5040} + O\
 </div>
 </div>
 
-<div class="jb_cell tag_hide_input tag_interactive">
+<div class="jb_cell">
 
-<div class="cell border-box-sizing code_cell rendered tag_hide_input tag_interactive">
+<div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 
 <div class="inner_cell">
@@ -283,7 +273,7 @@ $\displaystyle x - \frac{x^{3}}{6} + \frac{x^{5}}{120} - \frac{x^{7}}{5040} + O\
 <div class="output_wrapper">
 <div class="output">
 
-<div class="jb_output_wrapper output_widget_view  }}">
+<div class="jb_output_wrapper }}">
 <div class="output_area">
 
 
@@ -291,13 +281,13 @@ $\displaystyle x - \frac{x^{3}}{6} + \frac{x^{5}}{120} - \frac{x^{7}}{5040} + O\
 
  
  
-<div id="df69327c-f531-4fac-b41b-d603c48f14a3"></div>
+<div id="479b2fb7-46d2-4d46-bbe4-efe909dec466"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#df69327c-f531-4fac-b41b-d603c48f14a3');
+var element = $('#479b2fb7-46d2-4d46-bbe4-efe909dec466');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "71cad1fcd8b44881af73ef37f928818d", "version_major": 2, "version_minor": 0}
+{"model_id": "feb9dcd59b184643a130366bcad5b9e9", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -353,9 +343,34 @@ var element = $('#df69327c-f531-4fac-b41b-d603c48f14a3');
 <p>$\phi^{n+1} = \phi^{n-1} - \phi^n$</p>
 <p>Therefore by calcuating $\phi^0 = 1$ and $\phi^1 = 0.618034$ and successively applying the recusion relationship we should be able to calculate as many powers as desired. Let's see this in action:</p>
 <p>First we'll calculate what we will call the "exact" answer by actually evaluating all the power individually.</p>
-$$
-\phi_{\mbox{exact}} = Table [(\frac{\sqrt5 - 1}{2})^n , \{n, 0, 80\}];
-$$<p>Next we will calculate the first 2 powers and use the recursion formula to evaluate the rest.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">phi_exact</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">80</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Next we will calculate the first 2 powers and use the recursion formula to evaluate the rest.</p>
 $$
 \phi recursion = Join [\{1,\frac{\sqrt{5}-1}{2}\},ConstantArray[0,79]];
 $$<p>Do</p>
@@ -369,12 +384,62 @@ $$
 
 <div class="jb_cell">
 
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p><strong><em> PLACEHOLDER FOR GRAPHIC </em></strong></p>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">phi_recursion</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">80</span><span class="p">)</span>
+<span class="n">phi_recursion</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">phi_recursion</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">79</span><span class="p">):</span>
+    <span class="n">phi_recursion</span><span class="p">[</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">phi_recursion</span><span class="p">[</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">phi_recursion</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
 
 </div>
 </div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">phi_exact</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">phi_recursion</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="images/Chapter1_18_0.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
 </div>
 </div>
 
@@ -406,25 +471,6 @@ $$
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>0
-2
-4
-6
-8
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -453,25 +499,6 @@ $$
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>0
-2
-4
-6
-8
-</pre>
-</div>
-</div>
-</div>
 </div>
 </div>
 
@@ -507,21 +534,6 @@ $$
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>i is not equal to 1
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -553,23 +565,6 @@ $$
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>i is not equal to 1, i is 0
-i is equal to 1
-i is not equal to 1, i is 2
-</pre>
-</div>
-</div>
-</div>
 </div>
 </div>
 
