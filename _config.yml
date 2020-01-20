@@ -30,7 +30,7 @@ url: https://johntfoster.github.io # the base hostname & protocol for your site,
 # Jupyter Book settings
 
 # Main page settings
-footer_text: This page was created by <a href="https://github.com/jupyter/jupyter-book/graphs/contributors">The
+footer_text: This page was created by <a href="https://johntfoster.pge.utexas.edu">John T. Foster</a> and <a href="https://github.com/jupyter/jupyter-book/graphs/contributors">The
   Jupyter Book Community</a>
 
 # Sidebar settings
@@ -38,7 +38,7 @@ show_sidebar: true                # Show the sidebar. Only set to false if your 
 collapse_inactive_chapters: true  # Whether to collapse the inactive chapters in the sidebar
 collapse_inactive_sections: true  # Whether to collapse the sub-sections within a non-active section in the sidebar
 textbook_logo: images/logo/logo.png               # A logo to be displayed at the top of your textbook sidebar. Should be square
-textbook_logo_link: https://jupyterbook.org/                    # A link for the logo.
+textbook_logo_link: https://johntfoster.pge.utexas.edu/                    # A link for the logo.
 sidebar_footer_text: Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
 number_toc_chapters: true         # Whether to add numbers to chapterse in your Table of Contents. If true, you can control this at the Chapter level in _data/toc.yml
 
@@ -65,7 +65,7 @@ jupyterhub_url: ''                     # The URL for your JupyterHub. If no URL,
 jupyterhub_interact_text: Interact             # The text that interact buttons will contain.
 
 # Binder link settings
-use_binder_button: false # If 'true', add a binder button for interactive links
+use_binder_button: true # If 'true', add a binder button for interactive links
 binderhub_url: https://mybinder.org                        # The URL for your BinderHub. If no URL, use ""
 binder_repo_base: https://github.com/                     # The site on which the textbook repository is hosted
 binder_repo_org: johntfoster                     # The username or organization that owns this repository
