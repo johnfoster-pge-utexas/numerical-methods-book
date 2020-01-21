@@ -13,7 +13,7 @@ prev_page:
 next_page:
   url: 
 suffix: .ipynb
-search: error x called point numerical series floating m epsilon roundoff taylor frac phi loops numbers function truncation different bit machine between example sin terms lets calculate used computer computers infinite approximation usually analysts integer times using something algorithm exact evaluate difference powers n recusion relationship statements precision into fixed bits sign representing mantissa exponent might s b base sometimes result etc adding epsilonm returns however algorithms desired solution cannot therefore take answer pi evaluating add stability unstable want power psuedocode conventional programming structures introduction preliminaries descriptors unfortunately cant store instead packed arranged represent data types integers importance us represented within
+search: error x called point numerical series floating m epsilon roundoff taylor frac phi loops numbers function truncation infinite different bit machine between example sin terms lets calculate used computer computers approximation usually analysts integer times using something algorithm exact cannot evaluate difference powers n recusion relationship statements loop precision into fixed bits sign representing mantissa exponent might s b base sometimes e result etc adding epsilonm returns however algorithms desired solution therefore take answer pi evaluating add maximum stability unstable want power psuedocode conventional structure programming conditional structures iterations while statement introduction preliminaries descriptors unfortunately cant store instead packed arranged
 
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
@@ -294,13 +294,13 @@ $\displaystyle x - \frac{x^{3}}{6} + \frac{x^{5}}{120} - \frac{x^{7}}{5040} + O\
 
  
  
-<div id="3e17f171-5c42-4e2e-affb-e979d80fe653"></div>
+<div id="79a897a8-352c-46bb-9f78-4be1682fa6c1"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#3e17f171-5c42-4e2e-affb-e979d80fe653');
+var element = $('#79a897a8-352c-46bb-9f78-4be1682fa6c1');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "02dc3ac51849418d949d69cfbedea339", "version_major": 2, "version_minor": 0}
+{"model_id": "ed342b5f713748a1895bac11079a6934", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -323,9 +323,9 @@ var element = $('#3e17f171-5c42-4e2e-affb-e979d80fe653');
 </div>
 </div>
 
-<div class="jb_cell">
+<div class="jb_cell tag_hide_input tag_interactive">
 
-<div class="cell border-box-sizing code_cell rendered">
+<div class="cell border-box-sizing code_cell rendered tag_hide_input tag_interactive">
 <div class="input">
 
 <div class="inner_cell">
@@ -340,8 +340,6 @@ var element = $('#3e17f171-5c42-4e2e-affb-e979d80fe653');
     <span class="sa">r</span><span class="s1">&#39;\usepackage</span><span class="si">{amssymb}</span><span class="s1">&#39;</span><span class="p">]</span>
 
 <span class="k">def</span> <span class="nf">interactive_sin_plot</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
-    
-    <span class="n">display</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">taylor_sin</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="o">.</span><span class="n">removeO</span><span class="p">())</span>
     
     <span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
     
@@ -369,7 +367,7 @@ var element = $('#3e17f171-5c42-4e2e-affb-e979d80fe653');
 <div class="output_wrapper">
 <div class="output">
 
-<div class="jb_output_wrapper }}">
+<div class="jb_output_wrapper output_widget_view  }}">
 <div class="output_area">
 
 
@@ -377,13 +375,13 @@ var element = $('#3e17f171-5c42-4e2e-affb-e979d80fe653');
 
  
  
-<div id="19519e6a-07b3-4cc0-8574-6bb374068a45"></div>
+<div id="bccb37fe-faee-4734-a96f-ca7b98f484ae"></div>
 <div class="output_subarea output_widget_view ">
 <script type="text/javascript">
-var element = $('#19519e6a-07b3-4cc0-8574-6bb374068a45');
+var element = $('#bccb37fe-faee-4734-a96f-ca7b98f484ae');
 </script>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "3b66602a0f1f4e2b83c1c100be6e1ff3", "version_major": 2, "version_minor": 0}
+{"model_id": "273cde14fc034181ae0d85becdd6d1dd", "version_major": 2, "version_minor": 0}
 </script>
 </div>
 
@@ -444,7 +442,7 @@ var element = $('#19519e6a-07b3-4cc0-8574-6bb374068a45');
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Next we will calculate the first 2 powers and use the recursion formula to evaluate the rest.</p>
+<p>Next we explicitly will calculate the first 2 powers and use the recursion formula to evaluate the rest.</p>
 
 </div>
 </div>
@@ -484,9 +482,9 @@ var element = $('#19519e6a-07b3-4cc0-8574-6bb374068a45');
 </div>
 </div>
 
-<div class="jb_cell tag_hide_input tag_interactive">
+<div class="jb_cell tag_hide_input">
 
-<div class="cell border-box-sizing code_cell rendered tag_hide_input tag_interactive">
+<div class="cell border-box-sizing code_cell rendered tag_hide_input">
 <div class="input">
 
 <div class="inner_cell">
@@ -507,7 +505,7 @@ var element = $('#19519e6a-07b3-4cc0-8574-6bb374068a45');
 <div class="output_wrapper">
 <div class="output">
 
-<div class="jb_output_wrapper output_widget_view  }}">
+<div class="jb_output_wrapper }}">
 <div class="output_area">
 
 
@@ -629,7 +627,7 @@ var element = $('#19519e6a-07b3-4cc0-8574-6bb374068a45');
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>If Statements:</strong> Used as tests to return different actions. An example of an 'if statement' is:</p>
+<p><strong>If Statements:</strong> Used as tests to return different actions. An example of an <code>if</code>-statement is</p>
 
 </div>
 </div>
@@ -676,7 +674,7 @@ var element = $('#19519e6a-07b3-4cc0-8574-6bb374068a45');
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>When we write sophisticated code we might use multiple loops and if statements in conjunction. For instance:</p>
+<p>When we write sophisticated code we might use multiple loops and <code>if</code>-statements in conjunction. For instance</p>
 
 </div>
 </div>
@@ -713,6 +711,60 @@ var element = $('#19519e6a-07b3-4cc0-8574-6bb374068a45');
 <pre>i is not equal to 1, i is 0
 i is equal to 1
 i is not equal to 1, i is 2
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can use a conditional <code>if</code>-statement in combination with a <code>for</code>-loop and <code>break</code> command to create a "safer" <code>while</code> structure, i.e. one that has a maximum number of iterations and cannot generate an infinite loop.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">7</span><span class="p">:</span>
+        <span class="k">break</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>0
+1
+2
+3
+4
+5
+6
+7
+8
 </pre>
 </div>
 </div>
