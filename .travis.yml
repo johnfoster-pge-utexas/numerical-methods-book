@@ -1,0 +1,23 @@
+os: linux
+language: python
+install:
+  - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  - conda info -a
+  - conda env create -f binder/environment.yml
+  - source activate book
+before_script:
+  - git config --global user.email ${GH_EMAIL}
+  - git config --global user.name ${GH_NAME}
+script: 
+  - jupyter-book build .
+after_success:
+  - git add -A
+  - git commit -m "Travis CI autocommit from travis build $TRAVIS_BUILD_NUMBER"
+  - git push -fq origin gh-pages > /dev/null
+  - bash $HOME/build/johntfoster/numerical_methods_book/binder/trigger_binder.sh https://gke.mybinder.org/build/gh/johntfoster/numerical_methods_book/"${TRAVIS_BRANCH}"
+  - bash $HOME/build/johntfoster/numerical_methods_book/binder/trigger_binder.sh https://ovh.mybinder.org/build/gh/johntfoster/numerical_methods_book/"${TRAVIS_BRANCH}"
