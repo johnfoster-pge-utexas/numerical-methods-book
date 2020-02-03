@@ -24,6 +24,6 @@
 # See the demo `toc.yml` for the right structure to follow. You can 
 # generate a demo book by running `jupyter-book create mybook --demo`
 # ==============================
-- url: /Chapter1/IntroPythonVariablesAndDataTypes
+- url: /Chapter1/PythonIntro_VariablesDataTypes
 - url: /Chapter1
 
