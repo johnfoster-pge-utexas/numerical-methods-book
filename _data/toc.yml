@@ -30,4 +30,6 @@
   sections:
   - url: /PythonIntro_VariablesDataTypes
     title: "Variables and Data Types"
+  - url: /PythonIntro_ConditionalsFlowControl
+    title: "Conditionals and Flow Control"
 
