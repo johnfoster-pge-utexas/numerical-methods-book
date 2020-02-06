@@ -32,4 +32,6 @@
     title: "Variables and Data Types"
   - url: /PythonIntro_ConditionalsFlowControl
     title: "Conditionals and Flow Control"
+  - url: /PythonIntro_ListsTuplesDictionaries
+    title: "Common Data Structures: Lists, Tuples, and Dictionaries"
 
