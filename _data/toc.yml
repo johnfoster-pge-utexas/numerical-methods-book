@@ -34,4 +34,6 @@
     title: "Conditionals and Flow Control"
   - url: /PythonIntro_ListsTuplesDictionaries
     title: "Common Data Structures: Lists, Tuples, and Dictionaries"
+  - url: /PythonIntro_Loops
+    title: "More Flow Control: For and While Loops"
 
