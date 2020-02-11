@@ -13,7 +13,7 @@ prev_page:
 next_page:
   url: 
 suffix: .ipynb
-search: loop python list items body while loops conditional statement function used code example range structure above here desired comprehensions times iteration integers case start item alist assigned through only given reading found docs org html lists values computations keyword looping e another flow control perform allows fixed simply monotonically increasing cycles tuple data gets program until reached course not type just cycle any valid simple set argument including iterated also keywords variables often store results executes append integer output comprehension tutorial execute true false maximum iterations replicated enumerate further strucutres method programming structured repeated tasks occur numerous compact additionally dict
+search: loop python list items body while loops conditional statement function used code example range structure above here desired comprehensions times iteration integers case start item alist assigned through only given reading found docs org html lists values computations keyword looping e another flow control perform allows fixed simply monotonically increasing cycles tuple data gets program until reached course not type just cycle any valid simple set argument including iterated also keywords variables often store results executes append integer output comprehension tutorial enumerate execute true false maximum iterations replicated further strucutres method programming structured repeated tasks occur numerous compact additionally dict
 
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
@@ -441,6 +441,55 @@ hello
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Enumerate">Enumerate<a class="anchor-link" href="#Enumerate"> </a></h3><p>Occasionally, in addition to iterating over the actual items in a list/tuple, the integer index corresponding to the location in the data structure is also desired.  This can be returned with the <code>enumerate()</code> function.  For example,</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">atuple</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;tuple&quot;</span><span class="p">,</span> <span class="s2">&quot;of&quot;</span><span class="p">,</span> <span class="s2">&quot;strings&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">count</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">atuple</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&quot;</span><span class="si">{}</span><span class="s1">&quot; -- has the index </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">count</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&#34;a&#34; -- has the index 0
+&#34;tuple&#34; -- has the index 1
+&#34;of&#34; -- has the index 2
+&#34;strings&#34; -- has the index 3
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="While-loops">While loops<a class="anchor-link" href="#While-loops"> </a></h2><p>While loops continuously execute the body of the loop so long as some conditional statement is evaluating to <code>True</code>.  The conditional statement appears to the right of the <code>while</code> keyword.  In the example below, we use a very simple conditional statement, but any valid conditional expression in Python, including <code>and</code> and <code>or</code> clauses can be used.</p>
 
 </div>
@@ -543,55 +592,6 @@ hello
 2
 3
 4
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Enumerate">Enumerate<a class="anchor-link" href="#Enumerate"> </a></h3><p>Occasionally, in addition to iterating over the actual items in a list/tuple, the integer index corresponding to the location in the data structure is also desired.  This can be returned with the <code>enumerate()</code> function.  For example,</p>
-
-</div>
-</div>
-</div>
-</div>
-
-<div class="jb_cell">
-
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">atuple</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;tuple&quot;</span><span class="p">,</span> <span class="s2">&quot;of&quot;</span><span class="p">,</span> <span class="s2">&quot;strings&quot;</span><span class="p">)</span>
-
-<span class="k">for</span> <span class="n">count</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">atuple</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&quot;</span><span class="si">{}</span><span class="s1">&quot; -- has the index </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">count</span><span class="p">))</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="jb_output_wrapper }}">
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>&#34;a&#34; -- has the index 0
-&#34;tuple&#34; -- has the index 1
-&#34;of&#34; -- has the index 2
-&#34;strings&#34; -- has the index 3
 </pre>
 </div>
 </div>
