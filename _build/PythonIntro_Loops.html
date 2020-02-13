@@ -1,0 +1,620 @@
+---
+redirect_from:
+  - "/pythonintro-loops"
+interact_link: content/PythonIntro_Loops.ipynb
+kernel_name: python3
+kernel_path: content
+has_widgets: false
+title: |-
+  More Flow Control: For and While Loops
+pagenum: 4
+prev_page:
+  url: /PythonIntro_ListsTuplesDictionaries.html
+next_page:
+  url: 
+suffix: .ipynb
+search: loop python list items body while loops conditional statement function used code example range structure above here desired comprehensions times iteration integers case start item alist assigned through only given reading found docs org html lists values computations keyword looping e another flow control perform allows fixed simply monotonically increasing cycles tuple data gets program until reached course not type just cycle any valid simple set argument including iterated also keywords variables often store results executes append integer output comprehension tutorial enumerate execute true false maximum iterations replicated further structures method programming structured repeated tasks occur numerous compact additionally dict
+
+comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
+---
+
+    <main class="jupyter-page">
+    <div id="page-info"><div id="page-title">More Flow Control: For and While Loops</div>
+</div>
+    <div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Looping structures, i.e. <code>for</code> and <code>while</code> loops, are another method of flow control in Python programming.  They can be used to perform structured and/or repeated tasks that occur numerous times in a compact way.</p>
+<h2 id="For-loops">For loops<a class="anchor-link" href="#For-loops"> </a></h2><p>For loops are a looping structure that allows for iteration over a fixed number of items.  The items can simply be monotonically increasing integers, in which case the loop simply cycles a fixed number of times.  Additionally, the items can by items from a Python <code>list</code>, <code>tuple</code>, or <code>dict</code>.</p>
+<p>For demonstration purposes, let's start with a Python list with mixed data types.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">alist</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="s1">&#39;hello&#39;</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now we can write a <code>for</code> loop that iterates over each item in the list one at a time and prints the item to the screen.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell tag_popout">
+
+<div class="cell border-box-sizing text_cell rendered tag_popout"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In this loop <code>item</code> becomes a <em>variable</em> internal to the loop that each entry in <code>alist</code> gets assigned to one-by-one as the program cycles through the body of the loop until the end of <code>alist</code> has been reached.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">alist</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>1
+2.0
+hello
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The loop above is exactly equivalent to this code</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">item</span> <span class="o">=</span> <span class="n">alist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+<span class="n">item</span> <span class="o">=</span> <span class="n">alist</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+<span class="n">item</span> <span class="o">=</span> <span class="n">alist</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>1
+2.0
+hello
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The code above is said to be the <em>unrolling</em> of the loop.  Of course, if <code>alist</code> had many items in it, we would not want to type all the lines of code required to perform the operation without the loop.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Just like Python functions and if statements, loops use whitespace indentation to indicate the <em>body</em> of the loop.  What is in the body gets executed every cycle through the loop, any valid Python code can be placed in the body.  For example, a simple computation</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell tag_popout">
+
+<div class="cell border-box-sizing text_cell rendered tag_popout"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The <code>range()</code> function provides a quick way to generate a monotonically increasing set of integers for iteration.  If only one argument is given, i.e. <code>range(5)</code>, then the resulting integers start at 0 and increment by 1 up to, but not including, the number given as the argument.  Additional reading on the <code>range()</code> function can be found <a href="https://docs.python.org/3/library/stdtypes.html#typesseq-range">here</a>.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>0
+1
+4
+9
+16
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Tuples can be iterated over in a for loop just like lists.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">atuple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">atuple</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>1
+3
+5
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Dictionaries can also be iterated over, in this case, the use of the <code>items()</code> function allows for both the keywords and the values to be unpacked and assigned each to variables local to the loop.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell tag_popout">
+
+<div class="cell border-box-sizing text_cell rendered tag_popout"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If only dictionary keywords where desired for iteration in the loop, the <code>keys()</code> function could be used in place of <code>items()</code>.  Likewise <code>values()</code> can be used if only the values are desired.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">adict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name1&quot;</span><span class="p">:</span> <span class="s2">&quot;Romeo&quot;</span><span class="p">,</span> <span class="s2">&quot;name2&quot;</span><span class="p">:</span> <span class="s2">&quot;Juliet&quot;</span><span class="p">}</span>
+
+<span class="k">for</span> <span class="n">keyword</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">adict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&quot;</span><span class="si">{}</span><span class="s1">&quot; is </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">keyword</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&#34;name1&#34; is Romeo
+&#34;name2&#34; is Juliet
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Often times we would like to store the results of computations in a list at the loop executes.  One way to do this is using the <code>append()</code> function defined for Python lists.  Here we start with an empty list and append the square of the integer range of numbers from 0 to 9 each cycle through the loop.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">alist</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">alist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    
+<span class="nb">print</span><span class="p">(</span><span class="n">alist</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="List-comprehensions">List comprehensions<a class="anchor-link" href="#List-comprehensions"> </a></h3><p>There is another type of for loop structure that can be used in Python when it is desired to store the output of computations from a loop in a list.  These are called <em>list comprehensions</em>.  The syntax is a little strange, but they are <em>much faster</em> at producing lists as an output of the loop.  An example of a list comprehension that produces the same result as the for loop above is</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell tag_popout">
+
+<div class="cell border-box-sizing text_cell rendered tag_popout"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In a list comprehension, the body of the loop goes before the <code>for</code> keyword.  More on list comprehensions can be found <a href="https://docs.python.org/3/tutorial/datastructures.html?highlight=list%20comprehensions#list-comprehensions">here</a>.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">alist</span> <span class="o">=</span> <span class="p">[</span><span class="n">item</span> <span class="o">**</span> <span class="mi">2</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">alist</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Enumerate">Enumerate<a class="anchor-link" href="#Enumerate"> </a></h3><p>Occasionally, in addition to iterating over the actual items in a list/tuple, the integer index corresponding to the location in the data structure is also desired.  This can be returned with the <code>enumerate()</code> function.  For example,</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">atuple</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;tuple&quot;</span><span class="p">,</span> <span class="s2">&quot;of&quot;</span><span class="p">,</span> <span class="s2">&quot;strings&quot;</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">count</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">atuple</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&quot;</span><span class="si">{}</span><span class="s1">&quot; -- has the index </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">count</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&#34;a&#34; -- has the index 0
+&#34;tuple&#34; -- has the index 1
+&#34;of&#34; -- has the index 2
+&#34;strings&#34; -- has the index 3
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="While-loops">While loops<a class="anchor-link" href="#While-loops"> </a></h2><p>While loops continuously execute the body of the loop so long as some conditional statement is evaluating to <code>True</code>.  The conditional statement appears to the right of the <code>while</code> keyword.  In the example below, we use a very simple conditional statement, but any valid conditional expression in Python, including <code>and</code> and <code>or</code> clauses can be used.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell tag_popout">
+
+<div class="cell border-box-sizing text_cell rendered tag_popout"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here the conditional statement is <code>i &lt; 5</code> which of course is <code>True</code> with the given initial value of <code>i=0</code>.  So the body of the loop executes, each time incrementing <code>i</code> by 1, until <code>i = 5</code> which causes the conditional statement to evaluate to <code>False</code> and the loop exits.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+
+<span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    
+    <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>0
+1
+2
+3
+4
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If the conditional statement in a while loop never evaluates to <code>False</code>, the loop will execute ad infinitum.  If new variables are being assigned in the body of the loop or the results of computations are stored, the infinite cycling can cause the computer's memory to fill and possibly lead to a crash of the program and/or computer.  It's often desirable to have a set number of maximum iterations that if reached will guarantee the loop will exit.  In this case, the functionality of a while loop can be replicated with the combination of a for loop and an if statement with a <code>break</code> keyword.  For example, the while loop structure above is replicated in the following code, but with the guard that the maximum number of iterations cannot exceed 10.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    
+    <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="k">break</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>0
+1
+2
+3
+4
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Further-reading">Further reading<a class="anchor-link" href="#Further-reading"> </a></h2><p>Further reading on Python flow control with loops can be found in the <a href="https://docs.python.org/3/tutorial/controlflow.html">Python documentation</a></p>
+
+</div>
+</div>
+</div>
+</div>
+
+ 
+
+
+    </main>
+    
