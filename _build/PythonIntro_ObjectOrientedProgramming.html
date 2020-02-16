@@ -13,7 +13,7 @@ prev_page:
 next_page:
   url: 
 suffix: .ipynb
-search: class shape polygon object function functions classes called data instantiated code str arguments python argument also because define rectangle inherit variable attribute special returns both automatically print its derive defined triangle definition string only member init placed instantiate s new sidelengths value enough sides computeperimeter notice self including used inheritance too defines organizing into containers transform once becomes usually assigned below named stores just implemented am meanings any run store name statement giving runs result therefore work unless explicitly overridden implement not compute perimeter return edges initialized none cant set exact yet dont information e g need order requires same
+search: class shape polygon object classes function functions called python data instantiated code str arguments argument also because define rectangle inherit variable attribute special returns both automatically print its inheritance derive defined triangle definition string only member init placed instantiate s new sidelengths value enough sides computeperimeter notice self including used too further reading defines organizing into containers transform once becomes usually assigned below named stores just implemented am meanings any run store name statement giving runs result therefore work unless explicitly overridden implement not compute perimeter return edges initialized none cant set exact yet dont information e g need order
 
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
@@ -115,7 +115,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now we will <em>derive</em> a class from <code>Shape</code> called <code>Polygon</code>.  A <code>Polygon</code> <em>is a</em> <code>Shape</code> and therefore all of the functions defined in <code>Shape</code> will work on an instantiated object of <code>Polygon</code> (unless they are explicitly overridden).</p>
+<h2 id="Class-inheritance">Class inheritance<a class="anchor-link" href="#Class-inheritance"> </a></h2><p>Now we will <em>derive</em> a class from <code>Shape</code> called <code>Polygon</code>.  A <code>Polygon</code> <em>is a</em> <code>Shape</code> and therefore all of the functions defined in <code>Shape</code> will work on an instantiated object of <code>Polygon</code> (unless they are explicitly overridden).</p>
 <p>We will also implement some new functions, not defined in <code>Shape</code> that can compute the perimeter of a polygon and return the number of edges.</p>
 <p>There is also a new data attribute called <code>side_lengths</code> which is initialized to <code>None</code>.  We can't set its exact value yet because we don't have enough information about the polygon, e.g. How many sides it has, but we need to define it in order to define <code>compute_perimeter</code> because it requires <code>side_lengths</code> as an argument.  Same goes for <code>get_number_of_sides</code>.</p>
 
@@ -648,6 +648,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Python classes offer a way to organize your code and when used carefully can add readability and reuse to the code you write.  However, if inheritance trees become too deep (classes inherit from classes, that inherit from classes, that inherit from classes, that inherit from classes, etc.) or multiple inheritance is used too frequently, the opposite can happen.</p>
+<h2 id="Further-reading">Further reading<a class="anchor-link" href="#Further-reading"> </a></h2><p>Further reading on classes and object-oriented programming can be found in the <a href="https://docs.python.org/3.8/tutorial/classes.html">Python documentation</a>.</p>
 
 </div>
 </div>
