@@ -13,7 +13,7 @@ prev_page:
 next_page:
   url: 
 suffix: .ipynb
-search: class shape polygon object function functions classes called data instantiated code str arguments python argument also because define inherit variable attribute special returns both automatically print its derive defined rectangle triangle definition string only member init placed instantiate s new sidelengths value enough sides computeperimeter notice self including used inheritance too defines organizing into containers transform once becomes usually assigned below named stores just implemented am meanings any run store name statement giving runs result therefore work unless explicitly overridden implement not compute perimeter return edges initialized none cant set exact yet dont information e g need order requires same
+search: class shape polygon object function functions classes called data instantiated code str arguments python argument also because define rectangle inherit variable attribute special returns both automatically print its derive defined triangle definition string only member init placed instantiate s new sidelengths value enough sides computeperimeter notice self including used inheritance too defines organizing into containers transform once becomes usually assigned below named stores just implemented am meanings any run store name statement giving runs result therefore work unless explicitly overridden implement not compute perimeter return edges initialized none cant set exact yet dont information e g need order requires same
 
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
@@ -26,7 +26,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>A Python <em>class</em> defines a way of organizing code into containers of data, and functions that transform the data in some way.   Once a class is <em>instantiated</em> in code, it becomes an <em>object</em> (and is usually assigned to a variable).</p>
-<p>Below is a class definition named <code>Shape()</code>.  It stores the data attribute <code>shape</code> which is just a string.  The only member function implemented in this class is the special <code>__str__</code> function which returns the string <code>I am a shape</code> when called on an object instantiated from the class <code>Shape()</code>.</p>
+<p>Below is a class definition named <code>Shape</code>.  It stores the data attribute <code>shape</code> which is just a string.  The only member function implemented in this class is the special <code>__str__</code> function which returns the string <code>I am a shape</code> when called on an object instantiated from the class <code>Shape</code>.</p>
 
 </div>
 </div>
@@ -37,7 +37,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 <div class="cell border-box-sizing text_cell rendered tag_popout"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The functions <code>__init__()</code> and <code>__str__()</code> both have special meanings in Python.  <code>__init__()</code> is automatically called when an object is instantiated.  Any code placed in this function will be automatically run.  <code>__str__()</code> is a special function that is called when the <code>print()</code> function is called on an object.</p>
+<p>The functions <code>__init__</code> and <code>__str__</code> both have special meanings in Python.  <code>__init__</code> is automatically called when an object is instantiated.  Any code placed in this function will be automatically run.  <code>__str__</code> is a special function that is called when the <code>print</code> function is called on an object.</p>
 
 </div>
 </div>
@@ -115,9 +115,9 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now we will <em>derive</em> a class from <code>Shape()</code> called <code>Polygon()</code>.  A <code>Polygon()</code> <em>is a</em> <code>Shape()</code> and therefore all of the functions defined in <code>Shape()</code> will work on an instantiated object of <code>Polygon()</code> (unless they are explicitly overridden).</p>
-<p>We will also implement some new functions, not defined in <code>Shape()</code> that can compute the perimeter of a polygon and return the number of edges.</p>
-<p>There is also a new data attribute called <code>side_lengths</code> which is initialized to <code>None</code>.  We can't set its exact value yet because we don't have enough information about the polygon, e.g. How many sides it has, but we need to define it in order to define <code>compute_perimeter()</code> because it requires <code>side_lengths</code> as an argument.  Same goes for <code>get_number_of_sides</code>.</p>
+<p>Now we will <em>derive</em> a class from <code>Shape</code> called <code>Polygon</code>.  A <code>Polygon</code> <em>is a</em> <code>Shape</code> and therefore all of the functions defined in <code>Shape</code> will work on an instantiated object of <code>Polygon</code> (unless they are explicitly overridden).</p>
+<p>We will also implement some new functions, not defined in <code>Shape</code> that can compute the perimeter of a polygon and return the number of edges.</p>
+<p>There is also a new data attribute called <code>side_lengths</code> which is initialized to <code>None</code>.  We can't set its exact value yet because we don't have enough information about the polygon, e.g. How many sides it has, but we need to define it in order to define <code>compute_perimeter</code> because it requires <code>side_lengths</code> as an argument.  Same goes for <code>get_number_of_sides</code>.</p>
 
 </div>
 </div>
@@ -166,7 +166,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now we can instantiate a <code>Polygon()</code> object called <code>p</code> and call <code>print()</code> on it. It returns the function call from <code>__str__</code> that is <em>only</em> defined in <code>Shape()</code> because a <code>Polygon()</code> <em>is a</em> <code>Shape()</code>.</p>
+<p>Now we can instantiate a <code>Polygon</code> object called <code>p</code> and call <code>print</code> on it. It returns the function call from <code>__str__</code> that is <em>only</em> defined in <code>Shape</code> because a <code>Polygon</code> <em>is a</em> <code>Shape</code>.</p>
 
 </div>
 </div>
@@ -210,7 +210,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We can now derive another class from <code>Polygon()</code>, this time we are specialized enough that we know a <code>Rectange()</code> has 4 sides, so we can give a default value for the data attribute <code>side_length</code>.</p>
+<p>We can now derive another class from <code>Polygon</code>, this time we are specialized enough that we know a <code>Rectangle</code> has 4 sides, so we can give a default value for the data attribute <code>side_length</code>.</p>
 
 </div>
 </div>
@@ -242,7 +242,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>And now we can call <code>compute_perimeter()</code> on the object <code>rect</code> that was instantiated from <code>Rectangle()</code> even though we didn't define the function in the <code>Rectangle()</code> class.  We can do this because a <code>Rectangle()</code> <em>is a</em> <code>Polygon()</code>.</p>
+<p>And now we can call <code>compute_perimeter</code> on the object <code>rect</code> that was instantiated from <code>Rectangle</code> even though we didn't define the function in the <code>Rectangle</code> class.  We can do this because a <code>Rectangle</code> <em>is a</em> <code>Polygon</code>.</p>
 
 </div>
 </div>
@@ -288,7 +288,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Likewise, we can derive a <code>Triangle()</code> class from <code>Polygon()</code> and it <em>inherits</em> the member functions from both <code>Polygon()</code> and <code>Shape()</code>.  Again, a <code>Triangle()</code> <em>is a</em> <code>Polygon()</code> which <em>is a</em> <code>Shape()</code>.</p>
+<p>Likewise, we can derive a <code>Triangle</code> class from <code>Polygon</code> and it <em>inherits</em> the member functions from both <code>Polygon</code> and <code>Shape</code>.  Again, a <code>Triangle</code> <em>is a</em> <code>Polygon</code> which <em>is a</em> <code>Shape</code>.</p>
 
 </div>
 </div>
@@ -320,7 +320,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Examples of calling functions on the object <code>t</code> instantiated from <code>Triangle()</code>.</p>
+<p>Examples of calling functions on the object <code>t</code> instantiated from <code>Triangle</code>.</p>
 
 </div>
 </div>
@@ -432,7 +432,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Everything in Python is an object.  Including the lists we've already been using.  This might help you understand the syntax of the <code>.sort()</code> function a little better now.</p>
+<p>Everything in Python is an object.  Including the lists we've already been using.  This might help you understand the syntax of the <code>sort</code> function a little better now.</p>
 
 </div>
 </div>
