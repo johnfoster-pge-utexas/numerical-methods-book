@@ -750,10 +750,10 @@ y is =
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>A common approximation for computing derivatives of functions is a finite difference approximation</p>
 $$
-\frac{{\rm d}}{{\rm d}x}y(x) \approx \frac{y(x + \Delta x) - y(x)}{\Delta x}
+\frac{\rm d}{{\rm d}x}y(x) \approx \frac{y(x + \Delta x) - y(x)}{\Delta x}
 $$<p>or for discrete data</p>
 $$
-\frac{{\rm d}}{{\rm d}x}y(x_i) \approx \frac{y(x_i + \Delta x_{i+1/2}) - y(x_i)}{\Delta x_{i+1/2}}
+\frac{\rm d}{{\rm d}x}y(x_i) \approx \frac{y(x_i + \Delta x_{i+1/2}) - y(x_i)}{\Delta x_{i+1/2}}
 $$<p>where $\Delta x_{i + 1/2} = x_{i+1} - x_{i}$.  This operation can be accomplished efficiently and compactly using NumPy's slicing and vectorized algebraic operations.</p>
 
 </div>
