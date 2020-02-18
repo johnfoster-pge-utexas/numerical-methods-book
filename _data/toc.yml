@@ -40,4 +40,6 @@
     title: "Functions: Argument Types and Lambda Functions"
   - url: /PythonIntro_ObjectOrientedProgramming
     title: "Python Classes and Object-Oriented Programming"
+  - url: /PythonIntro_Numpy
+    title: "NumPy: Numerical Python"
 
