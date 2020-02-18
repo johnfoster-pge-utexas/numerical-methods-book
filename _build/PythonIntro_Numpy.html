@@ -13,7 +13,7 @@ prev_page:
 next_page:
   url: 
 suffix: .ipynb
-search: array x numpy arrays python e data operation np functions y entry g numbers using dimension element duck typing indexing along function list slicing mbox th delta booleen org broadcasting operations returns its etc type million ipython here also create rows index frac mathrm d where entries numerical structures well entire slow performance c memory different shape adding comprehension another import arange getting reshape notation parts used copy xi example values fancy www originally primarily dimensional might efficient operators contained makes computations fact dont declare variable types float runtime dynamic objects single contiguous storage common functionality cache level expected perform
+search: array x numpy arrays python e data operation np functions y entry g numbers using indexing dimension element duck typing along function list slicing mbox th delta booleen org broadcasting operations returns its etc type million ipython here also create parts rows index frac mathrm d where entries fancy numerical structures well entire slow performance c memory different shape adding comprehension another import arange getting reshape notation used copy xi example values www originally primarily dimensional might efficient operators contained makes computations fact dont declare variable types float runtime dynamic objects single contiguous storage common functionality cache level expected perform
 
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
@@ -129,18 +129,17 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>To demonstrate the efficacy of NumPy, we'll perform the same operation, i.e. adding 1 to an array containing a million numbers, using a Python list comprehension and then using a NumPy array.</p>
-<p>First, the Python list comprehension</p>
 
 </div>
 </div>
 </div>
 </div>
 
-<div class="jb_cell tag_popout">
+<div class="jb_cell">
 
-<div class="cell border-box-sizing text_cell rendered tag_popout"><div class="inner_cell">
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We use the <code>%timeit</code> magic function from <a href="https://ipython.org/">IPython</a> which runs the command that follows it a number of times and reports some statistics on how long it takes the function to execute.</p>
+<p>We use the <code>%timeit</code> magic function from <a href="https://ipython.org/">IPython</a> which runs the command that follows it a number of times and reports some statistics on how long it takes the function to execute.  First, the Python list comprehension</p>
 
 </div>
 </div>
@@ -282,7 +281,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>289 ms ± 42.2 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+<pre>254 ms ± 15.1 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
 </pre>
 </div>
 </div>
@@ -300,8 +299,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span>
-<span class="o">%</span><span class="k">timeit</span> numpy.sin(numpy.arange(1000000)) ** 2
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">timeit</span> np.sin(numpy.arange(1000000)) ** 2
 </pre></div>
 
     </div>
@@ -331,6 +329,30 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Creating-NumPy-arrays">Creating NumPy arrays<a class="anchor-link" href="#Creating-NumPy-arrays"> </a></h2><p>NumPy offers several built-in functions for creating arrays</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell tag_popout">
+
+<div class="cell border-box-sizing text_cell rendered tag_popout"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>It's idiomatic to import NumPy with the statement</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+<p>and use the abbreviated <code>np</code> namespace.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">11</span><span class="p">])</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mf">2.</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">1</span><span class="o">+</span><span class="mi">1</span><span class="n">j</span><span class="p">,</span><span class="mf">2.</span><span class="p">]])</span>
@@ -359,7 +381,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Array-functions">Array functions<a class="anchor-link" href="#Array-functions"> </a></h2><p>NumPy array functions for slicing, getting info, etc.</p>
+<h2 id="Array-functions">Array functions<a class="anchor-link" href="#Array-functions"> </a></h2><p>NumPy has many built-in functions for slicing, getting info, etc.</p>
 
 </div>
 </div>
@@ -408,10 +430,6 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>It's idiomatic to import NumPy with the statement</p>
-<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-</pre></div>
-<p>and use the abbreviated <code>np</code> namespace.</p>
 <p>Here we create a one-dimensional array with  the <code>np.arange()</code> function that containts the integer numbers 0-9.  Then we reshape it to be a 3 x 3 array.  Keep in mind that the memory is still continguous and the reshape operation merely offers a different 'view' of the data.  It also allows us to use multiple indexes and special notation to retrieve parts of the data, e.g.</p>
 
 </div>
@@ -841,7 +859,7 @@ $$<p>where $\Delta x_{i + 1/2} = x_{i+1} - x_{i}$.  This operation can be accomp
 
 
 <div class="output_png output_subarea ">
-<img src="images/PythonIntro_Numpy_39_0.png"
+<img src="images/PythonIntro_Numpy_41_0.png"
 >
 </div>
 
@@ -1047,7 +1065,7 @@ $$<p>where $\Delta x_{i + 1/2} = x_{i+1} - x_{i}$.  This operation can be accomp
 
 
 <div class="output_png output_subarea ">
-<img src="images/PythonIntro_Numpy_46_0.png"
+<img src="images/PythonIntro_Numpy_48_0.png"
 >
 </div>
 
@@ -1064,6 +1082,17 @@ $$<p>where $\Delta x_{i + 1/2} = x_{i+1} - x_{i}$.  This operation can be accomp
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Fancy-Indexing">Fancy Indexing<a class="anchor-link" href="#Fancy-Indexing"> </a></h2>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Fancy indexing is special syntax, specific to NumPy, that allows for extracting parts of arrays.  Starting with an array <code>x</code></p>
+
 </div>
 </div>
 </div>
