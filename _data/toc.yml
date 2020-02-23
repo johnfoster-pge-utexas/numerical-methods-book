@@ -42,4 +42,6 @@
     title: "Python Classes and Object-Oriented Programming"
   - url: /PythonIntro_Numpy
     title: "NumPy: Numerical Python"
+  - url: /PythonIntro_Pandas
+    title: "Pandas: Python Data Analysis Library"
 
