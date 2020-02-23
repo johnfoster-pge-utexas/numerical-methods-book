@@ -13,7 +13,7 @@ prev_page:
 next_page:
   url: 
 suffix: .ipynb
-search: pandas dataframe data org pydata reference docs html stable function api index labels columns member argument column create rows dataframes python numpy example label new porosity missing series keyword values features plot common reading file head where true its set csv functions e useful operation select row desired feature library style structures share import files default readfwf mbox indices selection loc iloc adding removing pass dictionary inplace df below remove drop axis further conditional also our well plotting explicitly much provides n dimensional best utilized contains single examples monotonically increasing integers created multiple through pd offers available parsing text readcsv
+search: pandas dataframe data org pydata reference docs html stable function api index labels columns member argument numpy column create rows dataframes python example label new series porosity values missing keyword features plot common reading file head where true its set csv functions e useful operation select row desired feature library style structures share import files default readfwf mbox indices selection loc iloc array adding removing pass dictionary inplace df below remove drop axis further conditional also our well plotting explicitly much provides n dimensional best utilized contains single examples monotonically increasing integers created multiple through pd offers available parsing text
 
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
@@ -818,6 +818,89 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Get-data-as-NumPy-array">Get data as NumPy array<a class="anchor-link" href="#Get-data-as-NumPy-array"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can get the underlying data in a Series/DataFrame as a NumPy array with the <code>values</code> attribute.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;porosity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([0.1184 , 0.1566 , 0.192  , 0.1621 , 0.1766 , 0.1239 , 0.179  ,
+       0.1914 , 0.1763 , 0.1674 , 0.1369 , 0.1095 , 0.1677 , 0.1817 ,
+       0.119  , 0.1774 , 0.1418 , 0.1296 , 0.1325 , 0.1729 , 0.08494,
+       0.188  , 0.1147 , 0.1795 , 0.1981 , 0.1258 , 0.215  , 0.1781 ,
+       0.1428 , 0.1495 , 0.1435 , 0.1026 , 0.1772 , 0.19   , 0.1597 ,
+       0.1453 , 0.1653 , 0.176  , 0.2232 , 0.1336 , 0.1819 , 0.1591 ,
+       0.1328 , 0.1517 , 0.1061 , 0.08187, 0.1682 , 0.1367 , 0.1628 ,
+       0.1305 , 0.1097 , 0.2062 , 0.168  , 0.1663 , 0.1231 , 0.1965 ,
+       0.1292 , 0.1347 , 0.1481 , 0.1523 , 0.1388 , 0.1574 , 0.1769 ,
+       0.1982 , 0.161  , 0.1584 , 0.1594 , 0.1146 , 0.1367 , 0.1742 ,
+       0.1585 , 0.1065 , 0.181  , 0.1372 , 0.1384 , 0.0991 , 0.137  ,
+       0.1957 , 0.1032 , 0.1973 , 0.1336 , 0.1792 , 0.152  , 0.08245,
+       0.1505 , 0.0938 , 0.1563 , 0.1277 , 0.141  , 0.1712 , 0.1428 ,
+       0.07338, 0.1595 , 0.1079 , 0.1191 , 0.132  , 0.1394 , 0.2154 ,
+       0.1428 , 0.1416 , 0.1658 , 0.187  , 0.1796 , 0.177  , 0.1714 ,
+       0.1438 , 0.186  , 0.0964 , 0.1455 , 0.1322 , 0.06726, 0.1162 ,
+       0.1021 , 0.1396 , 0.1139 , 0.1576 , 0.1417 , 0.2159 , 0.1352 ,
+       0.0964 , 0.1853 , 0.1898 , 0.1785 , 0.1648 , 0.1367 , 0.1644 ,
+       0.1376 , 0.1974 , 0.1498 , 0.1524 , 0.1579 , 0.147  , 0.1105 ,
+       0.1825 , 0.1227 , 0.1414 , 0.1347 , 0.165  , 0.2019 , 0.1487 ,
+       0.1784 , 0.0784 , 0.1061 , 0.1491 , 0.0915 , 0.1677 , 0.1811 ,
+       0.1377 , 0.2158 , 0.1356 , 0.1062 , 0.132  , 0.05   , 0.08678,
+       0.1474 , 0.164  , 0.15   , 0.1606 , 0.1478 , 0.1645 , 0.1415 ,
+       0.1821 , 0.1319 , 0.08012, 0.2158 , 0.177  , 0.08209, 0.1254 ,
+       0.1611 , 0.1916 , 0.1742 , 0.2063 , 0.122  , 0.1541 , 0.1435 ,
+       0.1505 , 0.192  , 0.1104 , 0.1717 , 0.1394 , 0.1503 , 0.18   ,
+       0.164  , 0.1808 , 0.1577 , 0.1211 , 0.1523 , 0.1467 , 0.1591 ,
+       0.1367 , 0.192  , 0.1359 , 0.1513 , 0.1473 , 0.1377 , 0.1634 ,
+       0.1548 , 0.1321 , 0.06092, 0.1505 ])</pre>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="DataFrame-Transformations">DataFrame Transformations<a class="anchor-link" href="#DataFrame-Transformations"> </a></h2>
 </div>
 </div>
@@ -858,7 +941,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;facies_threshold_0.3&#39;</span><span class="p">:</span> <span class="s1">&#39;facies&#39;</span><span class="p">,</span> 
                    <span class="s1">&#39;permeability&#39;</span><span class="p">:</span> <span class="s1">&#39;perm&#39;</span><span class="p">,</span> 
-                   <span class="s1">&#39;acoustic_impedance&#39;</span><span class="p">:</span><span class="s1">&#39;ai&#39;</span><span class="p">},</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+                   <span class="s1">&#39;acoustic_impedance&#39;</span><span class="p">:</span> <span class="s1">&#39;ai&#39;</span><span class="p">},</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -3017,28 +3100,28 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
   <tbody>
     <tr>
       <th>0</th>
-      <td>0.001733</td>
-      <td>5.226433e-08</td>
+      <td>0.002964</td>
+      <td>2.620269e-07</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>0.002562</td>
-      <td>1.691216e-07</td>
+      <td>0.010314</td>
+      <td>1.120098e-05</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>0.005937</td>
-      <td>2.117773e-06</td>
+      <td>0.011038</td>
+      <td>1.375044e-05</td>
     </tr>
     <tr>
       <th>3</th>
-      <td>0.007952</td>
-      <td>5.109359e-06</td>
+      <td>0.015046</td>
+      <td>3.511114e-05</td>
     </tr>
     <tr>
       <th>4</th>
-      <td>0.008526</td>
-      <td>6.304951e-06</td>
+      <td>0.016245</td>
+      <td>4.430182e-05</td>
     </tr>
   </tbody>
 </table>
@@ -3453,7 +3536,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 
 <div class="output_png output_subarea ">
-<img src="images/PythonIntro_Pandas_85_0.png"
+<img src="images/PythonIntro_Pandas_88_0.png"
 >
 </div>
 
@@ -3499,7 +3582,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 
 <div class="output_png output_subarea ">
-<img src="images/PythonIntro_Pandas_87_0.png"
+<img src="images/PythonIntro_Pandas_90_0.png"
 >
 </div>
 
@@ -3556,7 +3639,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 
 <div class="output_png output_subarea ">
-<img src="images/PythonIntro_Pandas_90_0.png"
+<img src="images/PythonIntro_Pandas_93_0.png"
 >
 </div>
 
