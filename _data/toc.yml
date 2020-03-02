@@ -44,4 +44,6 @@
     title: "NumPy: Numerical Python"
   - url: /PythonIntro_Pandas
     title: "Pandas: Python Data Analysis Library"
+  - url: /PythonIntro_Matplotlib
+    title: "Matplotlib: A scientific visualization toolbox"
 
