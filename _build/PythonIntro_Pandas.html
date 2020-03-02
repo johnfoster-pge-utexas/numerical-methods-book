@@ -1,0 +1,4056 @@
+---
+redirect_from:
+  - "/pythonintro-pandas"
+interact_link: content/PythonIntro_Pandas.ipynb
+kernel_name: python3
+kernel_path: content
+has_widgets: false
+title: |-
+  Pandas: Python Data Analysis Library
+pagenum: 8
+prev_page:
+  url: /PythonIntro_Numpy.html
+next_page:
+  url: 
+suffix: .ipynb
+search: pandas dataframe data org function pydata reference docs html stable api index labels columns member argument column numpy create python series rows porosity dataframes example label values new keyword missing features plot common reading functions file head where true its set csv permeability e useful operation select row desired feature library style structures share import files default readfwf mbox indices selection loc iloc array adding removing pass dictionary inplace df below remove drop any axis further conditional also apply returns our well plotting explicitly much provides n dimensional best utilized contains single examples monotonically increasing integers created multiple through pd
+
+comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
+---
+
+    <main class="jupyter-page">
+    <div id="page-info"><div id="page-title">Pandas: Python Data Analysis Library</div>
+</div>
+    <div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="https://pandas.pydata.org/">Pandas</a> is a library for working with and manipulating tabular style data.  In many ways you can think of it as a replacement for a spreadsheet only it's much more powerful.  Whereas <a href="https://numpy.org/">NumPy</a> provides $N$-dimensional data structures, Pandas is best utilized on two-dimensional, <em>labeled</em> data.  The fundamental data structures in Pandas are the <code>Series</code> and the <code>Dataframe</code>.</p>
+<p>A Pandas Series contains a single column of data and an <em>index</em>.  The index is a way to reference the rows of data in the Series.  Common examples of an index would be simply a monotonically increasing set of integers, or time/date stamps for time series data.</p>
+<p>A Pandas DataFrame can be thought of being created by combining more than one Series that share a common index.  So a table with multiple column labels and common index would be an example of a DataFrame.  The description of these data structures will be made clear through examples in the sequel.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell tag_popout">
+
+<div class="cell border-box-sizing text_cell rendered tag_popout"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Similarly to the way we import NumPy, it's idiomatic Python to import Pandas as</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Loading-Data">Loading Data<a class="anchor-link" href="#Loading-Data"> </a></h2>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Pandas offers some of the best utilities available for reading/parsing data from text files. The function <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_csv.html"><code>read_csv</code></a> has numerous options for managing header/footer lines in files, parsing dates, selecting specific columns, etc in comma separated value (CSV) files.  The default index for the Dataframe is set to a set of monotonically increasing integers unless otherwise specified with the keyword argument <code>index_col</code>.</p>
+<p>There are similar functions for reading Microsoft Excel spreadsheets (<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_excel.html"><code>read_excel</code></a>) and fixed width formatted text  (<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.read_fwf.html#pandas.read_fwf"><code>read_fwf</code></a>).</p>
+<p>The file <code>'200wells.csv'</code> contains a dataset with X and Y coordinates, facies 1 and 2 (1 is sandstone and 2 interbedded sand and mudstone), porosity , permeability (mD) and acoustic impedance ($\mbox{kg} / (\mbox{m}^2 \cdot \mbox{s} \cdot 10^6)$).</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell tag_popout">
+
+<div class="cell border-box-sizing text_cell rendered tag_popout"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.head.html"><code>head()</code></a> member function for DataFrames displays the first 5 rows of the DataFrame.  Optionally, you can specify an argument (e.g. <code>head(n=10)</code> to display more/less rows</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;datasets/200wells.csv&#39;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>X</th>
+      <th>Y</th>
+      <th>facies_threshold_0.3</th>
+      <th>porosity</th>
+      <th>permeability</th>
+      <th>acoustic_impedance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>565</td>
+      <td>1485</td>
+      <td>1</td>
+      <td>0.1184</td>
+      <td>6.170</td>
+      <td>2.009</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2585</td>
+      <td>1185</td>
+      <td>1</td>
+      <td>0.1566</td>
+      <td>6.275</td>
+      <td>2.864</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2065</td>
+      <td>2865</td>
+      <td>2</td>
+      <td>0.1920</td>
+      <td>92.297</td>
+      <td>3.524</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3575</td>
+      <td>2655</td>
+      <td>1</td>
+      <td>0.1621</td>
+      <td>9.048</td>
+      <td>2.157</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1835</td>
+      <td>35</td>
+      <td>1</td>
+      <td>0.1766</td>
+      <td>7.123</td>
+      <td>3.979</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Summary-Statistics">Summary Statistics<a class="anchor-link" href="#Summary-Statistics"> </a></h2>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The DataFrame member function <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.describe.html"><code>describe</code></a> provides useful summary statistics such as the total number of samples, mean, standard deviations, min/max, and quartiles for each column of the DataFrame.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>X</th>
+      <th>Y</th>
+      <th>facies_threshold_0.3</th>
+      <th>porosity</th>
+      <th>permeability</th>
+      <th>acoustic_impedance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>200.000000</td>
+      <td>200.00000</td>
+      <td>200.000000</td>
+      <td>200.000000</td>
+      <td>200.000000</td>
+      <td>200.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>2053.400000</td>
+      <td>1876.15000</td>
+      <td>1.330000</td>
+      <td>0.149300</td>
+      <td>25.287462</td>
+      <td>3.000435</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>1113.524641</td>
+      <td>1137.58016</td>
+      <td>0.471393</td>
+      <td>0.032948</td>
+      <td>64.470135</td>
+      <td>0.592201</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>25.000000</td>
+      <td>35.00000</td>
+      <td>1.000000</td>
+      <td>0.050000</td>
+      <td>0.015820</td>
+      <td>2.009000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>1112.500000</td>
+      <td>920.00000</td>
+      <td>1.000000</td>
+      <td>0.132175</td>
+      <td>1.366750</td>
+      <td>2.483250</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>2160.000000</td>
+      <td>1855.00000</td>
+      <td>1.000000</td>
+      <td>0.150150</td>
+      <td>4.825500</td>
+      <td>2.964500</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>2915.000000</td>
+      <td>2782.50000</td>
+      <td>2.000000</td>
+      <td>0.174200</td>
+      <td>14.597000</td>
+      <td>3.527000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>3955.000000</td>
+      <td>3995.00000</td>
+      <td>2.000000</td>
+      <td>0.223200</td>
+      <td>463.641000</td>
+      <td>3.984000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Indexing-and-Selecting-Data">Indexing and Selecting Data<a class="anchor-link" href="#Indexing-and-Selecting-Data"> </a></h2>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can access parts of the DataFrame by their labels or their numerical indices. The most basic and useful operation is to select an entire column of data by it's label.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;porosity&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>porosity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.1184</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.1566</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.1920</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.1621</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.1766</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Multiple columns can be selected by passing in a list of labels.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;porosity&#39;</span><span class="p">,</span> <span class="s1">&#39;permeability&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>porosity</th>
+      <th>permeability</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.1184</td>
+      <td>6.170</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.1566</td>
+      <td>6.275</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.1920</td>
+      <td>92.297</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.1621</td>
+      <td>9.048</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.1766</td>
+      <td>7.123</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Label-based-selection">Label based selection<a class="anchor-link" href="#Label-based-selection"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The member function <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.loc.html"><code>loc</code></a> can be used to select both rows and columns of data by their labels.  The index is interpreted as the row label.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;porosity&#39;</span><span class="p">,</span> <span class="s1">&#39;permeability&#39;</span><span class="p">]]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>porosity</th>
+      <th>permeability</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>0.1566</td>
+      <td>6.275</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.1920</td>
+      <td>92.297</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>loc</code> support NumPy-style <em>slicing</em> notation to select sequences of labels.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;porosity&#39;</span><span class="p">:</span><span class="s1">&#39;acoustic_impedance&#39;</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>porosity</th>
+      <th>permeability</th>
+      <th>acoustic_impedance</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>0.1566</td>
+      <td>6.275</td>
+      <td>2.864</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.1920</td>
+      <td>92.297</td>
+      <td>3.524</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Index-based-selection">Index based selection<a class="anchor-link" href="#Index-based-selection"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The member function <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.iloc.html"><code>iloc</code></a> can be used to select both rows and columns of data by their integer index.  <code>iloc</code> supports Python-list style slicing.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>porosity</th>
+      <th>permeability</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>0.1566</td>
+      <td>6.275</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.1920</td>
+      <td>92.297</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Get-data-as-NumPy-array">Get data as NumPy array<a class="anchor-link" href="#Get-data-as-NumPy-array"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can get the underlying data in a Series/DataFrame as a NumPy array with the <code>values</code> attribute.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;porosity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([0.1184 , 0.1566 , 0.192  , 0.1621 , 0.1766 , 0.1239 , 0.179  ,
+       0.1914 , 0.1763 , 0.1674 , 0.1369 , 0.1095 , 0.1677 , 0.1817 ,
+       0.119  , 0.1774 , 0.1418 , 0.1296 , 0.1325 , 0.1729 , 0.08494,
+       0.188  , 0.1147 , 0.1795 , 0.1981 , 0.1258 , 0.215  , 0.1781 ,
+       0.1428 , 0.1495 , 0.1435 , 0.1026 , 0.1772 , 0.19   , 0.1597 ,
+       0.1453 , 0.1653 , 0.176  , 0.2232 , 0.1336 , 0.1819 , 0.1591 ,
+       0.1328 , 0.1517 , 0.1061 , 0.08187, 0.1682 , 0.1367 , 0.1628 ,
+       0.1305 , 0.1097 , 0.2062 , 0.168  , 0.1663 , 0.1231 , 0.1965 ,
+       0.1292 , 0.1347 , 0.1481 , 0.1523 , 0.1388 , 0.1574 , 0.1769 ,
+       0.1982 , 0.161  , 0.1584 , 0.1594 , 0.1146 , 0.1367 , 0.1742 ,
+       0.1585 , 0.1065 , 0.181  , 0.1372 , 0.1384 , 0.0991 , 0.137  ,
+       0.1957 , 0.1032 , 0.1973 , 0.1336 , 0.1792 , 0.152  , 0.08245,
+       0.1505 , 0.0938 , 0.1563 , 0.1277 , 0.141  , 0.1712 , 0.1428 ,
+       0.07338, 0.1595 , 0.1079 , 0.1191 , 0.132  , 0.1394 , 0.2154 ,
+       0.1428 , 0.1416 , 0.1658 , 0.187  , 0.1796 , 0.177  , 0.1714 ,
+       0.1438 , 0.186  , 0.0964 , 0.1455 , 0.1322 , 0.06726, 0.1162 ,
+       0.1021 , 0.1396 , 0.1139 , 0.1576 , 0.1417 , 0.2159 , 0.1352 ,
+       0.0964 , 0.1853 , 0.1898 , 0.1785 , 0.1648 , 0.1367 , 0.1644 ,
+       0.1376 , 0.1974 , 0.1498 , 0.1524 , 0.1579 , 0.147  , 0.1105 ,
+       0.1825 , 0.1227 , 0.1414 , 0.1347 , 0.165  , 0.2019 , 0.1487 ,
+       0.1784 , 0.0784 , 0.1061 , 0.1491 , 0.0915 , 0.1677 , 0.1811 ,
+       0.1377 , 0.2158 , 0.1356 , 0.1062 , 0.132  , 0.05   , 0.08678,
+       0.1474 , 0.164  , 0.15   , 0.1606 , 0.1478 , 0.1645 , 0.1415 ,
+       0.1821 , 0.1319 , 0.08012, 0.2158 , 0.177  , 0.08209, 0.1254 ,
+       0.1611 , 0.1916 , 0.1742 , 0.2063 , 0.122  , 0.1541 , 0.1435 ,
+       0.1505 , 0.192  , 0.1104 , 0.1717 , 0.1394 , 0.1503 , 0.18   ,
+       0.164  , 0.1808 , 0.1577 , 0.1211 , 0.1523 , 0.1467 , 0.1591 ,
+       0.1367 , 0.192  , 0.1359 , 0.1513 , 0.1473 , 0.1377 , 0.1634 ,
+       0.1548 , 0.1321 , 0.06092, 0.1505 ])</pre>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="DataFrame-Transformations">DataFrame Transformations<a class="anchor-link" href="#DataFrame-Transformations"> </a></h2>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>There are several member functions that allow for transformations of the DataFrame labels, adding/removing columns, etc.</p>
+<p>To rename DataFrame column labels, we pass a Python dictionary where the keywords are the current labels and the values are the new labels.  For example,</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell tag_popout">
+
+<div class="cell border-box-sizing text_cell rendered tag_popout"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The use of the keyword argument <code>inplace = True</code> has an equivalent outcome as writing</p>
+<div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="o">...</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;facies_threshold_0.3&#39;</span><span class="p">:</span> <span class="s1">&#39;facies&#39;</span><span class="p">,</span> 
+                   <span class="s1">&#39;permeability&#39;</span><span class="p">:</span> <span class="s1">&#39;perm&#39;</span><span class="p">,</span> 
+                   <span class="s1">&#39;acoustic_impedance&#39;</span><span class="p">:</span> <span class="s1">&#39;ai&#39;</span><span class="p">},</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>X</th>
+      <th>Y</th>
+      <th>facies</th>
+      <th>porosity</th>
+      <th>perm</th>
+      <th>ai</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>565</td>
+      <td>1485</td>
+      <td>1</td>
+      <td>0.1184</td>
+      <td>6.170</td>
+      <td>2.009</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2585</td>
+      <td>1185</td>
+      <td>1</td>
+      <td>0.1566</td>
+      <td>6.275</td>
+      <td>2.864</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2065</td>
+      <td>2865</td>
+      <td>2</td>
+      <td>0.1920</td>
+      <td>92.297</td>
+      <td>3.524</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3575</td>
+      <td>2655</td>
+      <td>1</td>
+      <td>0.1621</td>
+      <td>9.048</td>
+      <td>2.157</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1835</td>
+      <td>35</td>
+      <td>1</td>
+      <td>0.1766</td>
+      <td>7.123</td>
+      <td>3.979</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Adding-a-New-Column">Adding a New Column<a class="anchor-link" href="#Adding-a-New-Column"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Pandas DataFrames share a lot of the same syntax with Python dictionaries including accessing columns by label (i.e. keyword) and adding entries.  The example below shows how to add a new column with the label <code>'zero'</code>.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;zero&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span> 
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>X</th>
+      <th>Y</th>
+      <th>facies</th>
+      <th>porosity</th>
+      <th>perm</th>
+      <th>ai</th>
+      <th>zero</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>565</td>
+      <td>1485</td>
+      <td>1</td>
+      <td>0.1184</td>
+      <td>6.170</td>
+      <td>2.009</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2585</td>
+      <td>1185</td>
+      <td>1</td>
+      <td>0.1566</td>
+      <td>6.275</td>
+      <td>2.864</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2065</td>
+      <td>2865</td>
+      <td>2</td>
+      <td>0.1920</td>
+      <td>92.297</td>
+      <td>3.524</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3575</td>
+      <td>2655</td>
+      <td>1</td>
+      <td>0.1621</td>
+      <td>9.048</td>
+      <td>2.157</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1835</td>
+      <td>35</td>
+      <td>1</td>
+      <td>0.1766</td>
+      <td>7.123</td>
+      <td>3.979</td>
+      <td>0.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Removing-Columns">Removing Columns<a class="anchor-link" href="#Removing-Columns"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can remove unwanted columns with the <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.drop.html"><code>drop</code></a> member function. The argument <code>inplace = True</code> modifies the existing DataFrame in place in memory, i.e. <code>'zero'</code> will no longer be accessible in any way in the DataFrame.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell tag_popout">
+
+<div class="cell border-box-sizing text_cell rendered tag_popout"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The argument <code>axis = 1</code> refers to columns, the default is <code>axis = 0</code> in which case the positional argument would be expected to be an index label.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;zero&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>X</th>
+      <th>Y</th>
+      <th>facies</th>
+      <th>porosity</th>
+      <th>perm</th>
+      <th>ai</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>565</td>
+      <td>1485</td>
+      <td>1</td>
+      <td>0.1184</td>
+      <td>6.170</td>
+      <td>2.009</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2585</td>
+      <td>1185</td>
+      <td>1</td>
+      <td>0.1566</td>
+      <td>6.275</td>
+      <td>2.864</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2065</td>
+      <td>2865</td>
+      <td>2</td>
+      <td>0.1920</td>
+      <td>92.297</td>
+      <td>3.524</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3575</td>
+      <td>2655</td>
+      <td>1</td>
+      <td>0.1621</td>
+      <td>9.048</td>
+      <td>2.157</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1835</td>
+      <td>35</td>
+      <td>1</td>
+      <td>0.1766</td>
+      <td>7.123</td>
+      <td>3.979</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Removing-Rows">Removing Rows<a class="anchor-link" href="#Removing-Rows"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can remove the row indexed by <code>1</code> as follows.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell tag_popout">
+
+<div class="cell border-box-sizing text_cell rendered tag_popout"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Notice we can stack member function commands, i.e. the <code>drop</code> function is immediately followed by <code>head</code> to display the DataFrame with row index <code>1</code> removed.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>X</th>
+      <th>Y</th>
+      <th>facies</th>
+      <th>porosity</th>
+      <th>perm</th>
+      <th>ai</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>565</td>
+      <td>1485</td>
+      <td>1</td>
+      <td>0.1184</td>
+      <td>6.170</td>
+      <td>2.009</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2065</td>
+      <td>2865</td>
+      <td>2</td>
+      <td>0.1920</td>
+      <td>92.297</td>
+      <td>3.524</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3575</td>
+      <td>2655</td>
+      <td>1</td>
+      <td>0.1621</td>
+      <td>9.048</td>
+      <td>2.157</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1835</td>
+      <td>35</td>
+      <td>1</td>
+      <td>0.1766</td>
+      <td>7.123</td>
+      <td>3.979</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>3375</td>
+      <td>2525</td>
+      <td>1</td>
+      <td>0.1239</td>
+      <td>1.468</td>
+      <td>2.337</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Because the argument <code>inplace = True</code> was not given, the orginal DataFrame is unchanged.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>X</th>
+      <th>Y</th>
+      <th>facies</th>
+      <th>porosity</th>
+      <th>perm</th>
+      <th>ai</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>565</td>
+      <td>1485</td>
+      <td>1</td>
+      <td>0.1184</td>
+      <td>6.170</td>
+      <td>2.009</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2585</td>
+      <td>1185</td>
+      <td>1</td>
+      <td>0.1566</td>
+      <td>6.275</td>
+      <td>2.864</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2065</td>
+      <td>2865</td>
+      <td>2</td>
+      <td>0.1920</td>
+      <td>92.297</td>
+      <td>3.524</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3575</td>
+      <td>2655</td>
+      <td>1</td>
+      <td>0.1621</td>
+      <td>9.048</td>
+      <td>2.157</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1835</td>
+      <td>35</td>
+      <td>1</td>
+      <td>0.1766</td>
+      <td>7.123</td>
+      <td>3.979</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Sorting">Sorting<a class="anchor-link" href="#Sorting"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can sort the DataFrame in either ascending or desending order by any column label.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;porosity&#39;</span><span class="p">,</span> <span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>X</th>
+      <th>Y</th>
+      <th>facies</th>
+      <th>porosity</th>
+      <th>perm</th>
+      <th>ai</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>38</th>
+      <td>3505</td>
+      <td>1525</td>
+      <td>2</td>
+      <td>0.2232</td>
+      <td>174.654</td>
+      <td>3.344</td>
+    </tr>
+    <tr>
+      <th>117</th>
+      <td>2665</td>
+      <td>3205</td>
+      <td>2</td>
+      <td>0.2159</td>
+      <td>273.980</td>
+      <td>2.551</td>
+    </tr>
+    <tr>
+      <th>164</th>
+      <td>2455</td>
+      <td>2885</td>
+      <td>2</td>
+      <td>0.2158</td>
+      <td>9.592</td>
+      <td>2.773</td>
+    </tr>
+    <tr>
+      <th>148</th>
+      <td>1975</td>
+      <td>2745</td>
+      <td>2</td>
+      <td>0.2158</td>
+      <td>361.704</td>
+      <td>3.839</td>
+    </tr>
+    <tr>
+      <th>97</th>
+      <td>1855</td>
+      <td>3025</td>
+      <td>2</td>
+      <td>0.2154</td>
+      <td>463.641</td>
+      <td>3.091</td>
+    </tr>
+    <tr>
+      <th>26</th>
+      <td>1785</td>
+      <td>3145</td>
+      <td>2</td>
+      <td>0.2150</td>
+      <td>201.363</td>
+      <td>2.877</td>
+    </tr>
+    <tr>
+      <th>171</th>
+      <td>3735</td>
+      <td>2585</td>
+      <td>1</td>
+      <td>0.2063</td>
+      <td>30.258</td>
+      <td>2.100</td>
+    </tr>
+    <tr>
+      <th>51</th>
+      <td>1655</td>
+      <td>2985</td>
+      <td>2</td>
+      <td>0.2062</td>
+      <td>17.585</td>
+      <td>3.444</td>
+    </tr>
+    <tr>
+      <th>138</th>
+      <td>1855</td>
+      <td>3095</td>
+      <td>2</td>
+      <td>0.2019</td>
+      <td>257.990</td>
+      <td>2.886</td>
+    </tr>
+    <tr>
+      <th>63</th>
+      <td>845</td>
+      <td>3915</td>
+      <td>1</td>
+      <td>0.1982</td>
+      <td>410.570</td>
+      <td>2.781</td>
+    </tr>
+    <tr>
+      <th>24</th>
+      <td>2625</td>
+      <td>3185</td>
+      <td>1</td>
+      <td>0.1981</td>
+      <td>124.222</td>
+      <td>2.451</td>
+    </tr>
+    <tr>
+      <th>127</th>
+      <td>1615</td>
+      <td>2285</td>
+      <td>2</td>
+      <td>0.1974</td>
+      <td>159.567</td>
+      <td>3.167</td>
+    </tr>
+    <tr>
+      <th>79</th>
+      <td>1265</td>
+      <td>3105</td>
+      <td>2</td>
+      <td>0.1973</td>
+      <td>114.044</td>
+      <td>2.750</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Reseting-Indices">Reseting Indices<a class="anchor-link" href="#Reseting-Indices"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In the previous example, the resulting indices are now out of order after the sorting operation.  This can be fixed, if desired, with the <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.reset_index.html"><code>reset_index</code></a> member function.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell tag_popout">
+
+<div class="cell border-box-sizing text_cell rendered tag_popout"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The reindexing operation could have been accomplished during the sort operation by passing the argument <code>ingnore_index = True</code>.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">drop</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="mi">13</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>X</th>
+      <th>Y</th>
+      <th>facies</th>
+      <th>porosity</th>
+      <th>perm</th>
+      <th>ai</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3505</td>
+      <td>1525</td>
+      <td>2</td>
+      <td>0.2232</td>
+      <td>174.654</td>
+      <td>3.344</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2665</td>
+      <td>3205</td>
+      <td>2</td>
+      <td>0.2159</td>
+      <td>273.980</td>
+      <td>2.551</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2455</td>
+      <td>2885</td>
+      <td>2</td>
+      <td>0.2158</td>
+      <td>9.592</td>
+      <td>2.773</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1975</td>
+      <td>2745</td>
+      <td>2</td>
+      <td>0.2158</td>
+      <td>361.704</td>
+      <td>3.839</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1855</td>
+      <td>3025</td>
+      <td>2</td>
+      <td>0.2154</td>
+      <td>463.641</td>
+      <td>3.091</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>1785</td>
+      <td>3145</td>
+      <td>2</td>
+      <td>0.2150</td>
+      <td>201.363</td>
+      <td>2.877</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>3735</td>
+      <td>2585</td>
+      <td>1</td>
+      <td>0.2063</td>
+      <td>30.258</td>
+      <td>2.100</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>1655</td>
+      <td>2985</td>
+      <td>2</td>
+      <td>0.2062</td>
+      <td>17.585</td>
+      <td>3.444</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>1855</td>
+      <td>3095</td>
+      <td>2</td>
+      <td>0.2019</td>
+      <td>257.990</td>
+      <td>2.886</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>845</td>
+      <td>3915</td>
+      <td>1</td>
+      <td>0.1982</td>
+      <td>410.570</td>
+      <td>2.781</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>2625</td>
+      <td>3185</td>
+      <td>1</td>
+      <td>0.1981</td>
+      <td>124.222</td>
+      <td>2.451</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>1615</td>
+      <td>2285</td>
+      <td>2</td>
+      <td>0.1974</td>
+      <td>159.567</td>
+      <td>3.167</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>1265</td>
+      <td>3105</td>
+      <td>2</td>
+      <td>0.1973</td>
+      <td>114.044</td>
+      <td>2.750</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Feature-Engineering">Feature Engineering<a class="anchor-link" href="#Feature-Engineering"> </a></h2>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In the field of data science, DataFrame column labels are often referred to as <em>features</em>.  <em>Feature engineering</em> is the process of creating new features and/or transforming features for further analysis.  In the example below, we create two new features through manipulations of existing features.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell tag_popout">
+
+<div class="cell border-box-sizing text_cell rendered tag_popout"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Mathematical operations can be performed directly on the DataFrame columns that are accessed by their labels.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;% porosity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;porosity&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">100</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;perm-por ratio&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;perm&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;porosity&#39;</span><span class="p">]</span>          
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>X</th>
+      <th>Y</th>
+      <th>facies</th>
+      <th>porosity</th>
+      <th>perm</th>
+      <th>ai</th>
+      <th>% porosity</th>
+      <th>perm-por ratio</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3505</td>
+      <td>1525</td>
+      <td>2</td>
+      <td>0.2232</td>
+      <td>174.654</td>
+      <td>3.344</td>
+      <td>22.32</td>
+      <td>782.500000</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2665</td>
+      <td>3205</td>
+      <td>2</td>
+      <td>0.2159</td>
+      <td>273.980</td>
+      <td>2.551</td>
+      <td>21.59</td>
+      <td>1269.013432</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2455</td>
+      <td>2885</td>
+      <td>2</td>
+      <td>0.2158</td>
+      <td>9.592</td>
+      <td>2.773</td>
+      <td>21.58</td>
+      <td>44.448563</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1975</td>
+      <td>2745</td>
+      <td>2</td>
+      <td>0.2158</td>
+      <td>361.704</td>
+      <td>3.839</td>
+      <td>21.58</td>
+      <td>1676.107507</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1855</td>
+      <td>3025</td>
+      <td>2</td>
+      <td>0.2154</td>
+      <td>463.641</td>
+      <td>3.091</td>
+      <td>21.54</td>
+      <td>2152.465181</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Assigning-Conditional-Categories">Assigning Conditional Categories<a class="anchor-link" href="#Assigning-Conditional-Categories"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can also use conditional statements when assigning values to a new feature.  For example, we could have a categorical porosity measure for high and low porosity, called <code>'porosity type'</code>.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell tag_popout">
+
+<div class="cell border-box-sizing text_cell rendered tag_popout"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Most NumPy functions such as <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.where.html"><code>where</code></a> will work directly on Pandas DataFrame columns.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;porosity type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;porosity&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.12</span><span class="p">,</span> <span class="s1">&#39;high&#39;</span><span class="p">,</span> <span class="s1">&#39;low&#39;</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;porosity type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;high&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>X</th>
+      <th>Y</th>
+      <th>facies</th>
+      <th>porosity</th>
+      <th>perm</th>
+      <th>ai</th>
+      <th>% porosity</th>
+      <th>perm-por ratio</th>
+      <th>porosity type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3505</td>
+      <td>1525</td>
+      <td>2</td>
+      <td>0.2232</td>
+      <td>174.654</td>
+      <td>3.344</td>
+      <td>22.32</td>
+      <td>782.500000</td>
+      <td>high</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2665</td>
+      <td>3205</td>
+      <td>2</td>
+      <td>0.2159</td>
+      <td>273.980</td>
+      <td>2.551</td>
+      <td>21.59</td>
+      <td>1269.013432</td>
+      <td>high</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2455</td>
+      <td>2885</td>
+      <td>2</td>
+      <td>0.2158</td>
+      <td>9.592</td>
+      <td>2.773</td>
+      <td>21.58</td>
+      <td>44.448563</td>
+      <td>high</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;porosity type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;low&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>X</th>
+      <th>Y</th>
+      <th>facies</th>
+      <th>porosity</th>
+      <th>perm</th>
+      <th>ai</th>
+      <th>% porosity</th>
+      <th>perm-por ratio</th>
+      <th>porosity type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>165</th>
+      <td>1365</td>
+      <td>2715</td>
+      <td>1</td>
+      <td>0.1191</td>
+      <td>0.2666</td>
+      <td>2.788</td>
+      <td>11.91</td>
+      <td>2.238455</td>
+      <td>low</td>
+    </tr>
+    <tr>
+      <th>166</th>
+      <td>2765</td>
+      <td>925</td>
+      <td>1</td>
+      <td>0.1190</td>
+      <td>0.7731</td>
+      <td>2.323</td>
+      <td>11.90</td>
+      <td>6.496639</td>
+      <td>low</td>
+    </tr>
+    <tr>
+      <th>167</th>
+      <td>565</td>
+      <td>1485</td>
+      <td>1</td>
+      <td>0.1184</td>
+      <td>6.1700</td>
+      <td>2.009</td>
+      <td>11.84</td>
+      <td>52.111486</td>
+      <td>low</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Feature-Truncation">Feature Truncation<a class="anchor-link" href="#Feature-Truncation"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here's an example where we use a conditional statement to assign a very low permeability value (0.0001 mD) for all porosity values below a threshold. Of course, this is for demonstration, in practice a much lower porosity threshold would likely be applied.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;perm cutoff&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;porosity&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.12</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;perm&#39;</span><span class="p">],</span> <span class="mf">0.0001</span><span class="p">)</span> 
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>X</th>
+      <th>Y</th>
+      <th>facies</th>
+      <th>porosity</th>
+      <th>perm</th>
+      <th>ai</th>
+      <th>% porosity</th>
+      <th>perm-por ratio</th>
+      <th>porosity type</th>
+      <th>perm cutoff</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3505</td>
+      <td>1525</td>
+      <td>2</td>
+      <td>0.2232</td>
+      <td>174.654</td>
+      <td>3.344</td>
+      <td>22.32</td>
+      <td>782.500000</td>
+      <td>high</td>
+      <td>174.654</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2665</td>
+      <td>3205</td>
+      <td>2</td>
+      <td>0.2159</td>
+      <td>273.980</td>
+      <td>2.551</td>
+      <td>21.59</td>
+      <td>1269.013432</td>
+      <td>high</td>
+      <td>273.980</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2455</td>
+      <td>2885</td>
+      <td>2</td>
+      <td>0.2158</td>
+      <td>9.592</td>
+      <td>2.773</td>
+      <td>21.58</td>
+      <td>44.448563</td>
+      <td>high</td>
+      <td>9.592</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;perm cutoff&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mf">0.0001</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>X</th>
+      <th>Y</th>
+      <th>facies</th>
+      <th>porosity</th>
+      <th>perm</th>
+      <th>ai</th>
+      <th>% porosity</th>
+      <th>perm-por ratio</th>
+      <th>porosity type</th>
+      <th>perm cutoff</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>165</th>
+      <td>1365</td>
+      <td>2715</td>
+      <td>1</td>
+      <td>0.1191</td>
+      <td>0.2666</td>
+      <td>2.788</td>
+      <td>11.91</td>
+      <td>2.238455</td>
+      <td>low</td>
+      <td>0.0001</td>
+    </tr>
+    <tr>
+      <th>166</th>
+      <td>2765</td>
+      <td>925</td>
+      <td>1</td>
+      <td>0.1190</td>
+      <td>0.7731</td>
+      <td>2.323</td>
+      <td>11.90</td>
+      <td>6.496639</td>
+      <td>low</td>
+      <td>0.0001</td>
+    </tr>
+    <tr>
+      <th>167</th>
+      <td>565</td>
+      <td>1485</td>
+      <td>1</td>
+      <td>0.1184</td>
+      <td>6.1700</td>
+      <td>2.009</td>
+      <td>11.84</td>
+      <td>52.111486</td>
+      <td>low</td>
+      <td>0.0001</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Applying-functions-to-Series/DataFrame">Applying functions to Series/DataFrame<a class="anchor-link" href="#Applying-functions-to-Series/DataFrame"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can apply any function that we can define in Python to entries of a Series or DataFrame.  First we define a function.  This function returns the Kozeny-Carmen relationship to predict permeability from porosity ϕ, for values of ϕ greater that $0.12$, otherwise it returns $0.0001$.  The proportionality constant $m$ is given as an additional keyword argument.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">kozeny_carmen_with_threshold</span><span class="p">(</span><span class="n">ϕ</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+    
+    <span class="k">if</span> <span class="n">ϕ</span> <span class="o">&gt;</span> <span class="mf">0.12</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">m</span> <span class="o">*</span> <span class="n">ϕ</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">ϕ</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mf">0.0001</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Using the <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.apply.html"><code>apply</code></a> member function we can transform the <code>'porosity'</code> column into permeability via the <code>kozeny_carmen_with_threshold</code> function above.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;kozeny carmen&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;porosity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">kozeny_carmen_with_threshold</span><span class="p">,</span> <span class="n">m</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">df</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>X</th>
+      <th>Y</th>
+      <th>facies</th>
+      <th>porosity</th>
+      <th>perm</th>
+      <th>ai</th>
+      <th>% porosity</th>
+      <th>perm-por ratio</th>
+      <th>porosity type</th>
+      <th>perm cutoff</th>
+      <th>kozeny carmen</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3505</td>
+      <td>1525</td>
+      <td>2</td>
+      <td>0.22320</td>
+      <td>174.65400</td>
+      <td>3.344</td>
+      <td>22.320</td>
+      <td>782.500000</td>
+      <td>high</td>
+      <td>174.6540</td>
+      <td>0.184274</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2665</td>
+      <td>3205</td>
+      <td>2</td>
+      <td>0.21590</td>
+      <td>273.98000</td>
+      <td>2.551</td>
+      <td>21.590</td>
+      <td>1269.013432</td>
+      <td>high</td>
+      <td>273.9800</td>
+      <td>0.163687</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2455</td>
+      <td>2885</td>
+      <td>2</td>
+      <td>0.21580</td>
+      <td>9.59200</td>
+      <td>2.773</td>
+      <td>21.580</td>
+      <td>44.448563</td>
+      <td>high</td>
+      <td>9.5920</td>
+      <td>0.163418</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1975</td>
+      <td>2745</td>
+      <td>2</td>
+      <td>0.21580</td>
+      <td>361.70400</td>
+      <td>3.839</td>
+      <td>21.580</td>
+      <td>1676.107507</td>
+      <td>high</td>
+      <td>361.7040</td>
+      <td>0.163418</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>1855</td>
+      <td>3025</td>
+      <td>2</td>
+      <td>0.21540</td>
+      <td>463.64100</td>
+      <td>3.091</td>
+      <td>21.540</td>
+      <td>2152.465181</td>
+      <td>high</td>
+      <td>463.6410</td>
+      <td>0.162346</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>195</th>
+      <td>1745</td>
+      <td>255</td>
+      <td>2</td>
+      <td>0.07840</td>
+      <td>1.01500</td>
+      <td>3.949</td>
+      <td>7.840</td>
+      <td>12.946429</td>
+      <td>low</td>
+      <td>0.0001</td>
+      <td>0.000100</td>
+    </tr>
+    <tr>
+      <th>196</th>
+      <td>3835</td>
+      <td>1095</td>
+      <td>1</td>
+      <td>0.07338</td>
+      <td>0.02198</td>
+      <td>3.775</td>
+      <td>7.338</td>
+      <td>0.299537</td>
+      <td>low</td>
+      <td>0.0001</td>
+      <td>0.000100</td>
+    </tr>
+    <tr>
+      <th>197</th>
+      <td>2365</td>
+      <td>355</td>
+      <td>1</td>
+      <td>0.06726</td>
+      <td>0.15170</td>
+      <td>3.833</td>
+      <td>6.726</td>
+      <td>2.255427</td>
+      <td>low</td>
+      <td>0.0001</td>
+      <td>0.000100</td>
+    </tr>
+    <tr>
+      <th>198</th>
+      <td>3795</td>
+      <td>535</td>
+      <td>1</td>
+      <td>0.06092</td>
+      <td>0.01582</td>
+      <td>3.907</td>
+      <td>6.092</td>
+      <td>0.259685</td>
+      <td>low</td>
+      <td>0.0001</td>
+      <td>0.000100</td>
+    </tr>
+    <tr>
+      <th>199</th>
+      <td>3745</td>
+      <td>115</td>
+      <td>1</td>
+      <td>0.05000</td>
+      <td>0.01653</td>
+      <td>3.527</td>
+      <td>5.000</td>
+      <td>0.330600</td>
+      <td>low</td>
+      <td>0.0001</td>
+      <td>0.000100</td>
+    </tr>
+  </tbody>
+</table>
+<p>200 rows × 11 columns</p>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Missing-Features">Missing Features<a class="anchor-link" href="#Missing-Features"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>It's very common in data analysis to have missing and/or invalid values in our our DataFrames.  Pandas offers several built in methods to identify and deal with missing Data.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>First, let's create a missing data point in the <code>'porosity'</code> column of <code>df</code>.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell tag_popout">
+
+<div class="cell border-box-sizing text_cell rendered tag_popout"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.at.html#pandas.DataFrame.at"><code>at</code></a> member function allows for fast selection of a single row/label position within a Series/DataFrame.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;porosity&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>X</th>
+      <th>Y</th>
+      <th>facies</th>
+      <th>porosity</th>
+      <th>perm</th>
+      <th>ai</th>
+      <th>% porosity</th>
+      <th>perm-por ratio</th>
+      <th>porosity type</th>
+      <th>perm cutoff</th>
+      <th>kozeny carmen</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3505</td>
+      <td>1525</td>
+      <td>2</td>
+      <td>0.2232</td>
+      <td>174.654</td>
+      <td>3.344</td>
+      <td>22.32</td>
+      <td>782.500000</td>
+      <td>high</td>
+      <td>174.654</td>
+      <td>0.184274</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2665</td>
+      <td>3205</td>
+      <td>2</td>
+      <td>NaN</td>
+      <td>273.980</td>
+      <td>2.551</td>
+      <td>21.59</td>
+      <td>1269.013432</td>
+      <td>high</td>
+      <td>273.980</td>
+      <td>0.163687</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2455</td>
+      <td>2885</td>
+      <td>2</td>
+      <td>0.2158</td>
+      <td>9.592</td>
+      <td>2.773</td>
+      <td>21.58</td>
+      <td>44.448563</td>
+      <td>high</td>
+      <td>9.592</td>
+      <td>0.163418</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.isnull.html"><code>isnull</code></a> member function returns a boolean array that identifies rows with missing values.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;porosity&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">()]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>X</th>
+      <th>Y</th>
+      <th>facies</th>
+      <th>porosity</th>
+      <th>perm</th>
+      <th>ai</th>
+      <th>% porosity</th>
+      <th>perm-por ratio</th>
+      <th>porosity type</th>
+      <th>perm cutoff</th>
+      <th>kozeny carmen</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>2665</td>
+      <td>3205</td>
+      <td>2</td>
+      <td>NaN</td>
+      <td>273.98</td>
+      <td>2.551</td>
+      <td>21.59</td>
+      <td>1269.013432</td>
+      <td>high</td>
+      <td>273.98</td>
+      <td>0.163687</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Dropping-missing-rows">Dropping missing rows<a class="anchor-link" href="#Dropping-missing-rows"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.dropna.html"><code>dropna</code></a> member function allows us to remove missing rows from the DataFrame.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>X</th>
+      <th>Y</th>
+      <th>facies</th>
+      <th>porosity</th>
+      <th>perm</th>
+      <th>ai</th>
+      <th>% porosity</th>
+      <th>perm-por ratio</th>
+      <th>porosity type</th>
+      <th>perm cutoff</th>
+      <th>kozeny carmen</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3505</td>
+      <td>1525</td>
+      <td>2</td>
+      <td>0.2232</td>
+      <td>174.654</td>
+      <td>3.344</td>
+      <td>22.32</td>
+      <td>782.500000</td>
+      <td>high</td>
+      <td>174.654</td>
+      <td>0.184274</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2455</td>
+      <td>2885</td>
+      <td>2</td>
+      <td>0.2158</td>
+      <td>9.592</td>
+      <td>2.773</td>
+      <td>21.58</td>
+      <td>44.448563</td>
+      <td>high</td>
+      <td>9.592</td>
+      <td>0.163418</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>1975</td>
+      <td>2745</td>
+      <td>2</td>
+      <td>0.2158</td>
+      <td>361.704</td>
+      <td>3.839</td>
+      <td>21.58</td>
+      <td>1676.107507</td>
+      <td>high</td>
+      <td>361.704</td>
+      <td>0.163418</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Creating-New-DataFrames">Creating New DataFrames<a class="anchor-link" href="#Creating-New-DataFrames"> </a></h2>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Up to now, we've utilized a DataFrame that was created by reading in the data from a CSV file.  We can also create DataFrames from scratch.  First we'll create a couple of NumPy arrays with representative data for demonstration.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">porosity</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random_sample</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.2</span>
+<span class="n">permeability</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">porosity</span> <span class="o">**</span> <span class="mi">3</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">porosity</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Create a Python dictionary where the keywords are the desired DataFrame labels and the values are the associated data.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;porosity&#39;</span><span class="p">:</span> <span class="n">porosity</span><span class="p">,</span> <span class="s1">&#39;permeability&#39;</span><span class="p">:</span> <span class="n">permeability</span><span class="p">}</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Pass the dictionary as an argument to <code>pd.Dataframe</code> to create the DataFrame</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_new</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">df_dict</span><span class="p">)</span>
+<span class="n">df_new</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;porosity&#39;</span><span class="p">,</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">ignore_index</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">df_new</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>porosity</th>
+      <th>permeability</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.001372</td>
+      <td>2.587134e-08</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.003407</td>
+      <td>3.980377e-07</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.005140</td>
+      <td>1.371724e-06</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.005541</td>
+      <td>1.720006e-06</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.009899</td>
+      <td>9.894022e-06</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Merging-DataFrames">Merging DataFrames<a class="anchor-link" href="#Merging-DataFrames"> </a></h2>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In this example, we'll take a couple subsets from our original DataFrame and create a new one by joining them with the <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.concat.html"><code>concat</code></a> function.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df1</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="mi">2</span><span class="p">:];</span> <span class="n">df1</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>facies</th>
+      <th>porosity</th>
+      <th>perm</th>
+      <th>ai</th>
+      <th>% porosity</th>
+      <th>perm-por ratio</th>
+      <th>porosity type</th>
+      <th>perm cutoff</th>
+      <th>kozeny carmen</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2</td>
+      <td>0.2232</td>
+      <td>174.654</td>
+      <td>3.344</td>
+      <td>22.32</td>
+      <td>782.500000</td>
+      <td>high</td>
+      <td>174.654</td>
+      <td>0.184274</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>0.2158</td>
+      <td>9.592</td>
+      <td>2.773</td>
+      <td>21.58</td>
+      <td>44.448563</td>
+      <td>high</td>
+      <td>9.592</td>
+      <td>0.163418</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2</td>
+      <td>0.2158</td>
+      <td>361.704</td>
+      <td>3.839</td>
+      <td>21.58</td>
+      <td>1676.107507</td>
+      <td>high</td>
+      <td>361.704</td>
+      <td>0.163418</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df2</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">10</span><span class="p">:</span><span class="mi">13</span><span class="p">,</span><span class="mi">2</span><span class="p">:];</span> <span class="n">df2</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>facies</th>
+      <th>porosity</th>
+      <th>perm</th>
+      <th>ai</th>
+      <th>% porosity</th>
+      <th>perm-por ratio</th>
+      <th>porosity type</th>
+      <th>perm cutoff</th>
+      <th>kozeny carmen</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>11</th>
+      <td>2</td>
+      <td>0.1974</td>
+      <td>159.567</td>
+      <td>3.167</td>
+      <td>19.74</td>
+      <td>808.343465</td>
+      <td>high</td>
+      <td>159.567</td>
+      <td>0.119411</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>2</td>
+      <td>0.1973</td>
+      <td>114.044</td>
+      <td>2.750</td>
+      <td>19.73</td>
+      <td>578.023315</td>
+      <td>high</td>
+      <td>114.044</td>
+      <td>0.119200</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>2</td>
+      <td>0.1965</td>
+      <td>199.952</td>
+      <td>2.747</td>
+      <td>19.65</td>
+      <td>1017.567430</td>
+      <td>high</td>
+      <td>199.952</td>
+      <td>0.117521</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell tag_popout">
+
+<div class="cell border-box-sizing text_cell rendered tag_popout"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We could have reindexed with the <code>ingnore_index = True</code> keyword argument.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df1</span><span class="p">,</span> <span class="n">df2</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>facies</th>
+      <th>porosity</th>
+      <th>perm</th>
+      <th>ai</th>
+      <th>% porosity</th>
+      <th>perm-por ratio</th>
+      <th>porosity type</th>
+      <th>perm cutoff</th>
+      <th>kozeny carmen</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2</td>
+      <td>0.2232</td>
+      <td>174.654</td>
+      <td>3.344</td>
+      <td>22.32</td>
+      <td>782.500000</td>
+      <td>high</td>
+      <td>174.654</td>
+      <td>0.184274</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2</td>
+      <td>0.2158</td>
+      <td>9.592</td>
+      <td>2.773</td>
+      <td>21.58</td>
+      <td>44.448563</td>
+      <td>high</td>
+      <td>9.592</td>
+      <td>0.163418</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2</td>
+      <td>0.2158</td>
+      <td>361.704</td>
+      <td>3.839</td>
+      <td>21.58</td>
+      <td>1676.107507</td>
+      <td>high</td>
+      <td>361.704</td>
+      <td>0.163418</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>2</td>
+      <td>0.1974</td>
+      <td>159.567</td>
+      <td>3.167</td>
+      <td>19.74</td>
+      <td>808.343465</td>
+      <td>high</td>
+      <td>159.567</td>
+      <td>0.119411</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>2</td>
+      <td>0.1973</td>
+      <td>114.044</td>
+      <td>2.750</td>
+      <td>19.73</td>
+      <td>578.023315</td>
+      <td>high</td>
+      <td>114.044</td>
+      <td>0.119200</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>2</td>
+      <td>0.1965</td>
+      <td>199.952</td>
+      <td>2.747</td>
+      <td>19.65</td>
+      <td>1017.567430</td>
+      <td>high</td>
+      <td>199.952</td>
+      <td>0.117521</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Plotting-DataFrames">Plotting DataFrames<a class="anchor-link" href="#Plotting-DataFrames"> </a></h2>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Pandas has some built in automatic plotting methods for DataFrames. They are most useful for quick-look plots of relationships between DataFrame columns, but they can be fully customized to make publication quality plots with additional options available in the <a href="https://matplotlib.org/">Matplotlib</a> plotting library.  The default <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.plot.html"><code>plot</code></a> member function will create a line plot of all DataFrame labels as functions of the index.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_new</span><span class="o">.</span><span class="n">plot</span><span class="p">();</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="images/PythonIntro_Pandas_93_0.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Of course, this is not that useful a plot.  What we are likely looking for is a relationship between the DataFrame columns.  One way to visualize this is to set the desired abscissa as the DataFrame index and create a plot.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_new</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;porosity&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">plot</span><span class="p">();</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="images/PythonIntro_Pandas_95_0.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Or explicitly pass the desired independent variable to the <code>x</code> keyword arguments and the dependent variable to the <code>y</code> keyword argument.  This time we'll also explicitly create a scatter plot.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell tag_popout">
+
+<div class="cell border-box-sizing text_cell rendered tag_popout"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>When the DataFrame columns are explicitly passed as arguments, the axis labels are correctly populated.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_new</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;porosity&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;permeability&#39;</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_png output_subarea ">
+<img src="images/PythonIntro_Pandas_98_0.png"
+>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Writing-a-DataFrame-to-a-File">Writing a DataFrame to a File<a class="anchor-link" href="#Writing-a-DataFrame-to-a-File"> </a></h2>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The most common way way to store and share DataFrames among different computers is the export the DataFrame to a CSV file.  This is accomplished with the <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.to_csv.html"><code>to_csv</code></a> member function.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s2">&quot;datasets/200wells_out.csv&quot;</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Displaying the raw data is the file with the UNIX <code>head</code> command</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>head -n <span class="m">5</span> datasets/200wells_out.csv
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>X,Y,facies,porosity,perm,ai,% porosity,perm-por ratio,porosity type,perm cutoff,kozeny carmen
+3505,1525,2,0.2232,174.65400000000002,3.344,22.32,782.5000000000001,high,174.65400000000002,0.18427403135841575
+2455,2885,2,0.2158,9.592,2.773,21.58,44.44856348470807,high,9.592,0.16341828373836473
+1975,2745,2,0.2158,361.704,3.839,21.58,1676.1075069508806,high,361.704,0.16341828373836473
+1855,3025,2,0.2154,463.64099999999996,3.091,21.54,2152.4651810584955,high,463.64099999999996,0.1623455875592409
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Further-Reading">Further Reading<a class="anchor-link" href="#Further-Reading"> </a></h2><p>Further reading on Pandas is avialable in the <a href="https://pandas.pydata.org/pandas-docs/stable/index.html">official Pandas documentation</a></p>
+
+</div>
+</div>
+</div>
+</div>
+
+ 
+
+
+    </main>
+    

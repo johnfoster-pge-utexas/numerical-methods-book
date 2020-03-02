@@ -11,9 +11,9 @@ pagenum: 7
 prev_page:
   url: /PythonIntro_ObjectOrientedProgramming.html
 next_page:
-  url: 
+  url: /PythonIntro_Pandas.html
 suffix: .ipynb
-search: array x numpy arrays python e data operation np functions y entry g numbers using indexing dimension element duck typing along function list slicing mbox th delta booleen org broadcasting operations returns its etc type million ipython here also create parts rows index frac mathrm d where entries fancy numerical structures well entire slow performance c memory different shape adding comprehension another import arange getting reshape notation used copy xi example values www originally primarily dimensional might efficient operators contained makes computations fact dont declare variable types float runtime dynamic objects single contiguous storage common functionality cache level expected perform
+search: array x numpy arrays python e data operation np functions y entry g numbers using indexing dimension element duck typing along org function list slicing mbox th delta booleen broadcasting operations returns its etc type million ipython here also create parts rows index frac mathrm d where entries fancy numerical structures well entire slow performance c memory different shape adding comprehension another import arange getting reshape notation used copy xi example values www originally primarily dimensional might efficient operators contained makes computations fact dont declare variable types float runtime dynamic objects single contiguous storage common functionality cache level expected perform
 
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
@@ -167,7 +167,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>103 ms ± 5.87 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
+<pre>130 ms ± 10.7 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
 </pre>
 </div>
 </div>
@@ -222,7 +222,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>1.1 ms ± 29.5 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
+<pre>1.11 ms ± 173 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
 </pre>
 </div>
 </div>
@@ -281,7 +281,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>254 ms ± 15.1 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+<pre>277 ms ± 32.1 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
 </pre>
 </div>
 </div>
@@ -299,7 +299,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">timeit</span> np.sin(numpy.arange(1000000)) ** 2
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">timeit</span> np.sin(np.arange(1000000)) ** 2
 </pre></div>
 
     </div>
@@ -313,7 +313,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>18.8 ms ± 2.6 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
+<pre>20.4 ms ± 3.88 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
 </pre>
 </div>
 </div>
@@ -980,55 +980,55 @@ $$<p>where $\Delta x_{i + 1/2} = x_{i+1} - x_{i}$.  This operation can be accomp
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>array([[[0.27483535, 0.4200164 , 0.15080534],
-        [0.34611975, 0.08645354, 0.13502094],
-        [0.09326517, 0.13990663, 0.1088337 ],
+<pre>array([[[0.33364119, 0.13513025, 0.20842892],
+        [0.40454534, 0.06366238, 0.04462673],
+        [0.01080912, 0.30341741, 0.06251468],
         ...,
-        [0.46721008, 0.11816295, 0.15231613],
-        [0.04309497, 0.24061874, 0.14010317],
-        [0.36581601, 0.18217032, 0.20828379]],
+        [0.32708048, 0.04858326, 0.10180382],
+        [0.32078865, 0.34092883, 0.03605694],
+        [0.09170571, 0.24678227, 0.24589827]],
 
-       [[0.39904247, 0.053773  , 0.11307889],
-        [0.17546017, 0.04251306, 0.09583825],
-        [0.47983285, 0.43506873, 0.02998528],
+       [[0.21254756, 0.16551062, 0.22846951],
+        [0.18045644, 0.41702304, 0.06012535],
+        [0.38533097, 0.33145034, 0.08837991],
         ...,
-        [0.19185358, 0.2394026 , 0.09260359],
-        [0.33214736, 0.34085653, 0.11020007],
-        [0.18175548, 0.45885511, 0.15989807]],
+        [0.08593075, 0.1861334 , 0.16543197],
+        [0.36022422, 0.46163817, 0.2045722 ],
+        [0.1820431 , 0.36425908, 0.18408599]],
 
-       [[0.02367449, 0.43860275, 0.05007971],
-        [0.07199807, 0.04361706, 0.169206  ],
-        [0.03071054, 0.02395268, 0.19490182],
+       [[0.17510702, 0.04097747, 0.10552684],
+        [0.37000548, 0.34619709, 0.21340561],
+        [0.34723524, 0.46696983, 0.1558489 ],
         ...,
-        [0.43685625, 0.49229625, 0.2436754 ],
-        [0.47081076, 0.01328465, 0.01807342],
-        [0.01882421, 0.443885  , 0.14175378]],
+        [0.33769851, 0.32747536, 0.13688034],
+        [0.32698697, 0.26822322, 0.16865753],
+        [0.11981576, 0.40658221, 0.19100672]],
 
        ...,
 
-       [[0.18122676, 0.21125463, 0.2281342 ],
-        [0.43721309, 0.17891302, 0.01388989],
-        [0.26726274, 0.49383074, 0.01381393],
+       [[0.02289841, 0.25208777, 0.16521157],
+        [0.37509381, 0.28146235, 0.0848047 ],
+        [0.33915749, 0.45476049, 0.07592419],
         ...,
-        [0.48145238, 0.4362373 , 0.23865333],
-        [0.45784213, 0.05190102, 0.17046476],
-        [0.30340724, 0.36788973, 0.02078434]],
+        [0.1792044 , 0.28564453, 0.19220406],
+        [0.07102123, 0.11573026, 0.15337064],
+        [0.24896788, 0.27197543, 0.06437695]],
 
-       [[0.40924159, 0.41463402, 0.03036792],
-        [0.40124974, 0.22794733, 0.05829053],
-        [0.03158394, 0.05434043, 0.07657488],
+       [[0.1733032 , 0.25960379, 0.03250389],
+        [0.1318084 , 0.40254201, 0.06377019],
+        [0.24165437, 0.27789474, 0.00749426],
         ...,
-        [0.31644814, 0.39215925, 0.10153963],
-        [0.14643645, 0.42197346, 0.04657562],
-        [0.42639816, 0.00954704, 0.14904657]],
+        [0.07340168, 0.21016249, 0.15144194],
+        [0.01706101, 0.09028999, 0.24587968],
+        [0.41057426, 0.42047552, 0.16598547]],
 
-       [[0.41641503, 0.15893411, 0.13985372],
-        [0.46470174, 0.44307156, 0.15767674],
-        [0.2557657 , 0.47595404, 0.0404936 ],
+       [[0.27752186, 0.08090733, 0.1117283 ],
+        [0.26182876, 0.06538528, 0.02021271],
+        [0.1021179 , 0.28103837, 0.0110313 ],
         ...,
-        [0.35980948, 0.27201398, 0.24729369],
-        [0.27106079, 0.24242745, 0.21302301],
-        [0.46442131, 0.30334565, 0.22279936]]])</pre>
+        [0.19586239, 0.35936449, 0.04311483],
+        [0.01226909, 0.48669562, 0.02201492],
+        [0.28844894, 0.01550648, 0.20414741]]])</pre>
 </div>
 
 </div>
@@ -1262,7 +1262,7 @@ $$<p>where $\Delta x_{i + 1/2} = x_{i+1} - x_{i}$.  This operation can be accomp
 <pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-30-04237b235198&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">&lt;ipython-input-24-04237b235198&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
 <span class="ansi-green-intense-fg ansi-bold">      1</span> xx <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">1</span> <span class="ansi-blue-fg">,</span><span class="ansi-cyan-fg">3</span><span class="ansi-blue-fg">,</span> <span class="ansi-cyan-fg">5</span><span class="ansi-blue-fg">,</span> <span class="ansi-cyan-fg">7</span><span class="ansi-blue-fg">]</span>
 <span class="ansi-green-fg">----&gt; 2</span><span class="ansi-red-fg"> </span>xx<span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">[</span><span class="ansi-cyan-fg">2</span><span class="ansi-blue-fg">,</span><span class="ansi-cyan-fg">3</span><span class="ansi-blue-fg">]</span><span class="ansi-blue-fg">]</span>
 
@@ -1503,7 +1503,7 @@ $$<p>where $\Delta x_{i + 1/2} = x_{i+1} - x_{i}$.  This operation can be accomp
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>array([-3,  4, -1, -4,  3,  0, -1, -7, -8,  4])</pre>
+<pre>array([-9, -2, -7, -9,  9,  7,  6, -6, -7,  3])</pre>
 </div>
 
 </div>
@@ -1548,7 +1548,7 @@ $$<p>where $\Delta x_{i + 1/2} = x_{i+1} - x_{i}$.  This operation can be accomp
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>array([False,  True, False, False,  True, False, False, False, False,
+<pre>array([False, False, False, False,  True,  True,  True, False, False,
         True])</pre>
 </div>
 
@@ -1594,7 +1594,7 @@ $$<p>where $\Delta x_{i + 1/2} = x_{i+1} - x_{i}$.  This operation can be accomp
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>array([4, 3, 4])</pre>
+<pre>array([9, 7, 6, 3])</pre>
 </div>
 
 </div>
@@ -1623,7 +1623,7 @@ $$<p>where $\Delta x_{i + 1/2} = x_{i+1} - x_{i}$.  This operation can be accomp
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">ind</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="s1">&#39;str&#39;</span><span class="p">);</span> <span class="n">y</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">ind</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span> <span class="n">y</span>
 </pre></div>
 
     </div>
@@ -1639,8 +1639,7 @@ $$<p>where $\Delta x_{i + 1/2} = x_{i+1} - x_{i}$.  This operation can be accomp
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>array([&#39;str&#39;, &#39;4&#39;, &#39;str&#39;, &#39;str&#39;, &#39;3&#39;, &#39;str&#39;, &#39;str&#39;, &#39;str&#39;, &#39;str&#39;, &#39;4&#39;],
-      dtype=&#39;&lt;U21&#39;)</pre>
+<pre>array([0, 0, 0, 0, 9, 7, 6, 0, 0, 3])</pre>
 </div>
 
 </div>
@@ -1648,6 +1647,17 @@ $$<p>where $\Delta x_{i + 1/2} = x_{i+1} - x_{i}$.  This operation can be accomp
 </div>
 </div>
 
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Further-Reading">Further Reading<a class="anchor-link" href="#Further-Reading"> </a></h2><p>Further reading on NumPy is avialable in the <a href="https://numpy.org/">official NumPy documentation</a></p>
+
+</div>
+</div>
 </div>
 </div>
 
