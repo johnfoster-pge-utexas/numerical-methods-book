@@ -40,10 +40,13 @@
     title: "Functions: Argument Types and Lambda Functions"
   - url: /PythonIntro_ObjectOrientedProgramming
     title: "Python Classes and Object-Oriented Programming"
-  - url: /PythonIntro_Numpy
+- url: /ScientificPython
+  title: "Scientific Python"
+  expand_sections: true
+  sections:
+  - url: /ScientificPython_Numpy
     title: "NumPy: Numerical Python"
-  - url: /PythonIntro_Pandas
+  - url: /ScientificPython_Pandas
     title: "Pandas: Python Data Analysis Library"
-  - url: /PythonIntro_Matplotlib
+  - url: /ScientificPython_Matplotlib
     title: "Matplotlib: A scientific visualization toolbox"
-
