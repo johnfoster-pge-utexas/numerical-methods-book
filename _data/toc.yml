@@ -50,3 +50,5 @@
     title: "Pandas: Python Data Analysis Library"
   - url: /ScientificPython_Matplotlib
     title: "Matplotlib: A scientific visualization toolbox"
+  - url: /ScientificPython_Bokeh
+    title: "Bokeh: Interactive visualizations for web pages"
