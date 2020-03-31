@@ -13,7 +13,7 @@ prev_page:
 next_page:
   url: /ScientificPython_Bokeh.html
 suffix: .ipynb
-search: matplotlib org plot figure style html axes example pandas plotting axis data contour pyplot add plots img faq api bokeh src width available python images lines reference grid subplots asgen command tr td background color white png its any dimensional figcaptionimage credit figcaption contain surface following create numpy using built com web holoviews altair href visualization libraries commands created index containing usagefaq title labels etc well several creating control below however colors styles styling fivethirtyeight based xkcd want dataframe object pbpython must nan mplotd github io best vega grammar table align center scientific while not easiest gallery shows black hole
+search: matplotlib org plot figure style html axes example pandas plotting axis data contour pyplot add plots img faq api bokeh src width available python images lines reference grid subplots asgen command tr td background color white png its any dimensional figcaptionimage credit figcaption contain surface following create numpy using built com web holoviews altair href visualization libraries commands created index containing usagefaq title labels etc well objects several creating control below however colors styles styling fivethirtyeight based xkcd want dataframe pbpython must nan mplotd github io best vega grammar table align center scientific while not easiest gallery shows black hole
 
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
@@ -595,6 +595,23 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 </div>
 </div>
 
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
 <div class="jb_cell tag_no_daytum">
 
 <div class="cell border-box-sizing code_cell rendered tag_no_daytum">
@@ -602,8 +619,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;datasets/200wells.csv&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;datasets/200wells.csv&#39;</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;porosity&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;permeability&#39;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;scatter&#39;</span><span class="p">);</span>
 </pre></div>
 
@@ -620,7 +636,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 
 <div class="output_png output_subarea ">
-<img src="images/ScientificPython_Matplotlib_33_0.png"
+<img src="images/ScientificPython_Matplotlib_34_0.png"
 >
 </div>
 
@@ -670,7 +686,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 
 <div class="output_png output_subarea ">
-<img src="images/ScientificPython_Matplotlib_35_0.png"
+<img src="images/ScientificPython_Matplotlib_36_0.png"
 >
 </div>
 
@@ -686,7 +702,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>As an additional example, we'll use Pandas to create a histogram of the porosity and permeability values.  This time we'll start with a <code>subplot</code> with one row and two columns.  This will return the <code>ax</code> object which is now a tuple containing two axes corresponding to permeability and porosity respectively.  We then add some labels and set axis limits.</p>
+<p>As an additional example, we'll use Pandas to create a histogram of the porosity and permeability values.  This time we'll start with a <code>subplot</code> with one row and two columns.  This will return a tuple containing two axes objects corresponding to permeability and porosity respectively.  We then add some labels and set axis limits.</p>
 
 </div>
 </div>
@@ -726,7 +742,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 
 <div class="output_png output_subarea ">
-<img src="images/ScientificPython_Matplotlib_37_0.png"
+<img src="images/ScientificPython_Matplotlib_38_0.png"
 >
 </div>
 
@@ -822,7 +838,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 
 <div class="output_png output_subarea ">
-<img src="images/ScientificPython_Matplotlib_43_0.png"
+<img src="images/ScientificPython_Matplotlib_44_0.png"
 >
 </div>
 
@@ -888,10 +904,10 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 
 
 
-<div id="f426fda7-52da-41ac-9dae-0281577e1dc5"></div>
+<div id="cfd626f0-8fa5-474e-b899-28a92d6d76d4"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#f426fda7-52da-41ac-9dae-0281577e1dc5');
+var element = $('#cfd626f0-8fa5-474e-b899-28a92d6d76d4');
 /* Put everything inside the global mpl namespace */
 window.mpl = {};
 
@@ -1669,7 +1685,7 @@ if (IPython.notebook.kernel != null) {
 
 
 <div class="output_html rendered_html output_subarea ">
-<div id='64d75bee-063a-4978-937b-c3c44350f488'></div>
+<div id='9a98ccad-0297-445e-84fb-40ad07415463'></div>
 </div>
 
 </div>
@@ -1704,7 +1720,7 @@ if (IPython.notebook.kernel != null) {
 <p><a href="https://docs.bokeh.org/en/latest/index.html">Bokeh</a> is a modern plotting library that is best used for creating interactive two-dimensional visualizations that are intended to be displayed in Jupyter Notebooks and/or HTML web sites.  It has a simple interface that allows for quickly creating great looking figures.</p>
 <p><a href="http://holoviews.org/">Holoviews</a> is a plotting package with a similar interface to Bokeh, but allows you to chose the backend to be either Bokeh (best for web) or Matplotlib (best for print publications) from a unified front end.</p>
 <p><a href="https://plot.ly/">Plotly</a> is another modern plotting library primarily targeting web-based visualizations and offers built in dashboarding capabilities.</p>
-<p><a href="https://altair-viz.github.io/">Altair</a>, the newest of the group, is based on <a href="https://vega.github.io/vega/">Vega</a>, a visualization grammar similar to the <a href="https://vita.had.co.nz/papers/layered-grammar.html">Grammar of Graphics</a> implementation in the R programming language.</p>
+<p><a href="https://altair-viz.github.io/">Altair</a>, the newest of the group, is based on <a href="https://vega.github.io/vega-lite/">Vega-Lite</a>, a Javascript visualization grammar similar to the <a href="https://vita.had.co.nz/papers/layered-grammar.html">Grammar of Graphics</a> implementation in the R programming language.</p>
 
 </div>
 </div>
