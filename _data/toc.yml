@@ -52,3 +52,9 @@
     title: "Matplotlib: A scientific visualization toolbox"
   - url: /ScientificPython_Bokeh
     title: "Bokeh: Interactive visualizations for web pages"
+- url: /NumericalMethods
+  title: "Numerical Methods"
+  expand_sections: true
+  sections:
+  - url: /NumericalMethods_ErrorDescriptors
+    title: "Computer Preliminaries and Error Descriptors"
