@@ -13,7 +13,7 @@ prev_page:
 next_page:
   url: 
 suffix: .ipynb
-search: error point x called floating series numerical m epsilon roundoff taylor frac phi numbers machine function truncation bit between sin terms calculate computer computers infinite precision approximation usually analysts integer times exact difference lets powers n relationship into fixed bits different sign representing mantissa exponent representation s b base sometimes result using adding epsilonm returns something however algorithm algorithms desired example solution cannot evaluate therefore take answer pi evaluating add stability unstable power recusion recursion preliminaries descriptors unfortunately cant store instead packed arranged represent data types integers importance us represented within positive negative significant digits significand symbolically might se where
+search: error point x called floating series m epsilon truncation taylor frac phi numbers numerical machine roundoff function bit between sin terms calculate recursion computer computers infinite precision approximation usually integer times exact difference lets powers n relationship into fixed bits different analysts sign representing mantissa exponent representation s b base sometimes result numpy using adding epsilonm returns something however algorithm algorithms desired example solution cannot evaluate therefore take answer pi evaluating add stability unstable power preliminaries descriptors unfortunately cant store instead packed arranged represent data types integers importance us represented within positive negative significant digits significand symbolically might se where
 
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
@@ -187,7 +187,7 @@ $$
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="The-Numerical-Analyst's-Enemy:--Roundoff-Error">The Numerical Analyst's Enemy:  Roundoff Error<a class="anchor-link" href="#The-Numerical-Analyst's-Enemy:--Roundoff-Error"> </a></h2>
+<h2 id="Truncation-Error">Truncation Error<a class="anchor-link" href="#Truncation-Error"> </a></h2>
 </div>
 </div>
 </div>
@@ -218,7 +218,7 @@ $$<p>Of course, this representation requires that the series be infinite for the
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">sympy</span><span class="o">.</span><span class="n">Symbol</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
 <span class="n">taylor_sin</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">N</span><span class="o">=</span><span class="mi">9</span><span class="p">:</span> <span class="n">sympy</span><span class="o">.</span><span class="n">series</span><span class="p">(</span><span class="n">sympy</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">x</span><span class="p">,</span><span class="n">n</span><span class="o">=</span><span class="n">N</span><span class="p">);</span>
-<span class="n">taylor_sin</span><span class="p">()</span>
+<span class="n">display</span><span class="p">(</span><span class="n">Latex</span><span class="p">(</span><span class="s1">&#39;$\sin(x) =</span><span class="si">{}</span><span class="s1">$&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sympy</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="n">taylor_sin</span><span class="p">()))))</span>
 </pre></div>
 
     </div>
@@ -231,12 +231,17 @@ $$<p>Of course, this representation requires that the series be infinite for the
 <div class="jb_output_wrapper }}">
 <div class="output_area">
 
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-6-dd0c67099d14&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> x <span class="ansi-blue-fg">=</span> sympy<span class="ansi-blue-fg">.</span>Symbol<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;x&#39;</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      2</span> taylor_sin <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">lambda</span> N<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">9</span><span class="ansi-blue-fg">:</span> sympy<span class="ansi-blue-fg">.</span>series<span class="ansi-blue-fg">(</span>sympy<span class="ansi-blue-fg">.</span>sin<span class="ansi-blue-fg">(</span>x<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span>x<span class="ansi-blue-fg">,</span>n<span class="ansi-blue-fg">=</span>N<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">;</span>
+<span class="ansi-green-fg">----&gt; 3</span><span class="ansi-red-fg"> </span>display<span class="ansi-blue-fg">(</span>Latex<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;$\sin(x) ={}$&#39;</span><span class="ansi-blue-fg">.</span>format<span class="ansi-blue-fg">(</span>sympy<span class="ansi-blue-fg">.</span>latex<span class="ansi-blue-fg">(</span>taylor_sin<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
 
-
-<div class="output_latex output_subarea output_execute_result">
-$\displaystyle x - \frac{x^{3}}{6} + \frac{x^{5}}{120} - \frac{x^{7}}{5040} + O\left(x^{9}\right)$
+<span class="ansi-red-fg">NameError</span>: name &#39;Latex&#39; is not defined</pre>
 </div>
-
 </div>
 </div>
 </div>
@@ -263,19 +268,12 @@ $\displaystyle x - \frac{x^{3}}{6} + \frac{x^{5}}{120} - \frac{x^{7}}{5040} + O\
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">ipywidgets</span> <span class="kn">import</span> <span class="n">interact</span><span class="p">,</span> <span class="n">interactive</span><span class="p">,</span> <span class="n">IntSlider</span>
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Markdown</span><span class="p">,</span> <span class="n">HTML</span><span class="p">,</span> <span class="n">Math</span>
-
-<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s2">&quot;&lt;script src=&#39;https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_HTML&#39;&gt;&lt;/script&gt;&quot;</span><span class="p">))</span>
-
-<span class="k">def</span> <span class="nf">taylor_sin_minus_one</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">taylor_sin_minus_one</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
     <span class="n">display</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">taylor_sin</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="o">.</span><span class="n">removeO</span><span class="p">())</span>
-    <span class="n">display</span><span class="p">(</span><span class="n">Markdown</span><span class="p">(</span><span class="s2">&quot;Error = </span><span class="si">{}</span><span class="s2">&quot;</span>
-                     <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sympy</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">taylor_sin</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="o">.</span><span class="n">removeO</span><span class="p">()</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">evalf</span><span class="p">(),</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;inline&#39;</span><span class="p">))))</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">Latex</span><span class="p">(</span><span class="s2">&quot;Error $= </span><span class="si">{}</span><span class="s2">$&quot;</span>
+                     <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sympy</span><span class="o">.</span><span class="n">latex</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">taylor_sin</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="o">.</span><span class="n">removeO</span><span class="p">()</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">evalf</span><span class="p">()))))</span>
           
-<span class="n">interactive_sin</span> <span class="o">=</span> <span class="n">interactive</span><span class="p">(</span><span class="n">taylor_sin_minus_one</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;No. of Terms:&#39;</span><span class="p">))</span>
-<span class="n">output</span> <span class="o">=</span> <span class="n">interactive_sin</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">output</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="s1">&#39;75px&#39;</span>
+<span class="n">interactive_sin</span> <span class="o">=</span> <span class="n">interactive</span><span class="p">(</span><span class="n">taylor_sin_minus_one</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;No. of Terms:&#39;</span><span class="p">,</span> <span class="n">continuous_update</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
 <span class="n">interactive_sin</span>
 </pre></div>
 
@@ -292,15 +290,14 @@ $\displaystyle x - \frac{x^{3}}{6} + \frac{x^{5}}{120} - \frac{x^{7}}{5040} + O\
 <div class="output_subarea output_text output_error">
 <pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">ModuleNotFoundError</span>                       Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-6-0537a0e0b793&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
-<span class="ansi-green-fg">----&gt; 1</span><span class="ansi-red-fg"> </span><span class="ansi-green-fg">from</span> ipywidgets <span class="ansi-green-fg">import</span> interact<span class="ansi-blue-fg">,</span> interactive<span class="ansi-blue-fg">,</span> IntSlider
-<span class="ansi-green-intense-fg ansi-bold">      2</span> <span class="ansi-green-fg">from</span> IPython<span class="ansi-blue-fg">.</span>display <span class="ansi-green-fg">import</span> display<span class="ansi-blue-fg">,</span> Markdown<span class="ansi-blue-fg">,</span> HTML<span class="ansi-blue-fg">,</span> Math
-<span class="ansi-green-intense-fg ansi-bold">      3</span> 
-<span class="ansi-green-intense-fg ansi-bold">      4</span> display<span class="ansi-blue-fg">(</span>HTML<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#34;&lt;script src=&#39;https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS_HTML&#39;&gt;&lt;/script&gt;&#34;</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-fg">&lt;ipython-input-7-2a827f06d76c&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-intense-fg ansi-bold">      4</span>                      .format(sympy.latex(1 - taylor_sin(N).removeO().subs(x, np.pi / 2).evalf()))))
 <span class="ansi-green-intense-fg ansi-bold">      5</span> 
+<span class="ansi-green-fg">----&gt; 6</span><span class="ansi-red-fg"> </span>interactive_sin <span class="ansi-blue-fg">=</span> interactive<span class="ansi-blue-fg">(</span>taylor_sin_minus_one<span class="ansi-blue-fg">,</span> N<span class="ansi-blue-fg">=</span>IntSlider<span class="ansi-blue-fg">(</span>min<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">,</span> max<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">20</span><span class="ansi-blue-fg">,</span> description<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">&#39;No. of Terms:&#39;</span><span class="ansi-blue-fg">,</span> continuous_update<span class="ansi-blue-fg">=</span><span class="ansi-green-fg">False</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      7</span> interactive_sin
 
-<span class="ansi-red-fg">ModuleNotFoundError</span>: No module named &#39;ipywidgets&#39;</pre>
+<span class="ansi-red-fg">NameError</span>: name &#39;interactive&#39; is not defined</pre>
 </div>
 </div>
 </div>
@@ -321,121 +318,6 @@ $\displaystyle x - \frac{x^{3}}{6} + \frac{x^{5}}{120} - \frac{x^{7}}{5040} + O\
 </div>
 </div>
 
-<div class="jb_cell tag_hide_input tag_interactive">
-
-<div class="cell border-box-sizing code_cell rendered tag_hide_input tag_interactive">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">matplotlib.ticker</span> <span class="k">as</span> <span class="nn">tck</span>
-<span class="kn">from</span> <span class="nn">sympy.utilities.lambdify</span> <span class="kn">import</span> <span class="n">lambdify</span>
-
-<span class="n">matplotlib</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;text.usetex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-<span class="n">matplotlib</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;text.latex.preamble&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="sa">r</span><span class="s1">&#39;\usepackage</span><span class="si">{amsmath}</span><span class="s1">&#39;</span><span class="p">,</span>
-    <span class="sa">r</span><span class="s1">&#39;\usepackage</span><span class="si">{amssymb}</span><span class="s1">&#39;</span><span class="p">]</span>
-
-<span class="k">def</span> <span class="nf">multiple_formatter</span><span class="p">(</span><span class="n">denominator</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">number</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">latex</span><span class="o">=</span><span class="s1">&#39;\pi&#39;</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">gcd</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
-        <span class="k">while</span> <span class="n">b</span><span class="p">:</span>
-            <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">b</span><span class="p">,</span> <span class="n">a</span><span class="o">%</span><span class="k">b</span>
-        <span class="k">return</span> <span class="n">a</span>
-    <span class="k">def</span> <span class="nf">_multiple_formatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
-        <span class="n">den</span> <span class="o">=</span> <span class="n">denominator</span>
-        <span class="n">num</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">rint</span><span class="p">(</span><span class="n">den</span><span class="o">*</span><span class="n">x</span><span class="o">/</span><span class="n">number</span><span class="p">))</span>
-        <span class="n">com</span> <span class="o">=</span> <span class="n">gcd</span><span class="p">(</span><span class="n">num</span><span class="p">,</span><span class="n">den</span><span class="p">)</span>
-        <span class="p">(</span><span class="n">num</span><span class="p">,</span><span class="n">den</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">num</span><span class="o">/</span><span class="n">com</span><span class="p">),</span><span class="nb">int</span><span class="p">(</span><span class="n">den</span><span class="o">/</span><span class="n">com</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">den</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">num</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
-                <span class="k">return</span> <span class="sa">r</span><span class="s1">&#39;$0$&#39;</span>
-            <span class="k">if</span> <span class="n">num</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
-                <span class="k">return</span> <span class="sa">r</span><span class="s1">&#39;$</span><span class="si">%s</span><span class="s1">$&#39;</span><span class="o">%</span><span class="k">latex</span>
-            <span class="k">elif</span> <span class="n">num</span><span class="o">==-</span><span class="mi">1</span><span class="p">:</span>
-                <span class="k">return</span> <span class="sa">r</span><span class="s1">&#39;$-</span><span class="si">%s</span><span class="s1">$&#39;</span><span class="o">%</span><span class="k">latex</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">return</span> <span class="sa">r</span><span class="s1">&#39;$</span><span class="si">%s%s</span><span class="s1">$&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">num</span><span class="p">,</span><span class="n">latex</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">num</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
-                <span class="k">return</span> <span class="sa">r</span><span class="s1">&#39;$\frac{</span><span class="si">%s</span><span class="s1">}{</span><span class="si">%s</span><span class="s1">}$&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">latex</span><span class="p">,</span><span class="n">den</span><span class="p">)</span>
-            <span class="k">elif</span> <span class="n">num</span><span class="o">==-</span><span class="mi">1</span><span class="p">:</span>
-                <span class="k">return</span> <span class="sa">r</span><span class="s1">&#39;$\frac{-</span><span class="si">%s</span><span class="s1">}{</span><span class="si">%s</span><span class="s1">}$&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">latex</span><span class="p">,</span><span class="n">den</span><span class="p">)</span>
-            <span class="k">else</span><span class="p">:</span>
-                <span class="k">return</span> <span class="sa">r</span><span class="s1">&#39;$\frac{</span><span class="si">%s%s</span><span class="s1">}{</span><span class="si">%s</span><span class="s1">}$&#39;</span><span class="o">%</span><span class="p">(</span><span class="n">num</span><span class="p">,</span><span class="n">latex</span><span class="p">,</span><span class="n">den</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">_multiple_formatter</span>
-
-<span class="k">class</span> <span class="nc">Multiple</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">denominator</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">number</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">latex</span><span class="o">=</span><span class="s1">&#39;\pi&#39;</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span> <span class="o">=</span> <span class="n">denominator</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">=</span> <span class="n">number</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">latex</span> <span class="o">=</span> <span class="n">latex</span>
-
-    <span class="k">def</span> <span class="nf">locator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">MultipleLocator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">number</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="p">)</span>
-
-    <span class="k">def</span> <span class="nf">formatter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="n">plt</span><span class="o">.</span><span class="n">FuncFormatter</span><span class="p">(</span><span class="n">multiple_formatter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">denominator</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">number</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">latex</span><span class="p">))</span>
-
-<span class="k">def</span> <span class="nf">interactive_sin_plot</span><span class="p">(</span><span class="n">N</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
-    
-    <span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span>
-    
-    <span class="n">ts</span> <span class="o">=</span> <span class="n">lambdify</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">taylor_sin</span><span class="p">(</span><span class="n">N</span><span class="p">)</span><span class="o">.</span><span class="n">removeO</span><span class="p">(),</span> <span class="s1">&#39;numpy&#39;</span><span class="p">)</span>
-    
-    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">xx</span><span class="p">))</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">ts</span><span class="p">(</span><span class="n">xx</span><span class="p">))</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="o">-</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">])</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\sin(x)$&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$x$&#39;</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
-    
-    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">MultipleLocator</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_minor_locator</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">MultipleLocator</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">12</span><span class="p">))</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_formatter</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">FuncFormatter</span><span class="p">(</span><span class="n">multiple_formatter</span><span class="p">()))</span>
-    
-    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
-    
-<span class="n">interactive_sin_plot</span> <span class="o">=</span> <span class="n">interactive</span><span class="p">(</span><span class="n">interactive_sin_plot</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="n">IntSlider</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s1">&#39;No. of Terms:&#39;</span><span class="p">))</span>
-<span class="n">output</span> <span class="o">=</span> <span class="n">interactive_sin_plot</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">output</span><span class="o">.</span><span class="n">layout</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="s1">&#39;320px&#39;</span>
-<span class="n">interactive_sin_plot</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="jb_output_wrapper output_widget_view  }}">
-<div class="output_area">
-
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-7-097644df749f&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
-<span class="ansi-green-intense-fg ansi-bold">     70</span>     plt<span class="ansi-blue-fg">.</span>close<span class="ansi-blue-fg">(</span>fig<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     71</span> 
-<span class="ansi-green-fg">---&gt; 72</span><span class="ansi-red-fg"> </span>interactive_sin_plot <span class="ansi-blue-fg">=</span> interactive<span class="ansi-blue-fg">(</span>interactive_sin_plot<span class="ansi-blue-fg">,</span> N<span class="ansi-blue-fg">=</span>IntSlider<span class="ansi-blue-fg">(</span>min<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">3</span><span class="ansi-blue-fg">,</span> max<span class="ansi-blue-fg">=</span><span class="ansi-cyan-fg">20</span><span class="ansi-blue-fg">,</span> description<span class="ansi-blue-fg">=</span><span class="ansi-blue-fg">&#39;No. of Terms:&#39;</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     73</span> output <span class="ansi-blue-fg">=</span> interactive_sin_plot<span class="ansi-blue-fg">.</span>children<span class="ansi-blue-fg">[</span><span class="ansi-blue-fg">-</span><span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">]</span>
-<span class="ansi-green-intense-fg ansi-bold">     74</span> output<span class="ansi-blue-fg">.</span>layout<span class="ansi-blue-fg">.</span>height <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">&#39;320px&#39;</span>
-
-<span class="ansi-red-fg">NameError</span>: name &#39;interactive&#39; is not defined</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-
-</div>
-</div>
-
 <div class="jb_cell">
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
@@ -451,13 +333,53 @@ $\displaystyle x - \frac{x^{3}}{6} + \frac{x^{5}}{120} - \frac{x^{7}}{5040} + O\
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Stability">Stability<a class="anchor-link" href="#Stability"> </a></h2><p>Usually roundoff error and truncation error do not interact with each other, but sometimes roundoff error can cause a numerical algorithm to become <em>unstable</em>. This happens when roundoff error gets mixed into the calculation and is magnified as it continues. Let's look at an example:</p>
+<h2 id="Stability">Stability<a class="anchor-link" href="#Stability"> </a></h2>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Usually roundoff error and truncation error do not interact with each other, but sometimes roundoff error can cause a numerical algorithm to become <em>unstable</em>. This happens when roundoff error gets mixed into the calculation and is magnified as it continues. Let's look at an example:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <p>Suppose we want to calculate the powers of the so called "Golden Mean"</p>
 <p>$\phi = \frac{\sqrt{5}-1}{2}$</p>
-<p>It can be verified that the power of $\phi^{n+1}$ can be calculated using the simple recusion relationship,</p>
+<p>It can be verified that the power of $\phi^{n+1}$ can be calculated using the simple recursion relationship,</p>
 <p>$\phi^{n+1} = \phi^{n-1} - \phi^n$</p>
-<p>Therefore by calcuating $\phi^0 = 1$ and $\phi^1 = 0.618034$ and successively applying the recusion relationship we should be able to calculate as many powers as desired. Let's see this in action:</p>
-<p>First we'll calculate what we will call the "exact" answer by actually evaluating all the power individually.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Therefore by calculating $\phi^0 = 1$ and $\phi^1 = 0.618034$ and successively applying the recursion relationship we should be able to calculate as many powers as desired. Let's see this in action:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>First we'll calculate what we will call the "exact" answer by actually evaluating all the power individually. We can do this efficiently with NumPy broadcasting.</p>
 
 </div>
 </div>
