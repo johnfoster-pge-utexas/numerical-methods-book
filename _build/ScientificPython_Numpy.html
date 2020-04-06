@@ -167,7 +167,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>80.6 ms ± 1.46 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
+<pre>65.2 ms ± 278 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)
 </pre>
 </div>
 </div>
@@ -222,7 +222,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>1.03 ms ± 10.3 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
+<pre>1.04 ms ± 9.53 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
 </pre>
 </div>
 </div>
@@ -281,7 +281,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>217 ms ± 1.72 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+<pre>216 ms ± 848 µs per loop (mean ± std. dev. of 7 runs, 1 loop each)
 </pre>
 </div>
 </div>
@@ -313,7 +313,7 @@ comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /con
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>36.6 ms ± 107 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)
+<pre>36.9 ms ± 188 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)
 </pre>
 </div>
 </div>
@@ -980,55 +980,55 @@ $$<p>where $\Delta x_{i + 1/2} = x_{i+1} - x_{i}$.  This operation can be accomp
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>array([[[0.06219167, 0.05601908, 0.10790655],
-        [0.4255581 , 0.24452381, 0.00613733],
-        [0.38207842, 0.12038392, 0.09109281],
+<pre>array([[[0.1018986 , 0.43443248, 0.14593223],
+        [0.1846522 , 0.17407867, 0.02376241],
+        [0.19999003, 0.00387254, 0.00274531],
         ...,
-        [0.32455678, 0.10180685, 0.02402669],
-        [0.03127067, 0.24070876, 0.02779554],
-        [0.4205088 , 0.12611245, 0.09446759]],
+        [0.18005484, 0.1185302 , 0.17615776],
+        [0.1942423 , 0.09227197, 0.21902065],
+        [0.38445869, 0.4087614 , 0.04348832]],
 
-       [[0.34950795, 0.06996868, 0.22227101],
-        [0.09347519, 0.05301022, 0.0613828 ],
-        [0.38966865, 0.42016044, 0.09159075],
+       [[0.01779394, 0.29028096, 0.23224299],
+        [0.3931844 , 0.47764322, 0.07338926],
+        [0.46009639, 0.10007349, 0.23277305],
         ...,
-        [0.38879951, 0.23502222, 0.0211869 ],
-        [0.3651849 , 0.38881891, 0.12888724],
-        [0.33652331, 0.329946  , 0.05544315]],
+        [0.18868246, 0.4475364 , 0.14991695],
+        [0.34015627, 0.22011403, 0.22852616],
+        [0.4329983 , 0.41120195, 0.177058  ]],
 
-       [[0.30150021, 0.06036034, 0.2359081 ],
-        [0.06663169, 0.28971099, 0.22349351],
-        [0.30697331, 0.36760856, 0.13798881],
+       [[0.01644341, 0.14040256, 0.21776634],
+        [0.3371591 , 0.16241594, 0.07555958],
+        [0.08138104, 0.01285228, 0.1746459 ],
         ...,
-        [0.35152342, 0.4459976 , 0.07671148],
-        [0.39270891, 0.28333085, 0.24434708],
-        [0.06353657, 0.16694752, 0.03945078]],
+        [0.39211257, 0.06699062, 0.10020109],
+        [0.26230385, 0.30729808, 0.05564744],
+        [0.35458983, 0.07308856, 0.11894202]],
 
        ...,
 
-       [[0.07913531, 0.16810151, 0.03408476],
-        [0.32887337, 0.00782757, 0.0259242 ],
-        [0.23429848, 0.19620893, 0.19822072],
+       [[0.46481638, 0.48223846, 0.05615405],
+        [0.43002145, 0.4235965 , 0.17613133],
+        [0.11728452, 0.05584113, 0.14223004],
         ...,
-        [0.22527641, 0.4392481 , 0.20539417],
-        [0.23915551, 0.33043012, 0.05283209],
-        [0.49188528, 0.298853  , 0.07420663]],
+        [0.36353166, 0.13101226, 0.03547245],
+        [0.13122663, 0.25750328, 0.05924087],
+        [0.23950341, 0.27205524, 0.16713442]],
 
-       [[0.37505778, 0.42451042, 0.04135828],
-        [0.04777851, 0.15132922, 0.18108155],
-        [0.16604199, 0.27242048, 0.05777697],
+       [[0.15701044, 0.21739217, 0.03721265],
+        [0.44076027, 0.31521625, 0.21550776],
+        [0.45836414, 0.30209529, 0.14822029],
         ...,
-        [0.05574049, 0.36853055, 0.2250655 ],
-        [0.2323152 , 0.3456773 , 0.24427402],
-        [0.16217257, 0.43798374, 0.01375931]],
+        [0.153771  , 0.42510446, 0.09141887],
+        [0.39504056, 0.45929534, 0.0886889 ],
+        [0.01385798, 0.34918156, 0.21276522]],
 
-       [[0.24794576, 0.1946996 , 0.20864124],
-        [0.17700955, 0.03925846, 0.06211676],
-        [0.24479116, 0.20053408, 0.02050085],
+       [[0.20031532, 0.15856525, 0.14736795],
+        [0.39386225, 0.22526746, 0.0186973 ],
+        [0.17770571, 0.34309581, 0.17239385],
         ...,
-        [0.10139377, 0.08661315, 0.20727808],
-        [0.11160805, 0.02945434, 0.13171736],
-        [0.21722406, 0.12887981, 0.17911139]]])</pre>
+        [0.13026295, 0.49535139, 0.20764405],
+        [0.32558924, 0.33331136, 0.08560134],
+        [0.45123294, 0.21372614, 0.18244129]]])</pre>
 </div>
 
 </div>
@@ -1503,7 +1503,7 @@ $$<p>where $\Delta x_{i + 1/2} = x_{i+1} - x_{i}$.  This operation can be accomp
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>array([ -2,   3,  -5,   3, -10,   0,   3,  -9,   1,  -5])</pre>
+<pre>array([ 8, -6, -6, -3,  2,  9, -4, -9,  4, -4])</pre>
 </div>
 
 </div>
@@ -1548,7 +1548,7 @@ $$<p>where $\Delta x_{i + 1/2} = x_{i+1} - x_{i}$.  This operation can be accomp
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>array([False,  True, False,  True, False, False,  True, False,  True,
+<pre>array([ True, False, False, False,  True,  True, False, False,  True,
        False])</pre>
 </div>
 
@@ -1594,7 +1594,7 @@ $$<p>where $\Delta x_{i + 1/2} = x_{i+1} - x_{i}$.  This operation can be accomp
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>array([3, 3, 3, 1])</pre>
+<pre>array([8, 2, 9, 4])</pre>
 </div>
 
 </div>
@@ -1639,7 +1639,7 @@ $$<p>where $\Delta x_{i + 1/2} = x_{i+1} - x_{i}$.  This operation can be accomp
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>array([0, 3, 0, 3, 0, 0, 3, 0, 1, 0])</pre>
+<pre>array([8, 0, 0, 0, 2, 9, 0, 0, 4, 0])</pre>
 </div>
 
 </div>

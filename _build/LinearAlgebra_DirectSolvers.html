@@ -13,7 +13,7 @@ prev_page:
 next_page:
   url: 
 suffix: .ipynb
-search: x bmatrix n frac begin end matrix r solution mathbf elimination system gauss linear row jordan gaussian b pivot equations equation back rows substitution xrightarrow p consider right conditioned align largest pivoting steps vec xn well inspection value algorithm partial xa methods unknowns singular below same computer loop m times both change called where ill condition matrices proceed computation using exchange pseudocode e leq current j multiplication subtraction set ji ei numpy implementation scheme inversion solving systems any without another form left vector hand computations numbers lets column ldotsa nn neq innermost ii perform ej python loops produce direct later
+search: x bmatrix n frac begin end matrix r solution mathbf elimination gauss system jordan linear row gaussian b pivot equations equation back rows substitution xrightarrow p consider right conditioned align largest pivoting steps vec xn well inspection value algorithm partial xa methods unknowns singular below same computer loop m times both change called where ill condition matrices proceed computation using exchange pseudocode e leq current j multiplication subtraction set ji ei numpy implementation scheme inversion solving systems any without another form left vector hand computations numbers lets column ldotsa nn neq innermost ii perform ej python loops produce direct later
 
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
@@ -315,7 +315,7 @@ x_1+10000x_2 = 10000
 
 <div class="cell border-box-sizing text_cell rendered tag_popout"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The diagonal entry of the row you are using to eliminate entries below is called the <em>pivot</em>. $0.0001$ is the pivot in this example.</p>
+<p>The leading non-zero entry of the row you are using to eliminate entries below is called the <em>pivot</em>. $0.0001$ is the pivot in this example.</p>
 
 </div>
 </div>
@@ -327,7 +327,10 @@ x_1+10000x_2 = 10000
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 \begin{equation}
-\begin{bmatrix} 0.0001&amp;1&amp;1\\0&amp;1&amp;1\end{bmatrix}
+\begin{bmatrix} 
+0.0001 &amp; 1 &amp; 1 \\
+0 &amp; 1 &amp; 1
+\end{bmatrix}
 \end{equation}
 </div>
 </div>
@@ -381,17 +384,6 @@ $$
 </div>
 </div>
 
-<div class="jb_cell tag_popout">
-
-<div class="cell border-box-sizing text_cell rendered tag_popout"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Pseudocode is a human readable computer algorithm description.  It omits any language specific syntax in favor of clarity using general programming flow control and conditional statements.</p>
-
-</div>
-</div>
-</div>
-</div>
-
 <div class="jb_cell">
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
@@ -413,6 +405,17 @@ E_2&amp;: a_{21}x_1+a_{22}x_2+\ldots+a_{2n}x_n = a_{2,n_1}\\
 &amp; \vdots \\
 E_n&amp;: a_{n1}x_1+a_{n2}x_2+\ldots+a_{nn}x_n = a_{n,n+1}
 \end{align}
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell tag_popout">
+
+<div class="cell border-box-sizing text_cell rendered tag_popout"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Pseudocode is a human readable computer algorithm description.  It omits any language specific syntax in favor of clarity using general programming flow control and conditional statements.</p>
+
 </div>
 </div>
 </div>
@@ -482,7 +485,8 @@ E_n&amp;: a_{n1}x_1+a_{n2}x_2+\ldots+a_{nn}x_n = a_{n,n+1}
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Python/NumPy-implementation-for-Gaussian-elimination-with-back-substitution-and-partial-pivoting">Python/NumPy implementation for Gaussian elimination with back substitution and partial pivoting<a class="anchor-link" href="#Python/NumPy-implementation-for-Gaussian-elimination-with-back-substitution-and-partial-pivoting"> </a></h3>
+<h3 id="Python/NumPy-implementation-for-Gaussian-elimination-with-back-substitution-and-partial-pivoting">Python/NumPy implementation for Gaussian elimination with back substitution and partial pivoting<a class="anchor-link" href="#Python/NumPy-implementation-for-Gaussian-elimination-with-back-substitution-and-partial-pivoting"> </a></h3><p><a id='gauss-elimination'></a></p>
+
 </div>
 </div>
 </div>
@@ -508,7 +512,8 @@ E_n&amp;: a_{n1}x_1+a_{n2}x_2+\ldots+a_{nn}x_n = a_{n,n+1}
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">gauss_solve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
     
-    <span class="c1">#Concontanate the matrix A and right hand side column vector b into one matrix</span>
+    <span class="c1">#Concontanate the matrix A and right hand side column </span>
+    <span class="c1">#vector b into one matrix</span>
     <span class="n">temp_mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span>
     
     <span class="c1">#Get the number of rows</span>
@@ -541,7 +546,8 @@ E_n&amp;: a_{n1}x_1+a_{n2}x_2+\ldots+a_{nn}x_n = a_{n,n+1}
     <span class="c1">#Allocating space for the solution vector</span>
     <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">double</span><span class="p">);</span>
 
-    <span class="c1">#Here we perform the back-substitution.  Initializing with the last row.</span>
+    <span class="c1">#Here we perform the back-substitution.  Initializing </span>
+    <span class="c1">#with the last row.</span>
     <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_mat</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">temp_mat</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">]</span>
     
     <span class="c1">#Looping over rows in reverse (from the bottom up), starting with the second to</span>
@@ -683,7 +689,8 @@ E_n&amp;: a_{n1}x_1+a_{n2}x_2+...+a_{nn}x_n = a_{n,n+1}
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Python/NumPy-implementation-for-Gauss-Jordan-elimination-with-partial-pivoting">Python/NumPy implementation for Gauss-Jordan elimination with partial pivoting<a class="anchor-link" href="#Python/NumPy-implementation-for-Gauss-Jordan-elimination-with-partial-pivoting"> </a></h3>
+<h3 id="Python/NumPy-implementation-for-Gauss-Jordan-elimination-with-partial-pivoting">Python/NumPy implementation for Gauss-Jordan elimination with partial pivoting<a class="anchor-link" href="#Python/NumPy-implementation-for-Gauss-Jordan-elimination-with-partial-pivoting"> </a></h3><p><a id='gauss-jordan'></a></p>
+
 </div>
 </div>
 </div>
@@ -698,7 +705,8 @@ E_n&amp;: a_{n1}x_1+a_{n2}x_2+...+a_{nn}x_n = a_{n,n+1}
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">gauss_jordan_solve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
     
-    <span class="c1">#Concontanate the matrix A and right hand side column vector b into one matrix</span>
+    <span class="c1">#Concontanate the matrix A and right hand side column </span>
+    <span class="c1">#vector b into one matrix</span>
     <span class="n">temp_mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span>
     
     <span class="c1">#Get the number of rows</span>
