@@ -1,0 +1,859 @@
+---
+redirect_from:
+  - "/linearalgebra-directsolvers"
+interact_link: content/LinearAlgebra_DirectSolvers.ipynb
+kernel_name: python3
+kernel_path: content
+has_widgets: false
+title: |-
+  Direct Methods for Solving Linear Systems of Equations
+pagenum: 14
+prev_page:
+  url: /NumericalMethods_ErrorDescriptors.html
+next_page:
+  url: 
+suffix: .ipynb
+search: x bmatrix n frac begin end matrix r solution mathbf elimination system gauss linear row jordan gaussian b pivot equations equation back rows substitution xrightarrow p consider right conditioned align largest pivoting steps vec xn well inspection value algorithm partial xa methods unknowns singular below same computer loop m times both change called where ill condition matrices proceed computation using exchange pseudocode e leq current j multiplication subtraction set ji ei numpy implementation scheme inversion solving systems any without another form left vector hand computations numbers lets column ldotsa nn neq innermost ii perform ej python loops produce direct later
+
+comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
+---
+
+    <main class="jupyter-page">
+    <div id="page-info"><div id="page-title">Direct Methods for Solving Linear Systems of Equations</div>
+</div>
+    <div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This section covers <em>direct methods</em> for solving linear systems of equations. Later, we'll also cover <em>iterative methods</em>; the distinction will be obvious once both types of methods are discussed.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Solving-systems-of-linear-equations">Solving systems of linear equations<a class="anchor-link" href="#Solving-systems-of-linear-equations"> </a></h2>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Recall the three basic rules for matrix manipulation from linear algebra:</p>
+<ol>
+<li>Switching two rows or columns does not change the solution of the linear system.</li>
+<li>Any row can be multiplied by a constant without changing the solution of the linear system.</li>
+<li>Any row or linear multiple of a row can be added/subtracted to/from another row without changing the solution of the linear system.</li>
+</ol>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Consider the system of equations:</p>
+$$3 x_1 + 8 x_2 = 10$$$$4 x_1 + 6 x_2 = 2$$
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can write in augmented matrix form:</p>
+$$
+\begin{bmatrix}
+3 &amp; 8 &amp; 10\\ 4 &amp; 6 &amp; 2
+\end{bmatrix}
+$$
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can multiply the 1st row $\left(R_1\right)$ by $-\frac{4}{3}$ and add it to the 2nd row $\left(R_2\right)$, etc...</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+$$
+\begin{bmatrix}
+3 &amp; 8 &amp; 10 \\ 4 &amp; 6 &amp; 2
+\end{bmatrix} \xrightarrow{-\frac{4}{3}R_1 \to R_1}
+\begin{bmatrix}
+-4 &amp; -\frac{32}{3} &amp; -\frac{40}{3} \\ 4 &amp; 6 &amp; 2
+\end{bmatrix} \xrightarrow{R_1 + R_2 \to R_2}
+\begin{bmatrix}
+-4 &amp; -\frac{32}{3} &amp; -\frac{40}{3} \\ 0 &amp; -\frac{14}{3} &amp; -\frac{34}{3}
+\end{bmatrix} {\xrightarrow[-\frac{3}{14}R_2 \to R_2]{-\frac{1}{4}R_1 \to R_1}}
+\begin{bmatrix}
+1 &amp; \frac{8}{3} &amp; \frac{10}{3} \\ 0 &amp; 1 &amp; \frac{17}{7}
+\end{bmatrix}
+$$
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>By inspection we can see that $x_2 = \frac{17}{7}$ we can then substitute this solution into a modified first equation</p>
+$$
+x_1 + \frac{8}{3}x_2 = \frac{10}{3}
+$$<p>and solve for $x_1$. The final solution is $x_1 = -\frac{22}{7}$,  $x_2 = \frac{17}{7}$.</p>
+<p>This procedure is called <em>Gaussian elimination</em>.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Stability-of-Gaussian-elimination">Stability of Gaussian elimination<a class="anchor-link" href="#Stability-of-Gaussian-elimination"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Recall that another way of writing a linear system of equations in matrix form is $\mathbf{A}\vec{x} = \vec{b}$, where $\mathbf{A}$ is the coefficient matrix, $\vec{x}$ is the vector of unknowns, and $\vec{b}$ is the right-hand side vector.</p>
+<p>One method of determining if a linear system <em>has a solution</em> is to take the determinate of the $\mathbf{A}$ matrix. If the determinate of $\mathbf{A} = 0$ then the matrix is said to be <em>singular</em> and the system either has no solution or an infinite number of solutions.</p>
+<p>A matrix that is near-singular is said to be <em>ill-conditioned</em> whereas one that is far from singular is said to be <em>well-conditioned</em>. There is a notion of <em>condition number</em> that mathematically quantifies a matrix's amenability to numeric computations with matrices having high condition numbers being well conditioned and matrices with low condition numbers being ill conditioned. We will return to condition numbers in more detail when we discuss singular value decomposition. Below is an example of two matrices $\mathbf{A}$ and $\mathbf{B}$. $\mathbf{A}$ is an ill-conditioned matrix, $\mathbf{B}$ is well-conditioned.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell tag_popout">
+
+<div class="cell border-box-sizing text_cell rendered tag_popout"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If we were to change the last entry of $\mathbf{A}$ to $a_{22} = 1$, it would be singular.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> 
+              <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.0001</span><span class="p">]])</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>9.99999999999889e-05</pre>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.0001</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+              <span class="p">[</span><span class="mi">1</span>     <span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+
+<span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">B</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>-0.9999</pre>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To illustrate the ill-conditioning of $\mathbf{A}$ in another way let's consider two very close right-hand side vectors, $\vec{b}$:</p>
+\begin{align}
+x_1 &amp;+ \phantom{1.0001}x_2 = 2  \\
+x_1 &amp;+ 1.0001x_2 = 2  \label{system1} \tag{1}
+\end{align}
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>and
+\begin{align}
+x_1 &amp;+ \phantom{1.0001}x_2 = 2 \\
+x_1 &amp;+ 1.0001 x_2 = 2.0001 \label{system2} \tag{2}
+\end{align}</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The system of equations (\ref{system1}) has the solution $x_1 = 2, x_2 = 0$, and the system of equations (\ref{system2}) has the solution $x_1 = x_2 = 1$. Notice that a change in the fifth digit of $\vec{b}$ was amplified to a change in the first digit of the solution. Even the most robust numerical method will have trouble with this sensitivity to small perturbations.</p>
+<p>Now I would like to illustrate that even a well-conditioned matrix like $\mathbf{B}$ can be ruined by a poor algorithm. Consider the matrix $\mathbf{B}$ with the right-hand side vector, $\vec{b} = \left[1,2\right]$ and let's proceed with Gaussian elimination.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+\begin{equation}
+\begin{bmatrix} 0.0001 &amp; 1 &amp; 1\\1&amp;1&amp;2\end{bmatrix} \xrightarrow{10000 R_1 + R_2 \to R_2}
+\begin{bmatrix} 0.0001&amp;1&amp;1\\0&amp;-9999&amp;-9998\end{bmatrix} \xrightarrow{-\frac{1}{9999}R_2 \to R_2}
+\begin{bmatrix} 0.0001&amp;1&amp;1\\0&amp;1&amp;0.9999\end{bmatrix}
+\end{equation}
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>by inspection we see that $x_2 = 0.9999$, now we can back substitute into the first equation
+\begin{equation}
+x_1+10000x_2 = 10000
+\end{equation}</p>
+<p>and solve for $x_1$. The final solution is $x_1 = 1, x_2 = 0.9999$. Now let us do the same computation, this time on a computer that rounds the results of the computations to 3 decimal places (a machine epsilon of 0.0001), the resulting matrix after manipulations would be</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell tag_popout">
+
+<div class="cell border-box-sizing text_cell rendered tag_popout"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The diagonal entry of the row you are using to eliminate entries below is called the <em>pivot</em>. $0.0001$ is the pivot in this example.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+\begin{equation}
+\begin{bmatrix} 0.0001&amp;1&amp;1\\0&amp;1&amp;1\end{bmatrix}
+\end{equation}
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>by inspection we see that $x_2 = 1$ and back substitution yields $x_1 = 0$. This is the incorrect solution brought on by the small <em>pivot</em> 0.0001. For this matrix Gaussian elimination is a poor algorithm. Fortunately there is an easy solution: exchange rows.</p>
+<p>Now lets do the same computation on the same computer that rounds off the computation to 3 decimal places. This time we will exchange the rows before proceeding with the Gaussian elimination. Eliminating some detail we can see</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+$$
+\begin{bmatrix}1&amp;1&amp;2\\0.0001&amp;1&amp;1\end{bmatrix}\xrightarrow{R_1 - 10000 R_2 \to R_2}
+\begin{bmatrix}1&amp;1&amp;2\\0&amp;0.999&amp;0.999\end{bmatrix}\xrightarrow{\frac{1}{0.999}R_2 \to R_2}
+\begin{bmatrix}1&amp;1&amp;2\\0&amp;1&amp;1\end{bmatrix}
+$$
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>by inspection we see that $x_2 = 1$, and back substitution yields $x_1 = 1$. We can see that this solution differs from the exact solution only by the roundoff error of the computer. Exchanging rows to obtain the largest possible pivot is called <em>partial pivoting</em>. Exchanging both rows and columns to obtain the largest possible pivot is called <em>full pivoting</em>. Full pivoting will result in the most stable algorithm but requires more computations and the requirement of tracking column permutations. For most matrices partial pivoting is sufficient enough for stability.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Pseudocode-for-Gaussian-elimination-with-back-substitution-and-partial-pivoting">Pseudocode for Gaussian elimination with back substitution and partial pivoting<a class="anchor-link" href="#Pseudocode-for-Gaussian-elimination-with-back-substitution-and-partial-pivoting"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell tag_popout">
+
+<div class="cell border-box-sizing text_cell rendered tag_popout"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Pseudocode is a human readable computer algorithm description.  It omits any language specific syntax in favor of clarity using general programming flow control and conditional statements.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Consider a linear system with $n$ equations and $n$ unknowns:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+\begin{align}
+E_1&amp;: a_{11}x_1+a_{12}x_2+\ldots+a_{1n}x_n = a_{1,n+1}\\
+E_2&amp;: a_{21}x_1+a_{22}x_2+\ldots+a_{2n}x_n = a_{2,n_1}\\
+&amp; \vdots \\
+E_n&amp;: a_{n1}x_1+a_{n2}x_2+\ldots+a_{nn}x_n = a_{n,n+1}
+\end{align}
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<table>
+<thead><tr>
+<th>Steps</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>For $i = 1$, ..., $n$ do Steps 2-4</td>
+<td>loop over rows in progression</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Find $p$, where $p$ is the largest number with $i\leq p\leq n$</td>
+<td>search the current pivot and rows below the current one for the largest value</td>
+</tr>
+<tr>
+<td>3</td>
+<td>If $p\neq i$, then exchange row $i$ with row $p$</td>
+<td>now the largest value in the column is the new pivot</td>
+</tr>
+<tr>
+<td>4</td>
+<td>For $j=i+1, ..., n$ do Steps 5-6</td>
+<td>the innermost loop, multiplication and subtraction</td>
+</tr>
+<tr>
+<td>5</td>
+<td>set $m_{ji} = a_{ji}/a_{ii}$</td>
+<td></td>
+</tr>
+<tr>
+<td>6</td>
+<td>Perform $E_j = ( E_j - m_{ji}E_i)$</td>
+<td></td>
+</tr>
+<tr>
+<td>7</td>
+<td>Set $x_n = a_{n,n+1}/a_{nn}$</td>
+<td>start back substitution</td>
+</tr>
+<tr>
+<td>8</td>
+<td>For $i = n-1, ..., 1$ set $x_i=\frac{a_{i,n+1}-\sum\nolimits_{j=i+1}a_{ij}x_j}{a_{ii}}$</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Python/NumPy-implementation-for-Gaussian-elimination-with-back-substitution-and-partial-pivoting">Python/NumPy implementation for Gaussian elimination with back substitution and partial pivoting<a class="anchor-link" href="#Python/NumPy-implementation-for-Gaussian-elimination-with-back-substitution-and-partial-pivoting"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell tag_popout">
+
+<div class="cell border-box-sizing text_cell rendered tag_popout"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This implementation eliminates a few of the explicit loops described in the algorithm pseudocode by using NumPy broadcasting operations.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">gauss_solve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    
+    <span class="c1">#Concontanate the matrix A and right hand side column vector b into one matrix</span>
+    <span class="n">temp_mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span>
+    
+    <span class="c1">#Get the number of rows</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">temp_mat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    
+    <span class="c1">#Loop over rows</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+            
+        <span class="c1">#Find the pivot index by looking down the ith </span>
+        <span class="c1">#column from the ith row to find the maximum </span>
+        <span class="c1">#(in magnitude) entry.</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">temp_mat</span><span class="p">[</span><span class="n">i</span><span class="p">:,</span> <span class="n">i</span><span class="p">])</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span>
+            
+        <span class="c1">#We have to reindex the pivot index to be the </span>
+        <span class="c1">#appropriate entry in the entire matrix, not </span>
+        <span class="c1">#just from the ith row down.</span>
+        <span class="n">p</span> <span class="o">+=</span> <span class="n">i</span> 
+    
+        <span class="c1">#Swapping rows to make the maximal entry the </span>
+        <span class="c1">#pivot (if needed).</span>
+        <span class="k">if</span> <span class="n">p</span> <span class="o">!=</span> <span class="n">i</span><span class="p">:</span>
+            <span class="n">temp_row</span> <span class="o">=</span> <span class="n">temp_mat</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">temp_mat</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_mat</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">temp_mat</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_row</span>
+            
+        <span class="c1">#Eliminate all entries below the pivot</span>
+        <span class="n">factor</span> <span class="o">=</span> <span class="n">temp_mat</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">temp_mat</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span>
+        <span class="n">temp_mat</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-=</span> <span class="n">factor</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">*</span> <span class="n">temp_mat</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+                
+    <span class="c1">#Allocating space for the solution vector</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">double</span><span class="p">);</span>
+
+    <span class="c1">#Here we perform the back-substitution.  Initializing with the last row.</span>
+    <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_mat</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">temp_mat</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+    
+    <span class="c1">#Looping over rows in reverse (from the bottom up), starting with the second to</span>
+    <span class="c1">#last row, because the last row solve was completed in the last step.</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">temp_mat</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">temp_mat</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">:]))</span> <span class="o">/</span> <span class="n">temp_mat</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>
+        
+    <span class="k">return</span> <span class="n">x</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Gauss-Jordan-elimination">Gauss-Jordan elimination<a class="anchor-link" href="#Gauss-Jordan-elimination"> </a></h2>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Gauss-Jordan elimination simply adds steps to the simple Gauss elimination procedure to produce a matrix that is in <em>reduced row echelon form</em>. This is done by eliminating values both <em>above and below</em> the pivots and ensuring that each pivot has the value 1. Starting where we ended on the exact solution of matrix $\mathbf{B}$ earlier we can simply add two steps to produce a reduced row echelon matrix.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+$$
+\begin{bmatrix}0.0001&amp;1&amp;1\\0&amp;1&amp;0.9999\end{bmatrix}\xrightarrow{R_1 - R_2 \to R_1}\begin{bmatrix}0.0001&amp;0&amp;0.0001\\0&amp;1&amp;0.9999\end{bmatrix}
+$$
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>then we normalize the first equation to produce a 1 on the pivot:</p>
+$$
+\begin{bmatrix}0.0001&amp;0&amp;0.0001\\0&amp;1&amp;0.9999\end{bmatrix}\xrightarrow{\frac{1}{0.0001}R_1 \to R_1}
+\begin{bmatrix}1&amp;0&amp;1\\0&amp;1&amp;0.9999\end{bmatrix}
+$$
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>now by inspection (and without the use of back substitution) we can see that the solution is $x_1 = 1, x_2 = 0.9999$ just as before.</p>
+<p>For a linear system with $n$ equations and $m$ unknowns. The innermost loops (one subtraction and one multiplication) of a Gauss-Jordan elimination routine are executed $n^3$ and $n^2$ $m$ times. The corresponding loops in a Gaussian scheme are executed $\frac{1}{3}n^3$ and $\frac{1}{2}n^2m$ times, followed by a back substitution for a similar loop (one subtraction and one multiplication) that occurs $\frac{1}{2}n^2$ times. If there are far more equations that unknowns the Gaussian scheme with back substitution enjoys roughly a factor of 3 advantage over the Gauss-Jordan, for $n=m$ Gaussian elimination with back substitution enjoys a factor of 6 advantage over Gauss-Jordan. For matrix inversion (discussed later) the two methods have identical efficiencies.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Pseudocode-for-Gauss-Jordan-elimination-with-partial-pivoting">Pseudocode for Gauss-Jordan elimination with partial pivoting<a class="anchor-link" href="#Pseudocode-for-Gauss-Jordan-elimination-with-partial-pivoting"> </a></h3><p>Consider a linear system with $n$ equations and $n$ unknowns:</p>
+\begin{align}
+E_1&amp;: a_{11}x_1+a_{12}x_2+...+a_{1n}x_n = a_{1,n+1}\\
+E_2&amp;: a_{21}x_1+a_{22}x_2+...+a_{2n}x_n = a_{2,n_1}\\
+&amp; \vdots\\
+E_n&amp;: a_{n1}x_1+a_{n2}x_2+...+a_{nn}x_n = a_{n,n+1}
+\end{align}<table>
+<thead><tr>
+<th>Steps</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>For $i=1,...,n$ do Steps 2-4</td>
+<td>loop over rows in progression</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Find $p$, where $p$ is the largest number with $i\leq p \leq n$</td>
+<td>search the current pivot and the rows below the current one for the largest value</td>
+</tr>
+<tr>
+<td>3</td>
+<td>If $p\neq i$, then exchange row $i$ with row $p$</td>
+<td>now the largest value in the column is the new pivot</td>
+</tr>
+<tr>
+<td>4</td>
+<td>For $j=1,...,n$ do Steps 5-6</td>
+<td>the innermost loop, multiplication and subtraction</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Perform $E_i = \frac{1}{a_{ii}}E_i$</td>
+<td></td>
+</tr>
+<tr>
+<td>6</td>
+<td>If $i \neq j$ perform $E_j-a_{ji}E_i$</td>
+<td></td>
+</tr>
+<tr>
+<td>7</td>
+<td>For $i = 1,...,n$ set $x_i = a_{i,n+1}$</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Python/NumPy-implementation-for-Gauss-Jordan-elimination-with-partial-pivoting">Python/NumPy implementation for Gauss-Jordan elimination with partial pivoting<a class="anchor-link" href="#Python/NumPy-implementation-for-Gauss-Jordan-elimination-with-partial-pivoting"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">gauss_jordan_solve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    
+    <span class="c1">#Concontanate the matrix A and right hand side column vector b into one matrix</span>
+    <span class="n">temp_mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span>
+    
+    <span class="c1">#Get the number of rows</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">temp_mat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    
+    <span class="c1">#Loop over rows</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+            
+        <span class="c1">#Find the pivot index by looking down the ith </span>
+        <span class="c1">#column from the ith row to find the maximum </span>
+        <span class="c1">#(in magnitude) entry.</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">temp_mat</span><span class="p">[</span><span class="n">i</span><span class="p">:,</span> <span class="n">i</span><span class="p">])</span><span class="o">.</span><span class="n">argmax</span><span class="p">()</span>
+            
+        <span class="c1">#We have to reindex the pivot index to be the </span>
+        <span class="c1">#appropriate entry in the entire matrix, not </span>
+        <span class="c1">#just from the ith row down.</span>
+        <span class="n">p</span> <span class="o">+=</span> <span class="n">i</span> 
+    
+        <span class="c1">#Swapping rows to make the maximal entry the </span>
+        <span class="c1">#pivot (if needed).</span>
+        <span class="k">if</span> <span class="n">p</span> <span class="o">!=</span> <span class="n">i</span><span class="p">:</span>
+            <span class="n">temp_row</span> <span class="o">=</span> <span class="n">temp_mat</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">temp_mat</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_mat</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">temp_mat</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_row</span>
+            
+        <span class="c1">#Make the diagonal entires 1</span>
+        <span class="n">temp_mat</span> <span class="o">=</span> <span class="n">temp_mat</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">diagonal</span><span class="p">(</span><span class="n">temp_mat</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+        
+        <span class="c1">#Eliminate all entries above the pivot</span>
+        <span class="n">factor</span> <span class="o">=</span> <span class="n">temp_mat</span><span class="p">[:</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> 
+        <span class="n">temp_mat</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span> <span class="o">-=</span> <span class="n">factor</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">*</span> <span class="n">temp_mat</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            
+        <span class="c1">#Eliminate all entries below the pivot</span>
+        <span class="n">factor</span> <span class="o">=</span> <span class="n">temp_mat</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:,</span> <span class="n">i</span><span class="p">]</span> 
+        <span class="n">temp_mat</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-=</span> <span class="n">factor</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">*</span> <span class="n">temp_mat</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    
+    <span class="c1">#If solution is a column vector, flatten it into a 1D array</span>
+    <span class="k">if</span> <span class="n">temp_mat</span><span class="p">[:,</span><span class="n">N</span><span class="p">:]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">temp_mat</span><span class="p">[:,</span><span class="n">N</span><span class="p">:]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">temp_mat</span><span class="p">[:,</span><span class="n">N</span><span class="p">:]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Matrix-Inversion-with-Gauss-Jordan-scheme">Matrix Inversion with Gauss-Jordan scheme<a class="anchor-link" href="#Matrix-Inversion-with-Gauss-Jordan-scheme"> </a></h2>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For matrix inversion, both the Gauss elimination with back-substitution and Gauss-Jordan schemes described previously have identical efficiencies. For this reason we will, for simplicities sake, only consider the process for matrix inversion using the Gauss-Jordan scheme.</p>
+<p>All we have to do is augment an $\mathbf{A}$ matrix with an identity matrix of the same dimensions and proceed with Gauss-Jordan elimination exactly as we have done previously. Consider the following $\mathbf{A}$ matrix:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+\begin{equation}
+\mathbf{A} = \begin{bmatrix}1&amp;3&amp;2\\2&amp;4&amp;5\\10&amp;7&amp;3\end{bmatrix}
+\end{equation}
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>we augment it with a $3\times3$ identity matrix $\mathbf{A}\vert\mathbf{I}$ and proceed with Gauss-Jordan Elimination.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+$$
+\begin{bmatrix}
+1&amp;3&amp;2&amp;1&amp;0&amp;0\\2&amp;4&amp;5&amp;0&amp;1&amp;0\\10&amp;7&amp;3&amp;0&amp;0&amp;1
+\end{bmatrix} \rightarrow
+\begin{bmatrix}
+1&amp;0&amp;0&amp;-\frac{23}{57}&amp;\frac{5}{57}&amp;\frac{7}{57}\\0&amp;1&amp;0&amp;\frac{44}{57}&amp;-\frac{17}{57}&amp;-\frac{1}{57}\\0&amp;0&amp;1&amp;-\frac{26}{57}&amp;-\frac{23}{57}&amp;-\frac{2}{57}
+\end{bmatrix}
+$$
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can see by inspection the right side $3\times3$ submatrix on the right is the inverse of $\mathbf{A}$.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Python-/-NumPy-implementation-of-matrix-inverse-with-Gauss-Jordan-algorithm">Python / NumPy implementation of matrix inverse with Gauss-Jordan algorithm<a class="anchor-link" href="#Python-/-NumPy-implementation-of-matrix-inverse-with-Gauss-Jordan-algorithm"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">gauss_jordan_inverse</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    <span class="c1">#initialize b as an identity matrix the same size as A, and call</span>
+    <span class="c1">#gauss_jordan_solve as before.</span>
+    <span class="k">return</span> <span class="n">gauss_jordan_solve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+ 
+
+
+    </main>
+    
