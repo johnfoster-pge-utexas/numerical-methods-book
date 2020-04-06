@@ -58,3 +58,5 @@
   sections:
   - url: /NumericalMethods_ErrorDescriptors
     title: "Computer Preliminaries and Error Descriptors"
+  - url: /LinearAlgebra_DirectSolvers
+    title: "Direct Methods for Solving Linear Systems of Equations"
