@@ -534,9 +534,7 @@ E_n&amp;: a_{n1}x_1+a_{n2}x_2+\ldots+a_{nn}x_n = a_{n,n+1}
         <span class="c1">#Swapping rows to make the maximal entry the </span>
         <span class="c1">#pivot (if needed).</span>
         <span class="k">if</span> <span class="n">p</span> <span class="o">!=</span> <span class="n">i</span><span class="p">:</span>
-            <span class="n">temp_row</span> <span class="o">=</span> <span class="n">temp_mat</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-            <span class="n">temp_mat</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_mat</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-            <span class="n">temp_mat</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_row</span>
+            <span class="n">temp_mat</span><span class="p">[[</span><span class="n">p</span><span class="p">,</span> <span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">temp_mat</span><span class="p">[[</span><span class="n">i</span><span class="p">,</span> <span class="n">p</span><span class="p">]]</span>
             
         <span class="c1">#Eliminate all entries below the pivot</span>
         <span class="n">factor</span> <span class="o">=</span> <span class="n">temp_mat</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">temp_mat</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span>
@@ -726,9 +724,7 @@ E_n&amp;: a_{n1}x_1+a_{n2}x_2+...+a_{nn}x_n = a_{n,n+1}
         <span class="c1">#Swapping rows to make the maximal entry the </span>
         <span class="c1">#pivot (if needed).</span>
         <span class="k">if</span> <span class="n">p</span> <span class="o">!=</span> <span class="n">i</span><span class="p">:</span>
-            <span class="n">temp_row</span> <span class="o">=</span> <span class="n">temp_mat</span><span class="p">[</span><span class="n">p</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-            <span class="n">temp_mat</span><span class="p">[</span><span class="n">p</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_mat</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-            <span class="n">temp_mat</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp_row</span>
+            <span class="n">temp_mat</span><span class="p">[[</span><span class="n">p</span><span class="p">,</span> <span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">temp_mat</span><span class="p">[[</span><span class="n">i</span><span class="p">,</span> <span class="n">p</span><span class="p">]]</span>
             
         <span class="c1">#Make the diagonal entires 1</span>
         <span class="n">temp_mat</span> <span class="o">=</span> <span class="n">temp_mat</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">diagonal</span><span class="p">(</span><span class="n">temp_mat</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
