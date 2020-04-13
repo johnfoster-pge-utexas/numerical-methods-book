@@ -1,0 +1,1819 @@
+---
+redirect_from:
+  - "/linearalgebra-lu"
+interact_link: content/LinearAlgebra_LU.ipynb
+kernel_name: python3
+kernel_path: content
+has_widgets: false
+title: |-
+  LU Factorization
+pagenum: 15
+prev_page:
+  url: /LinearAlgebra_DirectSolvers.html
+next_page:
+  url: 
+suffix: .ipynb
+search: mathbf l u n bmatrix vec end phantom begin ddots vdots right k matrix left ldots p b lu solve row nn y steps x j step det using set sum factorization substitution m ik decomposition ii implementation kk matrices identity ji e middle operations forward consider numpy pseudocode triangular o xrightarrow python diagonal ij s pmatrix times column plu ldotsa ldotsl determinate linear frac process hand same perform simple our where algorithm inverse permutations into lower elimination system only therefore procedure psuedocode equation uj ui nonzero testing comparing np quad doolittle ldotsu kj km mk upper gaussian algebra let
+
+comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
+---
+
+    <main class="jupyter-page">
+    <div id="page-info"><div id="page-title">LU Factorization</div>
+</div>
+    <div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Any non-singular matrix $\mathbf{A}$ can be factored into a lower triangular matrix $\mathbf{L}$, and upper triangular matrix $\mathbf{U}$ using procedures we have already established with Gaussian elimination. This proves very useful for numerical computation and is, in fact, one of the most common ways most packaged linear algebra solvers solve non-sparse linear systems.</p>
+<p>Previously, we learned that by using Gaussian elimination we can solve the linear system $\mathbf{A}\vec{x} = \vec{b}$ in $O\left(\frac{1}{3}n^3\right)$ arithmetic operations to determine $\vec{x}$. It turns out if $\mathbf{A}$ has the form $\mathbf{A=LU}$ we can solve for $\vec{x}$ using a two step process. First we let $\vec{y}=\mathbf{U}\vec{x}$ and solve the system for $L\vec{y}=\vec{b}$ for $\vec{y}$. Since $\mathbf{L}$ is lower triangular we use a forward substitution process that only takes $O\left(n^2\right)$ operations. Once $\vec{y}$ is known, the upper triangular system $\mathbf{U}\vec{x}=\vec{y}$ can be solved with back substitution in $O\left(n^2\right)$ operations. Therefore using this procedure we can reduce the solution of $
+\mathbf{A}\vec{x} = \vec{b}$ from $O\left(\frac{1}{3}n^3\right)$ to $O\left(2n^2\right)$ operations. For large systems this can reduce the calculation time by more than 95%. Determining the $\mathbf{L}$ and $\mathbf{U}$ matrices still takes $O\left(\frac{1}{3}n^3\right)$, but it only has to be done for a single $\mathbf{A}$ matrix and can be used efficiently to solve for $\vec{x}$ with many right-hand side vectors, $\vec{b}$.</p>
+<p>We already know one way to transform $\mathbf{A}$ into $\mathbf{U}$ by using Gaussian elimination. We will leave the proof for linear algebra class, but we find $\mathbf{L}$ by performing negations of the same operations on the identity matrix in reverse order. For example when going $\mathbf{A}\rightarrow \mathbf{U}$ if we perform the row operation</p>
+$$
+E_i - m_{ji}E_j\rightarrow E_i
+$$<p>to undo this and return to $\mathbf{A}$ we would perform</p>
+$$
+E_i+m_{ji}E_j\rightarrow E_i
+$$<p>by performing the second operation on the identity matrix with the same dimensions as $\mathbf{A}$ we will end up with an $\mathbf{L}$. I emphasize <em>an</em> here because this is only one way to decompose $\mathbf{A}$ into $\mathbf{L}$ and $\mathbf{U}$, there are other methods and an infinite number of $\mathbf{L}$ and $\mathbf{U}$ matrices, i.e. they are not unique.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="$\mathbf{LU}$-Example">$\mathbf{LU}$ Example<a class="anchor-link" href="#$\mathbf{LU}$-Example"> </a></h3><p>We will look at a simple example and write out the row operations.</p>
+$$
+\mathbf{A} = \begin{bmatrix}1&amp;1&amp;0\\2&amp;1&amp;-1\\3&amp;-1&amp;-1\end{bmatrix}
+\xrightarrow{E_2-2E_1}
+\begin{bmatrix}1&amp;1&amp;0\\0&amp;-1&amp;-1\\3&amp;-1&amp;-1\end{bmatrix}
+\xrightarrow{E_3-3E_1}
+\begin{bmatrix}1&amp;1&amp;0\\0&amp;-1&amp;-1\\0&amp;-4&amp;-1\end{bmatrix}
+\xrightarrow{E_3-4E_2}
+\begin{bmatrix}1&amp;1&amp;0\\0&amp;-1&amp;-1\\0&amp;0&amp;3\end{bmatrix} = \mathbf{U}
+$$$$
+\mathbf{I} = \begin{bmatrix}1&amp;0&amp;0\\0&amp;1&amp;0\\0&amp;0&amp;1\end{bmatrix}
+\xrightarrow{E_3+4E_2}
+\begin{bmatrix}1&amp;0&amp;0\\0&amp;1&amp;0\\0&amp;4&amp;1\end{bmatrix}
+\xrightarrow{E_3+3E_1}
+\begin{bmatrix}1&amp;0&amp;0\\0&amp;1&amp;0\\3&amp;4&amp;1\end{bmatrix}
+\xrightarrow{E_2+2E_1}
+\begin{bmatrix}1&amp;0&amp;0\\2&amp;1&amp;0\\3&amp;4&amp;1\end{bmatrix} = \mathbf{L}
+$$<p>Let's check our results with Python</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">U</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">]])</span>
+<span class="n">L</span> <span class="o">@</span> <span class="n">U</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([[ 1,  1,  0],
+       [ 2,  1, -1],
+       [ 3, -1, -1]])</pre>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Notice that the entries in $\mathbf{L}$ below the diagonal are simply the $m_{ij}$'s therefore we do not actually have to perform the row operations we can simply insert the $m_{ij}$ components into their proper place and move forward.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Psuedocode-for-a-simple-$\mathbf{LU}$-factorization">Psuedocode for a simple $\mathbf{LU}$ factorization<a class="anchor-link" href="#Psuedocode-for-a-simple-$\mathbf{LU}$-factorization"> </a></h3><p>Consider the matricies:</p>
+\begin{equation}
+\mathbf{A} = \begin{pmatrix}a_{11}&amp;a_{12}&amp;...&amp;a_{1n}\\a_{21}&amp;\ddots&amp; &amp;a_{2n}\\\vdots&amp; &amp;\ddots&amp; \vdots\\a_{n1}&amp;...&amp;...&amp;a_{nn}\end{pmatrix},
+\mathbf{L} = \begin{pmatrix}l_{11}&amp;l_{12}&amp;...&amp;l_{1n}\\l_{21}&amp;\ddots&amp; &amp;l_{2n}\\\vdots&amp; &amp;\ddots&amp; \vdots\\l_{n1}&amp;...&amp;...&amp;l_{nn}\end{pmatrix},
+\mathbf{U} = \begin{pmatrix}u_{11}&amp;u_{12}&amp;...&amp;u_{1n}\\u_{21}&amp;\ddots&amp; &amp;u_{2n}\\\vdots&amp; &amp;\ddots&amp; \vdots\\u_{n1}&amp;...&amp;...&amp;u_{nn}\end{pmatrix}
+\end{equation}<table>
+<thead><tr>
+<th style="text-align:right">Steps</th>
+<th style="text-align:left"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">1.</td>
+<td style="text-align:left">Initialize $L$ to an identity matrix, $I$, of dimension $n \times n$ and $\mathbf{U = A}$.</td>
+</tr>
+<tr>
+<td style="text-align:right">2.</td>
+<td style="text-align:left">For $i = 1, \ldots, n$ do Step 3</td>
+</tr>
+<tr>
+<td style="text-align:right">3.</td>
+<td style="text-align:left">$\phantom{--}$ For $j=i+1, \ldots, n$ do Steps 4-5</td>
+</tr>
+<tr>
+<td style="text-align:right">4.</td>
+<td style="text-align:left">$\phantom{----}$ Set $l_{ji}=u_{ji}/u_{ii}$</td>
+</tr>
+<tr>
+<td style="text-align:right">5.</td>
+<td style="text-align:left">$\phantom{----}$ Perform $U_j = (U_j-l_{ji}U_i)$ (where $U_i, U_j$ represent the $i$ and $j$ rows of the matrix $\mathbf{U}$, respectively)</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Python-/-NumPy-implementation-of-a-simple-$\mathbf{LU}$-factorization">Python / NumPy implementation of a simple $\mathbf{LU}$ factorization<a class="anchor-link" href="#Python-/-NumPy-implementation-of-a-simple-$\mathbf{LU}$-factorization"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">lu</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    
+    <span class="c1">#Get the number of rows</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    
+    <span class="n">U</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">double</span><span class="p">)</span>
+    
+    <span class="c1">#Loop over rows</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+            
+        <span class="c1">#Eliminate entries below i with row operations on U and</span>
+        <span class="c1">#reverse the row operations to manipulate L</span>
+        <span class="n">factor</span> <span class="o">=</span> <span class="n">U</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">U</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span>
+        <span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">factor</span>
+        <span class="n">U</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-=</span> <span class="n">factor</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">*</span> <span class="n">U</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        
+    <span class="k">return</span> <span class="n">L</span><span class="p">,</span> <span class="n">U</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Psuedocode-for-a-simple-P$\mathbf{LU}$-factorization">Psuedocode for a simple P$\mathbf{LU}$ factorization<a class="anchor-link" href="#Psuedocode-for-a-simple-P$\mathbf{LU}$-factorization"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If we observe the pseudocode presented previously we can see that something as simple as $a_{ii}=0$ will cause our algorithm to fail.  We can prevent this from happening by doing a row exchange with a row that has a nonzero value in the $i^\mathrm{th}$ column.  Like Gauss elimination there are several pivot strategies that can be utilized.  For simplicity, we will exchange any row that has a zero on the diagonal with the first row below it that has a nonzero number in that column.  Here we have to keep track of the row exchanges by creating a permutation matrix, $\mathbf{P}$ by performing the same row exchanges to an identity matrix.  This gives a matrix with precisely one nonzero entry in each row and in each column and each nonzero entry is 1.  We will need $\mathbf{P}$ later, when we use the $\mathbf{LU}$ factorization to solve the permuted system of equations, $\mathbf{P A}\vec{x} = \mathbf{P} \vec{b}$.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Consider the matrices:</p>
+\begin{equation}
+\mathbf{A} = \begin{bmatrix}a_{11}&amp;a_{12}&amp;...&amp;a_{1n}\\a_{21}&amp;\ddots&amp; &amp;a_{2n}\\\vdots&amp; &amp;\ddots&amp; \vdots\\a_{n1}&amp;...&amp;...&amp;a_{nn}\end{bmatrix},
+\mathbf{L} = \begin{bmatrix}l_{11}&amp;l_{12}&amp;...&amp;l_{1n}\\l_{21}&amp;\ddots&amp; &amp;l_{2n}\\\vdots&amp; &amp;\ddots&amp; \vdots\\l_{n1}&amp;...&amp;...&amp;l_{nn}\end{bmatrix},
+\mathbf{U} = \begin{bmatrix}u_{11}&amp;u_{12}&amp;...&amp;u_{1n}\\u_{21}&amp;\ddots&amp; &amp;u_{2n}\\\vdots&amp; &amp;\ddots&amp; \vdots\\u_{n1}&amp;...&amp;...&amp;u_{nn}\end{bmatrix},
+\mathbf{P} = \begin{bmatrix}p_{11}&amp;p_{12}&amp;...&amp;p_{1n}\\p_{21}&amp;\ddots&amp; &amp;p_{2n}\\\vdots&amp; &amp;\ddots&amp; \vdots\\p_{n1}&amp;...&amp;...&amp;p_{nn}\end{bmatrix}
+\end{equation}<table>
+<thead><tr>
+<th style="text-align:right">Steps</th>
+<th style="text-align:left"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">1.</td>
+<td style="text-align:left">Initialize $\mathbf{L = P = I}$ of dimension $n \times n$ and $\mathbf{U = A}$</td>
+</tr>
+<tr>
+<td style="text-align:right">2.</td>
+<td style="text-align:left">For $i = 1, \ldots, n$ do Steps 3-4, 8</td>
+</tr>
+<tr>
+<td style="text-align:right">3.</td>
+<td style="text-align:left">$\phantom{--}$ Let $k = i$,</td>
+</tr>
+<tr>
+<td style="text-align:right">4.</td>
+<td style="text-align:left">$\phantom{--}$ While $u_{ii}=0$, do Steps 5-7</td>
+</tr>
+<tr>
+<td style="text-align:right">5.</td>
+<td style="text-align:left">$\phantom{----}$ Swap row $U_i$ with row $U_{ k+1 }$</td>
+</tr>
+<tr>
+<td style="text-align:right">6.</td>
+<td style="text-align:left">$\phantom{----}$ Swap row $P_i$ with row $P_{ k+1 }$</td>
+</tr>
+<tr>
+<td style="text-align:right">7.</td>
+<td style="text-align:left">$\phantom{----}$ Increment $k$ by $1$.</td>
+</tr>
+<tr>
+<td style="text-align:right">8.</td>
+<td style="text-align:left">$\phantom{--}$ For $j = i+1, \ldots, n$ do Steps 9-10</td>
+</tr>
+<tr>
+<td style="text-align:right">9.</td>
+<td style="text-align:left">$\phantom{----}$ Set $l_{ji} = u_{ ji }/ u_{ ii }$</td>
+</tr>
+<tr>
+<td style="text-align:right">10.</td>
+<td style="text-align:left">$\phantom{----}$ Perform $U_{ j }=U_{j} - l_{ji} U_{ i }$ (where $U_i, U_j$ represent the $i$ and $j$ rows of the matrix $\mathbf{U}$, respectively) </td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Python/NumPy-implementation-of-$\mathbf{PLU}$-decomposition">Python/NumPy implementation of $\mathbf{PLU}$ decomposition<a class="anchor-link" href="#Python/NumPy-implementation-of-$\mathbf{PLU}$-decomposition"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">plu</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    
+    <span class="c1">#Get the number of rows</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    
+    <span class="c1">#Allocate space for P, L, and U</span>
+    <span class="n">U</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">double</span><span class="p">)</span>
+    <span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">double</span><span class="p">)</span>
+    
+    <span class="c1">#Loop over rows</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        
+        <span class="c1">#Permute rows if needed</span>
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span> 
+            <span class="k">if</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">U</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">],</span> <span class="mf">0.0</span><span class="p">):</span>
+                <span class="k">break</span>
+            <span class="n">U</span><span class="p">[[</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">U</span><span class="p">[[</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">]]</span>
+            <span class="n">P</span><span class="p">[[</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">P</span><span class="p">[[</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">]]</span>
+            
+        <span class="c1">#Eliminate entries below i with row operations on U and</span>
+        <span class="c1">#reverse the row operations to manipulate L</span>
+        <span class="n">factor</span> <span class="o">=</span> <span class="n">U</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">U</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span>
+        <span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">factor</span>
+        <span class="n">U</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-=</span> <span class="n">factor</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">*</span> <span class="n">U</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        
+    <span class="k">return</span> <span class="n">P</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">U</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Psuedocode-for-solving-equations-after-$\mathbf{LU}$-factorization">Psuedocode for solving equations after $\mathbf{LU}$ factorization<a class="anchor-link" href="#Psuedocode-for-solving-equations-after-$\mathbf{LU}$-factorization"> </a></h3><p>Once we have $\mathbf{L}$ and $\mathbf{U}$ we can solve for as many right-hand side vectors $\vec{b}$ as desired very quickly using the following two step process. First we let $\vec{y}=\mathbf{U}\vec{x}$ and then solve for $\mathbf{L}\vec{y}=\vec{b}$ for $\vec{y}$ by using forward substitution. The pseudocode for this is as follows</p>
+<h4 id="Forward-substitution">Forward substitution<a class="anchor-link" href="#Forward-substitution"> </a></h4><table>
+<thead><tr>
+<th style="text-align:right">Steps</th>
+<th style="text-align:left"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">1.</td>
+<td style="text-align:left">Set $y_1 = b_1/l_{11}$</td>
+</tr>
+<tr>
+<td style="text-align:right">2.</td>
+<td style="text-align:left">For $i=2, 3, \ldots n$ do Step 3</td>
+</tr>
+<tr>
+<td style="text-align:right">3.</td>
+<td style="text-align:left">$$\phantom{--} y_i = \left.\left(b_i - \sum_{j=1}^{i-1} l_{ij}y_j \right)\middle/l_{ii} \right. $$</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Python/NumPy-implementation-of-forward-substitution">Python/NumPy implementation of forward substitution<a class="anchor-link" href="#Python/NumPy-implementation-of-forward-substitution"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">forward_substitution</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    
+    <span class="c1">#Get number of rows</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">L</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    
+    <span class="c1">#Allocating space for the solution vector</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">double</span><span class="p">);</span>
+    
+    <span class="c1">#Here we perform the forward-substitution.  Initializing </span>
+    <span class="c1">#with the first row.</span>
+    <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">L</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    
+    <span class="c1">#Looping over rows in reverse (from the bottom up), starting with the second to</span>
+    <span class="c1">#last row, because the last row solve was completed in the last step.</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+        <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="p">,:</span><span class="n">i</span><span class="p">],</span> <span class="n">y</span><span class="p">[:</span><span class="n">i</span><span class="p">]))</span> <span class="o">/</span> <span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>
+        
+    <span class="k">return</span> <span class="n">y</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Then solve $\mathbf{U}\vec{x} = \vec{y}$ for $\vec{x}$ using backward substitution. The psuedocode for this is</p>
+<h4 id="Back-substitution">Back substitution<a class="anchor-link" href="#Back-substitution"> </a></h4><table>
+<thead><tr>
+<th style="text-align:right">Steps</th>
+<th style="text-align:left"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">1.</td>
+<td style="text-align:left">Set $x_n = y_n / u_{nn}$</td>
+</tr>
+<tr>
+<td style="text-align:right">2.</td>
+<td style="text-align:left">For $i = n-1, n-2, ..., 1$ do Step 3.</td>
+</tr>
+<tr>
+<td style="text-align:right">3.</td>
+<td style="text-align:left">$$\phantom{--} x_i = \left. \left(y_i - \sum_{j=i+1}^{n} u_{ij} x_j\right)\middle/u_{ii}\right.$$</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Python/NumPy-implementation-of-backward-substitution">Python/NumPy implementation of backward substitution<a class="anchor-link" href="#Python/NumPy-implementation-of-backward-substitution"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">back_substitution</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    
+    <span class="c1">#Number of rows</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">U</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    
+    <span class="c1">#Allocating space for the solution vector</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">double</span><span class="p">);</span>
+
+    <span class="c1">#Here we perform the back-substitution.  Initializing </span>
+    <span class="c1">#with the last row.</span>
+    <span class="n">x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">U</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    
+    <span class="c1">#Looping over rows in reverse (from the bottom up), starting with the second to</span>
+    <span class="c1">#last row, because the last row solve was completed in the last step.</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">U</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">:],</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">:]))</span> <span class="o">/</span> <span class="n">U</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>
+        
+    <span class="k">return</span> <span class="n">x</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Putting everything together for a solution process</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">lu_solve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    
+    <span class="n">L</span><span class="p">,</span> <span class="n">U</span> <span class="o">=</span> <span class="n">lu</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    
+    <span class="n">y</span> <span class="o">=</span> <span class="n">forward_substitution</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">back_substitution</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Testing the code</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">22</span><span class="p">],</span> <span class="p">[</span><span class="mi">32</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mi">5</span><span class="p">]])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">3.</span><span class="p">])</span>
+
+<span class="n">lu_solve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([ 0.05614973,  0.25935829, -0.01871658])</pre>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>and comparing to NumPy's <code>np.lingalg.solve</code></p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([ 0.05614973,  0.25935829, -0.01871658])</pre>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For a $\mathbf{PLU}$ factorization would have the additional step of permuting the right-hand side vector $\vec{b} = \mathbf{P}\vec{b}$ before doing the forward substitution to solve for $\vec{y}$.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">plu_solve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">):</span>
+    
+    <span class="n">P</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">U</span> <span class="o">=</span> <span class="n">plu</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    
+    <span class="n">y</span> <span class="o">=</span> <span class="n">forward_substitution</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+    
+    <span class="k">return</span> <span class="n">back_substitution</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Testing our implementation</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">22</span><span class="p">],</span> <span class="p">[</span><span class="mi">32</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mi">5</span><span class="p">]])</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">3.</span><span class="p">])</span>
+
+<span class="n">plu_solve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([ 0.05363985,  0.2835249 , -0.02681992])</pre>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Comparing to the NumPy <code>np.linalg.solve</code> function (which also uses the PLU
+factorization method)</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([ 0.05363985,  0.2835249 , -0.02681992])</pre>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="$\mathbf{LU}$-factorization,-another-look">$\mathbf{LU}$ factorization, another look<a class="anchor-link" href="#$\mathbf{LU}$-factorization,-another-look"> </a></h2>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's consider a generic $\mathbf{LU}$ factorization, for simplicity we will consider a set of $3 \times 3$ matrices, but these ideas will apply in the $n\times n$ case as well</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+$$
+\mathbf{LU} = \begin{bmatrix}l_{11}&amp;0&amp;0\\l_{21}&amp;l_{22}&amp;0\\l_{31}&amp;l_{32}&amp;l_{33}\end{bmatrix}
+\begin{bmatrix}u_{11}&amp;u_{12}&amp;u_{13}\\0&amp;u_{22}&amp;u_{23}\\0&amp;0&amp;u_{33}\end{bmatrix} = 
+\begin{bmatrix}a_{11}&amp;a_{12}&amp;a_{13}\\a_{21}&amp;a_{22}&amp;a_{23}\\a_{31}&amp;a_{32}&amp;a_{33}\end{bmatrix} = \mathbf{A}
+$$<p>If we multiply the two matrices on the left together, we have</p>
+$$
+\begin{bmatrix}l_{11}u_{11}&amp;l_{11}u_{12}&amp;l_{11}u_{12}\\l_{21}u_{11}&amp;l_{21}u_{12}+l_{22}u_{22}&amp;l_{21}u_{13}+l_{22}u_{23}\\l_{31}u_{11}&amp;l_{31}u_{12}+l_{32}u_{22}&amp;l_{31}u_{13}+l_{32}u_{23}+l_{33}u_{33}\end{bmatrix} = 
+\begin{bmatrix}a_{11}&amp;a_{12}&amp;a_{13}\\a_{21}&amp;a_{22}&amp;a_{23}\\a_{31}&amp;a_{32}&amp;a_{33}\end{bmatrix}
+$$
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now if we take the same approach as before where the $l_{ii}$'s are the 1's we can solve the first row of equations trivially, namely</p>
+$$u_{11} = a_{11}, \quad u_{12} = a_{12}, \quad u_{13} = a_{13},$$<p>then we have enough information to solve the rest of the first column,</p>
+$$l_{21} = a_{21}/a_{11}, \quad l_{31}=a_{31}/a_{11},$$<p>and the rest of the second row,</p>
+$$u_{22} = (a_{22}-a_{21}^{2}/a_{11}), \quad u_{23} = (a_{23}-a_{21}a_{23}/a_{11}),$$<p>etc.</p>
+<p>When this procedure is generalized it is known as the Doolittle alogrithm. There is a similar procedure known as Crout's method that uses the 1's on the diagonal of the $\mathbf{U}$ matrix. The generalization of these methods will be shown in the sequel described in their pseudocode.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Pseudocode-for-Doolittle-algorithm.">Pseudocode for Doolittle algorithm.<a class="anchor-link" href="#Pseudocode-for-Doolittle-algorithm."> </a></h3><p>Consider the matrices</p>
+$$
+\mathbf{A} = \begin{bmatrix}a_{11}&amp;a_{12}&amp;\ldots&amp;a_{1n}\\a_{21}&amp;\ddots&amp; &amp;a_{2n}\\\vdots&amp; &amp;\ddots&amp; \vdots\\a_{n1}&amp;\ldots&amp;\ldots&amp;a_{nn}\end{bmatrix},
+\mathbf{L} = \begin{bmatrix}l_{11}&amp;l_{12}&amp;\ldots&amp;l_{1n}\\l_{21}&amp;\ddots&amp; &amp;l_{2n}\\\vdots&amp; &amp;\ddots&amp; \vdots\\l_{n1}&amp;\ldots&amp;\ldots&amp;l_{nn}\end{bmatrix},
+\mathbf{U} = \begin{bmatrix}u_{11}&amp;u_{12}&amp;\ldots&amp;u_{1n}\\u_{21}&amp;\ddots&amp; &amp;u_{2n}\\\vdots&amp; &amp;\ddots&amp; \vdots\\u_{n1}&amp;\ldots&amp;\ldots&amp;u_{nn}\end{bmatrix}
+$$<table>
+<thead><tr>
+<th style="text-align:right">Steps</th>
+<th style="text-align:left"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">1.</td>
+<td style="text-align:left">For $k = 1, 2, \ldots, n$ do Steps 2-3, 5</td>
+</tr>
+<tr>
+<td style="text-align:right">2.</td>
+<td style="text-align:left">$\phantom{--}$ Set $l_{kk}=1$</td>
+</tr>
+<tr>
+<td style="text-align:right">3.</td>
+<td style="text-align:left">$\phantom{--}$ For $j=k, k+1, \ldots,  n$ do Step 4</td>
+</tr>
+<tr>
+<td style="text-align:right">4.</td>
+<td style="text-align:left">$$\phantom{----} u_{kj} = a_{kj} - \sum_{m=1}^{k-1}l_{km}u_{mj}$$</td>
+</tr>
+<tr>
+<td style="text-align:right">5.</td>
+<td style="text-align:left">$\phantom{--}$ For $i=k+1, k+2, \ldots, n$ do Step 6</td>
+</tr>
+<tr>
+<td style="text-align:right">6.</td>
+<td style="text-align:left">$$\phantom{----} l_{ik}=\left.\left(a_{ik}-\sum_{m=1}^{k-1}l_{im}u_{mk}\right) \middle/u_{kk}\right.$$</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">doolittle</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    
+    <span class="n">n</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    
+    <span class="n">U</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">double</span><span class="p">)</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">double</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        
+        <span class="n">U</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">:]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">:]</span> <span class="o">-</span> <span class="n">L</span><span class="p">[</span><span class="n">k</span><span class="p">,:</span><span class="n">k</span><span class="p">]</span> <span class="o">@</span> <span class="n">U</span><span class="p">[:</span><span class="n">k</span><span class="p">,</span><span class="n">k</span><span class="p">:]</span>
+        <span class="n">L</span><span class="p">[(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">):,</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">A</span><span class="p">[(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">):,</span><span class="n">k</span><span class="p">]</span> <span class="o">-</span> <span class="n">L</span><span class="p">[(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">):,:]</span> <span class="o">@</span> <span class="n">U</span><span class="p">[:,</span><span class="n">k</span><span class="p">])</span> <span class="o">/</span> <span class="n">U</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span>
+    
+    <span class="k">return</span> <span class="n">L</span><span class="p">,</span> <span class="n">U</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Latex</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">22</span><span class="p">],</span> <span class="p">[</span><span class="mi">32</span><span class="p">,</span> <span class="mf">5.</span><span class="p">,</span> <span class="mi">5</span><span class="p">]])</span>
+<span class="n">L</span><span class="p">,</span> <span class="n">U</span> <span class="o">=</span> <span class="n">doolittle</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">Latex</span><span class="p">(</span><span class="s1">&#39;$\mathbf A =\phantom{{.}}$</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">A</span><span class="p">)))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">Latex</span><span class="p">(</span><span class="s1">&#39;$\mathbf {{LU}} =\phantom{{.}}$</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">L</span> <span class="o">@</span> <span class="n">U</span><span class="p">)))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_latex output_subarea ">
+$\mathbf A =\phantom{.}$[[ 1.  4.  5.]
+ [ 6.  8. 22.]
+ [32.  5.  5.]]
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_latex output_subarea ">
+$\mathbf {LU} =\phantom{.}$[[ 1.  4.  5.]
+ [ 6.  8. 22.]
+ [32.  5.  5.]]
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Pseudocode-for-Crout-algorithm">Pseudocode for Crout algorithm<a class="anchor-link" href="#Pseudocode-for-Crout-algorithm"> </a></h3><p>Consider the matrices</p>
+$$
+A = \begin{bmatrix}a_{11}&amp;a_{12}&amp;\ldots&amp;a_{1n}\\a_{21}&amp;\ddots&amp; &amp;a_{2n}\\\vdots&amp; &amp;\ddots&amp; \vdots\\a_{n1}&amp;\ldots&amp;\ldots&amp;a_{nn}\end{bmatrix},
+L = \begin{bmatrix}l_{11}&amp;l_{12}&amp;\ldots&amp;l_{1n}\\l_{21}&amp;\ddots&amp; &amp;l_{2n}\\\vdots&amp; &amp;\ddots&amp; \vdots\\l_{n1}&amp;\ldots&amp;\ldots&amp;l_{nn}\end{bmatrix},
+U = \begin{bmatrix}u_{11}&amp;u_{12}&amp;\ldots&amp;u_{1n}\\u_{21}&amp;\ddots&amp; &amp;u_{2n}\\\vdots&amp; &amp;\ddots&amp; \vdots\\u_{n1}&amp;\ldots&amp;\ldots&amp;u_{nn}\end{bmatrix}
+$$<table>
+<thead><tr>
+<th style="text-align:right">Steps</th>
+<th style="text-align:left"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">1.</td>
+<td style="text-align:left">For $k = 1, 2, ..., n$ do Steps 2-3, 5</td>
+</tr>
+<tr>
+<td style="text-align:right">2.</td>
+<td style="text-align:left">$\phantom{--}$ Set $l_{kk} = a_{kk}-\sum_{m=1}^{k-1}l_{km}u_{mk}$</td>
+</tr>
+<tr>
+<td style="text-align:right">3.</td>
+<td style="text-align:left">$\phantom{--}$ For $j = k, k+1, \ldots n$ do Step 4</td>
+</tr>
+<tr>
+<td style="text-align:right">4.</td>
+<td style="text-align:left">$$\phantom{----} u_{kj} = \left.\left(a_{kj}-\sum_{m=1}^{k-1}l_{km}u_{mj}\right)\middle/l_{kk}\right.$$</td>
+</tr>
+<tr>
+<td style="text-align:right">5.</td>
+<td style="text-align:left">$\phantom{--}$ For $i = k+1, k+2, \ldots, n$ do Step </td>
+</tr>
+<tr>
+<td style="text-align:right">6.</td>
+<td style="text-align:left">$$\phantom{----} l_{ik} = \left.\left(a_{ik}-\sum_{m=1}^{k-1}l_{im}u_{mk}\right) \middle/ u_{kk}\right.$$</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">crout</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    
+    <span class="n">n</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    
+    <span class="n">U</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">double</span><span class="p">)</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">double</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        
+        <span class="n">L</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">-</span> <span class="n">L</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:]</span> <span class="o">@</span> <span class="n">U</span><span class="p">[:,</span> <span class="n">k</span><span class="p">]</span>
+        
+        <span class="n">U</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">:]</span> <span class="o">=</span> <span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">:]</span> <span class="o">-</span> <span class="n">L</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:</span><span class="n">k</span><span class="p">]</span> <span class="o">@</span> <span class="n">U</span><span class="p">[:</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">:])</span> <span class="o">/</span> <span class="n">L</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span>
+        <span class="n">L</span><span class="p">[(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">):,</span> <span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">A</span><span class="p">[(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">):,</span> <span class="n">k</span><span class="p">]</span> <span class="o">-</span> <span class="n">L</span><span class="p">[(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">):,</span> <span class="p">:]</span> <span class="o">@</span> <span class="n">U</span><span class="p">[:,</span> <span class="n">k</span><span class="p">])</span> <span class="o">/</span> <span class="n">U</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span>
+    
+    <span class="k">return</span> <span class="n">L</span><span class="p">,</span> <span class="n">U</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">L</span><span class="p">,</span> <span class="n">U</span> <span class="o">=</span> <span class="n">crout</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">Latex</span><span class="p">(</span><span class="s1">&#39;$\mathbf A =\phantom{{.}}$</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">A</span><span class="p">)))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">Latex</span><span class="p">(</span><span class="s1">&#39;$\mathbf {{LU}} =\phantom{{.}}$</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">L</span> <span class="o">@</span> <span class="n">U</span><span class="p">)))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_latex output_subarea ">
+$\mathbf A =\phantom{.}$[[ 1.  4.  5.]
+ [ 6.  8. 22.]
+ [32.  5.  5.]]
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_latex output_subarea ">
+$\mathbf {LU} =\phantom{.}$[[ 1.  4.  5.]
+ [ 6.  8. 22.]
+ [32.  5.  5.]]
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Pseudocode-for-Cholesky-decomposition">Pseudocode for Cholesky decomposition<a class="anchor-link" href="#Pseudocode-for-Cholesky-decomposition"> </a></h3><p>If matrix $\mathbf{A}$ is symmetric and positive definite, then there exists a lower triangular matrix $\mathbf{L}$ such that $\mathbf{A=LL}^\intercal$. This is just a special case of the $\mathbf{LU}$ decomposition, $\mathbf{U=L}^\intercal$. The algorithm is slightly simpler than the Doolittle or Crout methods.</p>
+<p>Consider the matrices</p>
+$$
+\mathbf{A} = \begin{bmatrix}a_{11}&amp;a_{12}&amp;\ldots&amp;a_{1n}\\a_{21}&amp;\ddots&amp; &amp;a_{2n}\\\vdots&amp; &amp;\ddots&amp; \vdots\\a_{n1}&amp;\ldots&amp;\ldots&amp;a_{nn}\end{bmatrix},
+L = \begin{bmatrix}l_{11}&amp;l_{12}&amp;\ldots&amp;l_{1n}\\l_{21}&amp;\ddots&amp; &amp;l_{2n}\\\vdots&amp; &amp;\ddots&amp; \vdots\\l_{n1}&amp;\ldots&amp;\ldots&amp;l_{nn}\end{bmatrix},
+$$<table>
+<thead><tr>
+<th style="text-align:right">Steps</th>
+<th style="text-align:left"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">1.</td>
+<td style="text-align:left">For $k=1,2,\ldots n$ do Steps 2-3</td>
+</tr>
+<tr>
+<td style="text-align:right">2.</td>
+<td style="text-align:left">$\phantom{--}$ Set $l_{kk} = \sqrt{a_{kk}-\sum_{m=1}^{k-1}l_{km}^2}$</td>
+</tr>
+<tr>
+<td style="text-align:right">3.</td>
+<td style="text-align:left">$\phantom{--}$ For $i=k+1,k+2,\ldots, n$ do Step 4.</td>
+</tr>
+<tr>
+<td style="text-align:right">4.</td>
+<td style="text-align:left">$$\phantom{----} l_{ik}=\left.\left(a_{ik}-\sum_{m=1}^{k-1}l_{im}l_{mk}\right) \middle / l_{kk}\right.$$</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">cholesky</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    
+    <span class="n">n</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    
+    <span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">double</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        
+        <span class="n">L</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">L</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">:]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+        
+        <span class="n">L</span><span class="p">[(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">):,</span> <span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">A</span><span class="p">[(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">):,</span> <span class="n">k</span><span class="p">]</span> <span class="o">-</span> <span class="n">L</span><span class="p">[(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">):,</span> <span class="p">:]</span> <span class="o">@</span> <span class="n">L</span><span class="p">[:,</span> <span class="n">k</span><span class="p">])</span> <span class="o">/</span> <span class="n">L</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span>
+    
+    <span class="k">return</span> <span class="n">L</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Testing the implementation</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mf">2.</span><span class="p">]])</span>
+<span class="n">L</span> <span class="o">=</span> <span class="n">cholesky</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">Latex</span><span class="p">(</span><span class="s1">&#39;$\mathbf L =\phantom{{.}}$</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">L</span><span class="p">)))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">Latex</span><span class="p">(</span><span class="s1">&#39;$\mathbf A = \mathbf {{L L^\intercal}} =\phantom{{.}}$</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">L</span> <span class="o">@</span> <span class="n">L</span><span class="o">.</span><span class="n">T</span><span class="p">)))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_latex output_subarea ">
+$\mathbf L =\phantom{.}$[[ 1.41421356  0.          0.        ]
+ [-0.70710678  1.22474487  0.        ]
+ [ 0.         -0.81649658  1.15470054]]
+</div>
+
+</div>
+</div>
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_latex output_subarea ">
+$\mathbf A = \mathbf {L L^\intercal} =\phantom{.}$[[ 2. -1.  0.]
+ [-1.  2. -1.]
+ [ 0. -1.  2.]]
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">cholesky</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+<span class="n">display</span><span class="p">(</span><span class="n">Latex</span><span class="p">(</span><span class="s1">&#39;$\mathbf L =\phantom{{.}}$</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">L</span><span class="p">)))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_latex output_subarea ">
+$\mathbf L =\phantom{.}$[[ 1.41421356  0.          0.        ]
+ [-0.70710678  1.22474487  0.        ]
+ [ 0.         -0.81649658  1.15470054]]
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Solving-for-the-inverse-of-$\mathbf-A$-with-the-$\mathbf{LU}$-decomposition">Solving for the inverse of $\mathbf A$ with the $\mathbf{LU}$ decomposition<a class="anchor-link" href="#Solving-for-the-inverse-of-$\mathbf-A$-with-the-$\mathbf{LU}$-decomposition"> </a></h2>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Once the $\mathbf{LU}$ decomposition of $\mathbf{A}$ is complete it is straightforward to find the inverse of $\mathbf{A}$, using the same forward and backward substitution process we used when solving for an arbitrary right hand side vector $\vec{b}$.   Except we will do the procedure $n$ times, where $n$ is the number of columns of $\mathbf{A}$ and</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+$$\vec{b} = \left[\vec{b}_1, \vec{b}_2, \ldots, \vec{b}_n\right] = \mathbf{I}$$
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>are the columns of the identity matrix. Stated differently, we will use the columns of the identity matrix as individual right-hand side vectors, $\vec{b}$, in order to solve for the inverse column-by-column.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Pseudocode-for-inverse-solve-after-$\mathbf{LU}$-decomposition">Pseudocode for inverse solve after $\mathbf{LU}$ decomposition<a class="anchor-link" href="#Pseudocode-for-inverse-solve-after-$\mathbf{LU}$-decomposition"> </a></h3><table>
+<thead><tr>
+<th style="text-align:right">Steps</th>
+<th style="text-align:left"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">1.</td>
+<td style="text-align:left">Set $\vec{b} = \mathbf{I}$ with dimension $n \times n$</td>
+</tr>
+<tr>
+<td style="text-align:right">2.</td>
+<td style="text-align:left">For $k = 1, 2, \ldots, n$ do Steps 3-4, 6-7</td>
+</tr>
+<tr>
+<td style="text-align:right">3.</td>
+<td style="text-align:left">$\phantom{--}$ Set $y_{1k}=\frac{b_{1k}}{l_{11}}$</td>
+</tr>
+<tr>
+<td style="text-align:right">4.</td>
+<td style="text-align:left">$\phantom{--}$ For $i = 2, 3, \ldots n$ do Step 5.</td>
+</tr>
+<tr>
+<td style="text-align:right">5.</td>
+<td style="text-align:left">$$\phantom{----} y_{ik} = \left.\left(b_{ik}-\sum\nolimits_{j=1}^{i-1}l_{ij}y_{jk} \right) \middle/ l_{ii} \right.$$</td>
+</tr>
+<tr>
+<td style="text-align:right">6.</td>
+<td style="text-align:left">$\phantom{--}$ Set $x_{nk} = \frac{y_{nk}}{u_{nn}}$</td>
+</tr>
+<tr>
+<td style="text-align:right">7.</td>
+<td style="text-align:left">$\phantom{--}$ For $i = n-1, n-2, \ldots, 1$ do Step 8</td>
+</tr>
+<tr>
+<td style="text-align:right">8.</td>
+<td style="text-align:left">$$\phantom{----} x_{ik}= \left.\left(y_{ik}-\sum_{j=i+1}^{n}u_{ij}x_{jk}\right) \middle/ u_{ii}\right.$$</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">plu_inverse</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    
+    <span class="n">n</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    
+    <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">Ainv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n</span><span class="p">,</span> <span class="n">n</span><span class="p">))</span>
+    
+    <span class="n">P</span><span class="p">,</span> <span class="n">L</span><span class="p">,</span> <span class="n">U</span> <span class="o">=</span> <span class="n">plu</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        
+        <span class="n">y</span> <span class="o">=</span> <span class="n">forward_substitution</span><span class="p">(</span><span class="n">L</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">P</span><span class="p">,</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]))</span>
+        
+        <span class="n">Ainv</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">back_substitution</span><span class="p">(</span><span class="n">U</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        
+    <span class="k">return</span> <span class="n">Ainv</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Testing the <code>plu_inverse</code> implementation</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plu_inverse</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([[0.75, 0.5 , 0.25],
+       [0.5 , 1.  , 0.5 ],
+       [0.25, 0.5 , 0.75]])</pre>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>and comparing with the built in NumPy matrix inverse function <code>np.linalg.inv</code></p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([[0.75, 0.5 , 0.25],
+       [0.5 , 1.  , 0.5 ],
+       [0.25, 0.5 , 0.75]])</pre>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Determinant-of-a-Matrix">Determinant of a Matrix<a class="anchor-link" href="#Determinant-of-a-Matrix"> </a></h2>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You might recall from linear algebra that there are several ways of computing the determinant of a matrix (e.g. Leibniz formula, Laplace formula, Cramer's rule, etc.); however, none of these are as computationally efficient as using the $\mathbf{LU}$ decomposition and a few properties of determinants to solve for the determinate of a matrix $\mathbf{A}$. Recall,</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For $\mathbf{A = LU}, \implies \det(\mathbf{A}) = \det(\mathbf{L})\det(\mathbf{U})$</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>also for an upper (or lower) triangular matrix. The determinate of the matrix is simply the product of the diagonal entries. Therefore, if we solve for $\mathbf{L}$ and $\mathbf{U}$ using the Doolittle method, where there are 1's on the diagonal of the $\mathbf{L}$ matrix, then the determinate of $\mathbf{L}$ is 1. Thus,</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+$$\det(\mathbf{A}) = 1 \cdot \det(\mathbf{U}) = \prod_{j=1}^{n}u_{jj}$$
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Similarly, for a $\mathbf{PLU}$ decomposition,</p>
+$$\det(\mathbf{A}) = \det(\mathbf{P})\det(\mathbf{L})\det(\mathbf{U}) = \det(\mathbf{P})\cdot\prod_{j=1}^{n}u_{jj}$$
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>but, $\mathbf{P}$ is just a permutation of the identity matrix. Let's observe what happens when we do five semi-random row permutations of the identity matrix and calculate the determinate of $\mathbf{P}$ each time.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">P</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">P</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">P</span><span class="p">))</span>
+
+<span class="n">P</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]]</span> <span class="o">=</span> <span class="n">P</span><span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">P</span><span class="p">))</span>
+
+<span class="n">P</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">]]</span> <span class="o">=</span> <span class="n">P</span><span class="p">[[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">P</span><span class="p">))</span>
+
+<span class="n">P</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]</span> <span class="o">=</span> <span class="n">P</span><span class="p">[[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">P</span><span class="p">))</span>
+
+<span class="n">P</span><span class="p">[[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">P</span><span class="p">[[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">P</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>-1.0
+1.0
+-1.0
+1.0
+-1.0
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Therefore all we need to do is keep track of the number of row permutations and the $\det(\mathbf{P})$ will have the following properties</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+$$
+\det(P) =
+\begin{cases}
+1, &amp; \textrm{for even number of permutations} \\
+-1,&amp; \textrm{for odd number of permutations}
+\end{cases}
+$$
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Python/NumPy-implementation-of-$\mathbf{PLU}$-determinate">Python/NumPy implementation of $\mathbf{PLU}$ determinate<a class="anchor-link" href="#Python/NumPy-implementation-of-$\mathbf{PLU}$-determinate"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>First we modify our <code>plu</code> function from before to only return $\mathbf{U}$ and the number of permutations of $\mathbf{P}$.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">plu_for_det</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    
+    <span class="c1">#Get the number of rows</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    
+    <span class="n">U</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">double</span><span class="p">)</span>
+    <span class="n">P</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">double</span><span class="p">)</span>
+    
+    <span class="n">number_of_permutations</span> <span class="o">=</span> <span class="mi">0</span>
+    
+    <span class="c1">#Loop over rows</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+        
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span> 
+            <span class="k">if</span> <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">U</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">],</span> <span class="mf">0.0</span><span class="p">):</span>
+                <span class="k">break</span>
+            <span class="n">U</span><span class="p">[[</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">U</span><span class="p">[[</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">]]</span>
+            <span class="n">P</span><span class="p">[[</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="n">P</span><span class="p">[[</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">]]</span>
+            <span class="n">number_of_permutations</span> <span class="o">+=</span> <span class="mi">1</span>
+            
+        <span class="c1">#Eliminate entries below i with row operations on U and</span>
+        <span class="c1">#reverse the row operations to manipulate L</span>
+        <span class="n">factor</span> <span class="o">=</span> <span class="n">U</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">U</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span>
+        <span class="n">L</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">factor</span>
+        <span class="n">U</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-=</span> <span class="n">factor</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">*</span> <span class="n">U</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        
+    <span class="k">return</span> <span class="n">U</span><span class="p">,</span> <span class="n">number_of_permutations</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now we can easily implement the determinate calculation</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">plu_det</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    
+    <span class="n">U</span><span class="p">,</span> <span class="n">number_of_permutations</span> <span class="o">=</span> <span class="n">plu_for_det</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">number_of_permutations</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">diagonal</span><span class="p">(</span><span class="n">U</span><span class="p">)</span><span class="o">.</span><span class="n">prod</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">diagonal</span><span class="p">(</span><span class="n">U</span><span class="p">)</span><span class="o">.</span><span class="n">prod</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Checking our implementation</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plu_det</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>4.0</pre>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Comparing against <code>np.linalg.det</code></p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="jb_output_wrapper }}">
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>4.0</pre>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+ 
+
+
+    </main>
+    
