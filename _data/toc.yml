@@ -60,3 +60,5 @@
     title: "Computer Preliminaries and Error Descriptors"
   - url: /LinearAlgebra_DirectSolvers
     title: "Direct Methods for Solving Linear Systems of Equations"
+  - url: /LinearAlgebra_LU
+    title: "LU Factorization"
