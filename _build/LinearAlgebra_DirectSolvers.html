@@ -13,7 +13,7 @@ prev_page:
 next_page:
   url: /LinearAlgebra_LU.html
 suffix: .ipynb
-search: x bmatrix n frac begin end matrix r solution mathbf elimination system gauss linear row jordan gaussian b pivot equations equation back rows substitution xrightarrow p consider right conditioned align largest pivoting steps vec xn well inspection value algorithm partial xa methods unknowns singular below same computer loop m times both change called where ill condition matrices proceed computation using exchange pseudocode e leq current j multiplication subtraction set ji ei numpy implementation scheme inversion solving systems any without another form left vector hand computations numbers lets column ldotsa nn neq innermost ii perform ej python loops produce direct later
+search: x bmatrix n frac begin end matrix r solution mathbf elimination system gauss linear row jordan gaussian b phantom equations equation right back p xrightarrow substitution consider conditioned align pivot pivoting steps vec xn well rows inspection algorithm partial xa methods left unknowns singular same computer m times both change called where ill condition matrices proceed computation using exchange largest pseudocode e leq j ji ei numpy implementation scheme inversion solving systems any without another form vector hand computations numbers below lets ldotsa nn neq set ii perform ej python loops produce direct later discussed recall columns changing add substitute
 
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
@@ -427,51 +427,46 @@ E_n&amp;: a_{n1}x_1+a_{n2}x_2+\ldots+a_{nn}x_n = a_{n,n+1}
 <div class="text_cell_render border-box-sizing rendered_html">
 <table>
 <thead><tr>
-<th>Steps</th>
-<th></th>
-<th></th>
+<th style="text-align:right">Steps</th>
+<th style="text-align:left"></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>1</td>
-<td>For $i = 1$, ..., $n$ do Steps 2-4</td>
-<td>loop over rows in progression</td>
+<td style="text-align:right">1</td>
+<td style="text-align:left">For $i = 1$, ..., $n$ do Steps 2-4</td>
 </tr>
 <tr>
-<td>2</td>
-<td>Find $p$, where $p$ is the largest number with $i\leq p\leq n$</td>
-<td>search the current pivot and rows below the current one for the largest value</td>
+<td style="text-align:right">2</td>
+<td style="text-align:left">$\phantom{--}$ Find $p$, where $p$ is the largest number with $i\leq p\leq n$ </td>
 </tr>
 <tr>
-<td>3</td>
-<td>If $p\neq i$, then exchange row $i$ with row $p$</td>
-<td>now the largest value in the column is the new pivot</td>
+<td style="text-align:right">3</td>
+<td style="text-align:left">$\phantom{--}$ If $p \neq i$, then exchange row $i$ with row $p$ </td>
 </tr>
 <tr>
-<td>4</td>
-<td>For $j=i+1, ..., n$ do Steps 5-6</td>
-<td>the innermost loop, multiplication and subtraction</td>
+<td style="text-align:right">4</td>
+<td style="text-align:left">$\phantom{--}$ For $j=i+1, ..., n$ do Steps 5-6</td>
 </tr>
 <tr>
-<td>5</td>
-<td>set $m_{ji} = a_{ji}/a_{ii}$</td>
-<td></td>
+<td style="text-align:right">5</td>
+<td style="text-align:left">$\phantom{----}$ set $m_{ji} = a_{ji}/a_{ii}$</td>
 </tr>
 <tr>
-<td>6</td>
-<td>Perform $E_j = ( E_j - m_{ji}E_i)$</td>
-<td></td>
+<td style="text-align:right">6</td>
+<td style="text-align:left">$\phantom{----}$ Perform $E_j = ( E_j - m_{ji}E_i)$</td>
 </tr>
 <tr>
-<td>7</td>
-<td>Set $x_n = a_{n,n+1}/a_{nn}$</td>
-<td>start back substitution</td>
+<td style="text-align:right">7</td>
+<td style="text-align:left">Set $x_n = a_{n,n+1}/a_{nn}$</td>
 </tr>
 <tr>
-<td>8</td>
-<td>For $i = n-1, ..., 1$ set $x_i=\frac{a_{i,n+1}-\sum\nolimits_{j=i+1}a_{ij}x_j}{a_{ii}}$</td>
-<td></td>
+<td style="text-align:right">8</td>
+<td style="text-align:left">For $i = n-1, ..., 1$ do Step 9</td>
+</tr>
+<tr>
+<td style="text-align:right">9</td>
+<td style="text-align:left">$$ x_i=\left.\left(a_{i,n+1}-\sum_{j=i+1}a_{ij}x_j \right) \middle/ a_{ii} \right.$$</td>
 </tr>
 </tbody>
 </table>
@@ -516,10 +511,10 @@ E_n&amp;: a_{n1}x_1+a_{n2}x_2+\ldots+a_{nn}x_n = a_{n,n+1}
     <span class="n">temp_mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span>
     
     <span class="c1">#Get the number of rows</span>
-    <span class="n">N</span> <span class="o">=</span> <span class="n">temp_mat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">temp_mat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     
     <span class="c1">#Loop over rows</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
             
         <span class="c1">#Find the pivot index by looking down the ith </span>
         <span class="c1">#column from the ith row to find the maximum </span>
@@ -549,7 +544,7 @@ E_n&amp;: a_{n1}x_1+a_{n2}x_2+\ldots+a_{nn}x_n = a_{n,n+1}
     
     <span class="c1">#Looping over rows in reverse (from the bottom up), starting with the second to</span>
     <span class="c1">#last row, because the last row solve was completed in the last step.</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
         <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">temp_mat</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">temp_mat</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">:]))</span> <span class="o">/</span> <span class="n">temp_mat</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">i</span><span class="p">]</span>
         
     <span class="k">return</span> <span class="n">x</span>
@@ -633,46 +628,38 @@ E_2&amp;: a_{21}x_1+a_{22}x_2+...+a_{2n}x_n = a_{2,n_1}\\
 E_n&amp;: a_{n1}x_1+a_{n2}x_2+...+a_{nn}x_n = a_{n,n+1}
 \end{align}<table>
 <thead><tr>
-<th>Steps</th>
-<th></th>
-<th></th>
+<th style="text-align:right">Steps</th>
+<th style="text-align:left"></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>1</td>
-<td>For $i=1,...,n$ do Steps 2-4</td>
-<td>loop over rows in progression</td>
+<td style="text-align:right">1</td>
+<td style="text-align:left">For $i=1,...,n$ do Steps 2-4</td>
 </tr>
 <tr>
-<td>2</td>
-<td>Find $p$, where $p$ is the largest number with $i\leq p \leq n$</td>
-<td>search the current pivot and the rows below the current one for the largest value</td>
+<td style="text-align:right">2</td>
+<td style="text-align:left">$\phantom{--}$ Find $p$, where $p$ is the largest number with $i\leq p \leq n$</td>
 </tr>
 <tr>
-<td>3</td>
-<td>If $p\neq i$, then exchange row $i$ with row $p$</td>
-<td>now the largest value in the column is the new pivot</td>
+<td style="text-align:right">3</td>
+<td style="text-align:left">$\phantom{--}$ If $p \neq i$, then exchange row $i$ with row $p$</td>
 </tr>
 <tr>
-<td>4</td>
-<td>For $j=1,...,n$ do Steps 5-6</td>
-<td>the innermost loop, multiplication and subtraction</td>
+<td style="text-align:right">4</td>
+<td style="text-align:left">$\phantom{--}$ For $j=1,...,n$ do Steps 5-6</td>
 </tr>
 <tr>
-<td>5</td>
-<td>Perform $E_i = \frac{1}{a_{ii}}E_i$</td>
-<td></td>
+<td style="text-align:right">5</td>
+<td style="text-align:left">$\phantom{----}$ Perform $E_i = \frac{1}{a_{ii}}E_i$</td>
 </tr>
 <tr>
-<td>6</td>
-<td>If $i \neq j$ perform $E_j-a_{ji}E_i$</td>
-<td></td>
+<td style="text-align:right">6</td>
+<td style="text-align:left">$\phantom{----}$ If $i \neq j$ perform $E_j-a_{ji}E_i$</td>
 </tr>
 <tr>
-<td>7</td>
-<td>For $i = 1,...,n$ set $x_i = a_{i,n+1}$</td>
-<td></td>
+<td style="text-align:right">7</td>
+<td style="text-align:left">For $i = 1,...,n$ set $x_i = a_{i,n+1}$</td>
 </tr>
 </tbody>
 </table>
@@ -706,10 +693,10 @@ E_n&amp;: a_{n1}x_1+a_{n2}x_2+...+a_{nn}x_n = a_{n,n+1}
     <span class="n">temp_mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">A</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span>
     
     <span class="c1">#Get the number of rows</span>
-    <span class="n">N</span> <span class="o">=</span> <span class="n">temp_mat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">temp_mat</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
     
     <span class="c1">#Loop over rows</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">N</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
             
         <span class="c1">#Find the pivot index by looking down the ith </span>
         <span class="c1">#column from the ith row to find the maximum </span>
@@ -738,10 +725,10 @@ E_n&amp;: a_{n1}x_1+a_{n2}x_2+...+a_{nn}x_n = a_{n,n+1}
         <span class="n">temp_mat</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span> <span class="o">-=</span> <span class="n">factor</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span> <span class="o">*</span> <span class="n">temp_mat</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
     
     <span class="c1">#If solution is a column vector, flatten it into a 1D array</span>
-    <span class="k">if</span> <span class="n">temp_mat</span><span class="p">[:,</span><span class="n">N</span><span class="p">:]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">temp_mat</span><span class="p">[:,</span><span class="n">N</span><span class="p">:]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">temp_mat</span><span class="p">[:,</span><span class="n">n</span><span class="p">:]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">temp_mat</span><span class="p">[:,</span><span class="n">n</span><span class="p">:]</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">temp_mat</span><span class="p">[:,</span><span class="n">N</span><span class="p">:]</span>
+        <span class="k">return</span> <span class="n">temp_mat</span><span class="p">[:,</span><span class="n">n</span><span class="p">:]</span>
 </pre></div>
 
     </div>
