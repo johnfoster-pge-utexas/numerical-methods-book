@@ -13,7 +13,7 @@ prev_page:
 next_page:
   url: 
 suffix: .ipynb
-search: mathbf l u n bmatrix vec end begin phantom ddots vdots right ldots k matrix left p b solve row lu nn y steps x equation j step det using set sum factorization substitution m ik decomposition ldotsa ldotsl ii implementation kk matrices identity ji e numpy pseudocode middle operations forward consider ldotsu plu triangular o xrightarrow python diagonal ij s pmatrix times column determinate linear frac process hand same perform simple our where algorithm testing inverse permutations into lower elimination system only therefore procedure psuedocode uj ui nonzero comparing np linalg function quad doolittle kj km mk upper gaussian
+search: mathbf l u n bmatrix vec end begin phantom ddots vdots right ldots k matrix left p lu b solve row nn y steps x equation j step det using decomposition set implementation sum factorization substitution m ik ldotsa ldotsl ii kk matrices identity ji e numpy plu pseudocode middle operations forward consider ldotsu triangular o xrightarrow our python diagonal ij s pmatrix times column scipy linalg determinate linear frac process hand same perform simple where algorithm function testing inverse permutations into lower elimination system only therefore procedure psuedocode uj ui nonzero comparing np quad doolittle kj km mk upper
 
 comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
 ---
@@ -364,6 +364,17 @@ $$
 </div>
 </div>
 
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The SciPy function <a href="https://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.linalg.lu.html"><code>scipy.linalg.lu</code></a> performs a $\mathbf{PLU}$ decomposition.  However, we can't compare our implementation to SciPy's in general, because the SciPy implementation uses a slightly different strategy which could result in a different (but still correct) decomposition.</p>
+
+</div>
+</div>
 </div>
 </div>
 
