@@ -63,4 +63,4 @@
   - url: /LinearAlgebra_LU
     title: "LU Factorization"
  - url: /LinearAlgebra_IterativeSolvers
-    title: "Iterative Methods for Solving Linear Systems of Equations"
+   title: "Iterative Methods for Solving Linear Systems of Equations"
