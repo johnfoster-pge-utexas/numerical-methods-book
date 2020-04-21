@@ -62,5 +62,5 @@
     title: "Direct Methods for Solving Linear Systems of Equations"
   - url: /LinearAlgebra_LU
     title: "LU Factorization"
- - url: /LinearAlgebra_IterativeSolvers
-   title: "Iterative Methods for Solving Linear Systems of Equations"
+  - url: /LinearAlgebra_IterativeSolvers
+    title: "Iterative Methods for Solving Linear Systems of Equations"
