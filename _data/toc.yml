@@ -66,3 +66,5 @@
     title: "Iterative Methods for Solving Linear Systems of Equations"
   - url: /LinearAlgebra_EigenProblem1
     title: "Numerical Solution of a Single Eigenvalue"
+ - url: /LinearAlgebra_EigenProblem2
+    title: "Numerical Solution for all Eigenvalues"
