@@ -1,0 +1,1051 @@
+---
+redirect_from:
+  - "/linearalgebra-eigenproblem2"
+interact_link: content/LinearAlgebra_EigenProblem2.ipynb
+kernel_name: python3
+kernel_path: content
+has_widgets: false
+title: |-
+  Numerical Solution for all Eigenvalues
+pagenum: 18
+prev_page:
+  url: /LinearAlgebra_EigenProblem1.html
+next_page:
+  url: 
+suffix: .ipynb
+search: vec mathbf k n phantom j q set ldots omega r b left right alpha intercal vert hat p c matrix bmatrix frac step y steps sum qr quad method eqn begin end eigenvalues mu v orthonormal omegaj sqrt basis vector algorithm its process mathrm mathtt shift s symmetric vdots ddots z x tridiagonal transformation label tag ref nn jk form householders orthogonal where gram schmidt factorization lambda bn householder without times ptrans sgn python numpy implementation vectors epsilon eigenvalue leq aj bj break loop d cj numerical continue transform changing simple uses similar given start mathbb therefore components found
+
+comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
+---
+
+    <main class="jupyter-page">
+    <div id="page-info"><div id="page-title">Numerical Solution for all Eigenvalues</div>
+</div>
+    <div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In this section we'll continue our discussion on solving for eigenvalues.  First, we introduce the Householder similarity transform as a method to tridiagonalize a symmetric matrix without changing its eignenvalues.  Then we discuss an efficient and simple deflation technique to solve for all the eigenvalues of a matrix.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Householder's-Method">Householder's Method<a class="anchor-link" href="#Householder's-Method"> </a></h2>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Householder's Method is a similarity transform. We will use it to find the eigenvalues of a matrix, but it has other uses outside this process. The method is used to find a symmetric tridiagonal matrix $\mathbf{B}$ which is similar to a given symmetric matrix $\mathbf{A}$. We'll start by defining the <em>Householder Transformation</em></p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let $\vec{\omega} \in \mathbb{R}^n$ with $\vec{\omega}\vec{\omega}^\intercal = 1$. The $n\times n$ matrix,</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+$$\mathbf{P} = \mathbf{I}-2 \vec{\omega}\vec{\omega}^\intercal$$
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This transformation is symmetric and orthogonal, therefore $\mathbf{P}^{-1} = \mathbf{P}$.</p>
+<p>Householder's method begins by determining a transform $\mathbf{P}^{(1)}$ with the property, $\mathbf{A}^{(2)} = \mathbf{P}^{(1)} \mathbf{A} \mathbf{P}^{(1)}$ that has</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+$$a_{j1}^{(2)} = 0, \quad \forall \quad j=3, 4, \ldots, n$$
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>and by symmetry, $a_{1j}^{(2)} = 0$. The desired outcome of this transformation along with the fact that $\vec{\omega}\vec{\omega}^\intercal = 1$ by definition, imposes $n$ constraints on the $n$ unknown components of $\vec{\omega}$. If we set $\omega_1 = 0$, then $a_{11}^{(2)} = a_{11}$. Now, we want</p>
+$$\mathbf{P}^{(1)} = \mathbf{I} - 2\vec{\omega}\vec{\omega}^\intercal$$<p>to satisfy</p>
+$$\mathbf{P}^{(1)}\left[a_{11}, a_{21}, a_{31}, \ldots a_{n1}\right]^\intercal = \left[a_{11}, \alpha, 0, \ldots, 0\right]^\intercal, \label{eqn:Ptrans1}\tag{1}$$<p>where $\alpha$ will be chosen later. Defining some notation</p>
+$$\hat{\vec{\omega}} = \left[\omega_2, \omega_3, \ldots, \omega_n\right]^\intercal \in\mathbb{R}^{n-1},\\ \hat{\vec{y}} = \left[a_{21}, a_{31}, \ldots, a_{n1}\right]^\intercal \in\mathbb{R}^{n-1},$$<p>and $\hat{\mathbf{P}}$ is the $(n-1) \times (n-1)$ Householder transformation</p>
+$$\hat{\mathbf{P}} = \mathbf{I}_{n-1} - 2\hat{\vec{\omega}}\hat{\vec{\omega}}^\intercal.$$<p>with these definitions, (\ref{eqn:Ptrans1}) becomes</p>
+$$\hat{\mathbf{P}}^{(1)} \begin{bmatrix}a_{11} \\a_{21} \\\vdots \\a_{n1} \end{bmatrix}= \begin{bmatrix} 1 &amp; \vec{0}^\intercal \\ \vec{0} &amp; \hat{\mathbf{P}} \end{bmatrix}  \begin{bmatrix} a_{11} \\ \hat{\vec{y}} \end{bmatrix} = \begin{bmatrix}a_{11} \\ \hat{\mathbf{P}} \hat{\vec{y}} \end{bmatrix} = \begin{bmatrix} a_{11} \\ \alpha \\ \vec{0} \end{bmatrix}$$<p>with</p>
+$$\hat{\mathbf{P}}\hat{\vec{y}} = \left[\mathbf{I}_{n-1} - 2\vec{\omega} \vec{\omega}^\intercal\right]\hat{\vec{y}} = \hat{\vec{y}} - 2(\hat{\vec{\omega}}^\intercal\hat{\vec{y}})\hat{\vec{\omega}} = \left[\alpha ,0,\ldots,0\right]^\intercal  \label{eqn:Ptrans2}\tag{2}$$<p>Let $r = \hat{\vec{\omega}}^\intercal \hat{\vec{y}}$. Then,</p>
+$$\left[\alpha, 0, \ldots, 0\right]^\intercal = \left[a_{21} - 2 r \omega_2, a_{31}-2r \omega_3, \ldots, a_{n1} - 2r \omega_n\right]^\intercal$$<p>we can determine all of the $\omega_j$ once we know $\alpha$ and $r$. Equating components</p>
+$$\alpha = a_{21} - 2r \omega_2$$<p>and</p>
+$$0 = a_{j1} - 2r \omega_j \quad \mathrm{for} \quad j=3,4,\ldots,n$$<p>Rearranging slightly,</p>
+$$2r \omega_2 = a_{21} - \alpha \tag{3}\label{eqn:2romega}$$$$2r \omega_j = a_{j1} \quad \mathrm{for} \quad j=3,4,\ldots,n \tag{4}\label{eqn:omegaj}$$<p>Now we square both sides of each equation and add the equations together,</p>
+$$4 r^2 \sum_{j=2}^n \omega_j^2 = (a_{21} - \alpha)^2 + \sum_{j=3}^n a_{j1}^2.$$<p>Since $\hat{\vec{\omega}}\hat{\vec{\omega}}^\intercal = 1$ and $\omega_1 = 0$, we have $\sum_{j=2}^n \omega_j^n = 1$, and</p>
+$$4r^2 = \sum_{j=2}^n a_{j1}^2 - 2 \alpha a_{21} + \alpha^2. \tag{5}\label{eqn:4r2}$$<p>Equation (\ref{eqn:Ptrans2}) and the fact that $\mathbf{P}$ is orthogonal implies that</p>
+$$\alpha ^2 = \left[\alpha, 0, \ldots, 0\right]\left[\alpha, 0, \ldots, 0\right]^\intercal = \left[\hat{\mathbf{P}} \hat{\vec{y}}\right]^\intercal \hat{\mathbf{P}}\hat{\vec{y}} = \hat{\vec{y}}\hat{\mathbf{P}}^\intercal\hat{\mathbf{P}}\hat{\vec{y}} = \hat{\vec{y}}^T\hat{\vec{y}}$$<p>Thus,</p>
+$$\alpha^2 = \sum_{j=2}^n a_{j1}^2,$$<p>Substituting into (\ref{eqn:4r2})</p>
+$$2r^2 = \sum_{j=2}^n a_{j1}^2 - \alpha a_{21}$$<p>To ensure $2r^2 = 0$ only when $a_{21} = a_{31} = \ldots = a_{n1} = 0$, we chose</p>
+$$\alpha = -\mathrm{sgn}\left(a_{21}\right)\sqrt{\sum_{j=2}^n a_{j1}^2}$$<p>therefore,</p>
+$$2r^2 = \sum_{j=2}^n a_{j1}^2 + \vert a_{21}\vert\sqrt{\sum_{j=2}^n a_{j1}^n}$$<p>With this choice of $\alpha$ and $2r^2$ we can solve (\ref{eqn:2romega}) and (\ref{eqn:omegaj}) to obtain,</p>
+<p>$\omega_2 = \frac{a_{21} - \alpha}{2r}$ and  $\omega_j = \frac{a_{j1}}{2r}$, and for $j = 3, \ldots, n$</p>
+<p>To summarize:</p>
+$$
+\alpha = -\mathrm{sgn}\left(a_{21}\right)\sqrt{\sum_{j=2}^n a_{j1}^n}\\
+r = \sqrt{\frac{1}{2} \alpha^2 - \frac{1}{2}a_{21}\alpha}\\
+\omega_1 = 0\\
+\omega_2 = \frac{a_{21}-\alpha}{2r}\\
+\omega_j = \frac{a_{j1}}{2r}, \quad \mbox{for each} \quad j=3, \ldots, n$$<p>For these choices we have:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+$$\mathbf{A}^{(2)} = \mathbf{P}^{(1)}\mathbf{AP}^{(1)} = \begin{bmatrix} a_{11}^{(2)} &amp; a_{12}^{(2)} &amp; 0 &amp; \ldots &amp; 0\\a_{21}^{(2)} &amp; a_{22}^{(2)} &amp; a_{23}^{(2)} &amp; \ldots &amp; a_{2n}^{(2)} \\ 0 &amp; a_{32}^{(2)} &amp; a_{33}^{(2)} &amp; \ldots &amp; a_{3n}^{(2)} \\ \vdots &amp; \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\ 0 &amp; a_{n2}^{(2)} &amp; a_{n3}^{(2)} &amp; \ldots &amp; a_{nn}^{(2)} \end{bmatrix}$$
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Having found $\mathbf{P}^{(1)}$ and computed $\mathbf{A}^{(2)}$, the process is repeated for $k = 2, 3, \ldots, n-2$:</p>
+$$\alpha = -\mathrm{sgn}\left(a_{k+1,k}^{(k)}\right) \sqrt{\sum_{j=2}^n (a_{jk}^{(k)})^2}\\
+r = \sqrt{\frac{1}{2}\alpha^2 - \frac{1}{2} \alpha \alpha_{k+1,k}^{(k)}}\\
+\omega_1^{(k)} = \omega_2^{(k)} = \ldots = \omega_k^{(k)} = 0\\
+\omega_{k+1}^{(k)} = \frac{a_{k+1,k}^{(k)} -\alpha}{2r}$$<p>$\omega_j^{(k)} = \frac{a_{jk}}{2r}$, for each $j = k+2, k+3, \ldots, n$</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+$$\mathbf{P}^{(k)} = \mathbf{I} -2\vec{\omega}^{(k)} \cdot \vec{\omega}^{(k)\intercal}$$$$\mathbf{A}^{(k+1)} = \mathbf{P}^{(k)}\mathbf{A}^{(k)}\mathbf{P}^{(k)}$$
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Continuing in this manner, the tridiagonal and symmetric matrix $\mathbf{A}^{(n-1)}$ is formed</p>
+$$\mathbf{A}^{(n-1)} = \mathbf{P}^{(n-2)}\mathbf{P}^{(n-3)}\ldots \mathbf{P}^{(1)}\mathbf{AP}^{(1)}\ldots \mathbf{P}^{(n-3)}\mathbf{P}^{(n-2)}.$$
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Psuedocode-for-Householder's-Method">Psuedocode for Householder's Method<a class="anchor-link" href="#Psuedocode-for-Householder's-Method"> </a></h3><p>Give a symmetric matrix $\mathbf{A}$ with $n$ number of rows</p>
+<table>
+<thead><tr>
+<th style="text-align:right">Steps</th>
+<th style="text-align:left"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">1.</td>
+<td style="text-align:left">For $k = 1, 2, \ldots, n-2$ do steps 2, 5-8, 10, 12, 14, 19-20, 22-23</td>
+</tr>
+<tr>
+<td style="text-align:right">2.</td>
+<td style="text-align:left">$\phantom{--}$ If $a_{k+1, k} = 0$ do Step 3.</td>
+</tr>
+<tr>
+<td style="text-align:right">3.</td>
+<td style="text-align:left">$\phantom{----}$ Set $$\alpha = -\sqrt{\sum_{j=k+1}^n (a_{jk})^2}$$</td>
+</tr>
+<tr>
+<td style="text-align:right"></td>
+<td style="text-align:left">$\phantom{--}$ Else, do Step 4.</td>
+</tr>
+<tr>
+<td style="text-align:right">4.</td>
+<td style="text-align:left">$\phantom{----}$ Set $$\alpha = -\mathrm{sgn}(a_{k+1, k})\sqrt{\sum_{j=k+1}^n(a_{jk})^2}$$</td>
+</tr>
+<tr>
+<td style="text-align:right">5.</td>
+<td style="text-align:left">$\phantom{--}$ Set $2r^2 = \alpha^2 - \alpha a_{k+1,k}$</td>
+</tr>
+<tr>
+<td style="text-align:right">6.</td>
+<td style="text-align:left">$\phantom{--}$ Set $v_k = 0$</td>
+</tr>
+<tr>
+<td style="text-align:right">7.</td>
+<td style="text-align:left">$\phantom{--}$ Set $v_{k+1} = a_{k+1,k} - \alpha$</td>
+</tr>
+<tr>
+<td style="text-align:right">8.</td>
+<td style="text-align:left">$\phantom{--}$ For $j = k + 2, \ldots , n$ do Step 9</td>
+</tr>
+<tr>
+<td style="text-align:right">9.</td>
+<td style="text-align:left">$\phantom{----} v_j = a_{jk}$ (note $\vec{\omega} = \frac{1}{2r} \vec{v}$)</td>
+</tr>
+<tr>
+<td style="text-align:right">10.</td>
+<td style="text-align:left">$\phantom{--}$ For $j = k, k+1, \ldots, n$ do Step 11</td>
+</tr>
+<tr>
+<td style="text-align:right">11.</td>
+<td style="text-align:left">$\phantom{----} u_j = \frac{1}{2 r^2} \sum_{i = k+1}^n a_{ji}v_i$ (note $\vec{u} = \frac{1}{r}A\vec{\omega}$)</td>
+</tr>
+<tr>
+<td style="text-align:right">12.</td>
+<td style="text-align:left">$\phantom{--}$ For $j = k, k+1, \ldots, n$ do Step 13</td>
+</tr>
+<tr>
+<td style="text-align:right">13.</td>
+<td style="text-align:left">$\phantom{----} z_j = u_j - \left(\frac{\vec{u}\cdot\vec{v}}{4 r^2}\right)v_j$  (note $\vec{z} = \frac{1}{r}\mathbf{A}\vec{\omega} - \vec{\omega}\vec{\omega}^\intercal \frac{1}{r} \mathbf{A}\vec{\omega}$)</td>
+</tr>
+<tr>
+<td style="text-align:right">14.</td>
+<td style="text-align:left">$\phantom{--}$ For $l = k+1, k+2, \ldots ,n-1$ do Steps 15, 18</td>
+</tr>
+<tr>
+<td style="text-align:right">15.</td>
+<td style="text-align:left">$\phantom{----}$ For $j = l + 1, \ldots, n$ Do Steps 16-17</td>
+</tr>
+<tr>
+<td style="text-align:right">16.</td>
+<td style="text-align:left">$\phantom{------} a_{jl} = a_{jl} - v_l z_j - v_j z_l$</td>
+</tr>
+<tr>
+<td style="text-align:right">17.</td>
+<td style="text-align:left">$\phantom{------} a_{lj} = a_{jl}$</td>
+</tr>
+<tr>
+<td style="text-align:right">18.</td>
+<td style="text-align:left">$\phantom{----}$ Set $a_{ll} = a_{ll} - 2v_l z_l$</td>
+</tr>
+<tr>
+<td style="text-align:right">19.</td>
+<td style="text-align:left">$\phantom{--}$ Set $a_{nn} = a_{nn} - 2v_n z_n$</td>
+</tr>
+<tr>
+<td style="text-align:right">20.</td>
+<td style="text-align:left">$\phantom{--}$ For $j=k+2, \ldots, n$ do Step 21</td>
+</tr>
+<tr>
+<td style="text-align:right">21.</td>
+<td style="text-align:left">$\phantom{----}$ Set $a_{kj} = a_{jk} = 0$</td>
+</tr>
+<tr>
+<td style="text-align:right">22.</td>
+<td style="text-align:left">$\phantom{--}$ Set $a_{k+1, k} = a_{k+1, k} - v_{k+1}z_k$</td>
+</tr>
+<tr>
+<td style="text-align:right">23.</td>
+<td style="text-align:left">$\phantom{--}$ Set $a_{k, k+1} = a_{k+1, k}$</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Python/NumPy-implementation-of-Householder's-method">Python/NumPy implementation of Householder's method<a class="anchor-link" href="#Python/NumPy-implementation-of-Householder's-method"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">householder</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">double</span><span class="p">)</span>
+    <span class="n">u</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">double</span><span class="p">)</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">double</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">],</span> <span class="mf">0.0</span><span class="p">):</span>
+            <span class="n">α</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">A</span><span class="p">[(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">):,</span> <span class="n">k</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">α</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">])</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">A</span><span class="p">[(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">):,</span> <span class="n">k</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+
+        <span class="n">two_r_squared</span> <span class="o">=</span> <span class="n">α</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">α</span> <span class="o">*</span> <span class="n">A</span><span class="p">[</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span>
+        <span class="n">v</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">v</span><span class="p">[</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">-</span> <span class="n">α</span>
+        <span class="n">v</span><span class="p">[(</span><span class="n">k</span><span class="o">+</span><span class="mi">2</span><span class="p">):]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[(</span><span class="n">k</span><span class="o">+</span><span class="mi">2</span><span class="p">):,</span> <span class="n">k</span><span class="p">]</span>
+        <span class="n">u</span><span class="p">[</span><span class="n">k</span><span class="p">:]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">two_r_squared</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">k</span><span class="p">:,</span> <span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">):],</span> <span class="n">v</span><span class="p">[(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">):])</span>
+        <span class="n">z</span><span class="p">[</span><span class="n">k</span><span class="p">:]</span> <span class="o">=</span> <span class="n">u</span><span class="p">[</span><span class="n">k</span><span class="p">:]</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">*</span> <span class="n">two_r_squared</span><span class="p">)</span> <span class="o">*</span> <span class="n">v</span><span class="p">[</span><span class="n">k</span><span class="p">:]</span>
+
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+
+            <span class="n">A</span><span class="p">[(</span><span class="n">l</span><span class="o">+</span><span class="mi">1</span><span class="p">):,</span> <span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[(</span><span class="n">l</span><span class="o">+</span><span class="mi">1</span><span class="p">):,</span> <span class="n">l</span><span class="p">]</span> <span class="o">-</span> <span class="n">v</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">*</span> <span class="n">z</span><span class="p">[(</span><span class="n">l</span><span class="o">+</span><span class="mi">1</span><span class="p">):]</span> <span class="o">-</span> <span class="n">v</span><span class="p">[(</span><span class="n">l</span><span class="o">+</span><span class="mi">1</span><span class="p">):]</span> <span class="o">*</span> <span class="n">z</span><span class="p">[</span><span class="n">l</span><span class="p">]</span>
+            <span class="n">A</span><span class="p">[</span><span class="n">l</span><span class="p">,</span> <span class="p">(</span><span class="n">l</span><span class="o">+</span><span class="mi">1</span><span class="p">):]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[(</span><span class="n">l</span><span class="o">+</span><span class="mi">1</span><span class="p">):,</span> <span class="n">l</span><span class="p">]</span>
+            <span class="n">A</span><span class="p">[</span><span class="n">l</span><span class="p">,</span> <span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">l</span><span class="p">,</span> <span class="n">l</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">v</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">*</span> <span class="n">z</span><span class="p">[</span><span class="n">l</span><span class="p">]</span>
+
+        <span class="n">A</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">v</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">z</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">A</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">2</span><span class="p">):]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="n">A</span><span class="p">[(</span><span class="n">k</span><span class="o">+</span><span class="mi">2</span><span class="p">):,</span> <span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+        <span class="n">A</span><span class="p">[</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span> <span class="o">-</span> <span class="n">v</span><span class="p">[</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">z</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+        <span class="n">A</span><span class="p">[</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="n">k</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="n">k</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Gram-Schmidt-Process">Gram-Schmidt Process<a class="anchor-link" href="#Gram-Schmidt-Process"> </a></h2>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In an <em>orthogonal basis</em> of a vector space (matrix), every vector is perpendicular to every other vector. If we divide each vector by its length we have unit vectors that span the vector space which we will call an <em>orthonormal basis</em>. A common orthonormal basis is the <em>standard basis</em> represented as the identity matrix. This is not the only orthonormal basis, we can rotate the axes without changing the right angles at which the vectors meet. These rotation matrices, we will call $\mathbf{Q}$. Every basis has an orthonormal basis which can be constructed by a simple process known as <em>Gram-Schmidt orthonormalization</em>. This process takes a skewed set of axes and makes them perpendicular.</p>
+<p>In numerical linear algebra orthonormal matrices are important because they don't introduce any numerical instability. When lengths stay the same, roundoff error stays in control. Suppose we are given a $3\times 3$ matrix $\mathbf{A} = \left[\vec{a} \vert \vec{b} \vert \vec{c}\right]$, where $\vec{a}, \vec{b}, \vec{c}$ are the column vectors of $\mathbf{A}$. We want to produce three column vectors, $\vec{q}_1, \vec{q}_2$, and $\vec{q}_3$ which form an orthonormal basis of $\mathbf{A}$. To start we can choose $\vec{q}_1$ to be in the same direction of $\mathbf{A}$ for convenience, all we have to do is make it a unit vector.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+$$\vec{q}_1 = \frac{\vec{a}}{\vert a \vert}$$
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For $\vec{q}_2$ we must subtract any component of $\vec{b}$ that is in the direction of $\vec{q}_1$. We calculate the projection of $\vec{b}$ onto $\vec{q}_1$ by $(\vec{q}_1^\intercal \vec{b})\vec{q}_1$, subtracting for this projection from $\vec{b}$, gives us an intermediate orthogonal vector $\vec{B}$, that we can make orthonormal by dividing by its length:</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+$$\vec{B} = \vec{b}- \left(\vec{q}_1^\intercal \vec{b}\right)\vec{q}_1$$
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+$$\vec{q}_2 = \frac{\vec{B}}{\vert \vec{B}\vert}$$
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To get $\vec{c}$ to $\vec{q}_3$ we need to subtract any components of $\vec{c}$, that might lie in the $\vec{q}_1, \vec{q}_2$ plane. What is left over is an orthogonal vector to $\vec{q}_1$ and $\vec{q}_2$, $\vec{C}$, that we make orthonormal by dividing by its length</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+$$\vec{C} = \vec{c}-\left(q_1^\intercal \vec{c}\right)\vec{q}_1 - \left(\vec{q}_2^\intercal \vec{c}\right)\vec{q}_2$$$$\vec{q}_3 = \frac{\vec{C}}{\vert C \vert}$$
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The matrix $\mathbf{Q}$, then forms an orthonormal basis of $\mathbf{A}$.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+$$\mathbf{Q} = \left[\vec{q}_1 \vert \vec{q}_2 \vert \vec{q}_3  \right]$$
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Pseudocode-for-Gram-Schmidt">Pseudocode for Gram-Schmidt<a class="anchor-link" href="#Pseudocode-for-Gram-Schmidt"> </a></h3><p>Given a matrix $\mathbf{A} = \begin{bmatrix} \vec{x}_1 \vert \vec{x}_2 \vert \ldots \vert \vec{x}_n \end{bmatrix}$</p>
+<table>
+<thead><tr>
+<th style="text-align:right">Steps</th>
+<th style="text-align:left"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">1.</td>
+<td style="text-align:left">For  $j=1, 2, \ldots, n$ do Step 2-3</td>
+</tr>
+<tr>
+<td style="text-align:right">2.</td>
+<td style="text-align:left">$\phantom{--}$ Set  $\vec{v}_j=\vec{x}_j$</td>
+</tr>
+<tr>
+<td style="text-align:right">3.</td>
+<td style="text-align:left">For  $j=1, 2, \ldots, n$ do Step 4-5</td>
+</tr>
+<tr>
+<td style="text-align:right">4.</td>
+<td style="text-align:left">$\phantom{--}$ Set  $\vec{q}_j=\vec{v}_j / \vert \vec{v}_j \vert$</td>
+</tr>
+<tr>
+<td style="text-align:right"> 5.</td>
+<td style="text-align:left">$\phantom{--}$ For  $k=j+1, 2, \ldots, n$ do Step 6</td>
+</tr>
+<tr>
+<td style="text-align:right">6.</td>
+<td style="text-align:left"> $$\phantom{----} \vec{v}_k=\vec{v}_k-\left(\vec{q}^\intercal_k \vec{v}_j\right)\vec{q}_k$$</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Python/NumPy-implementation-of-Gram-Schmidt">Python/NumPy implementation of Gram-Schmidt<a class="anchor-link" href="#Python/NumPy-implementation-of-Gram-Schmidt"> </a></h3>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">gram_schmidt</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    
+    <span class="n">m</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">Q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">double</span><span class="p">)</span>
+    <span class="n">temp_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">m</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">double</span><span class="p">)</span>
+    
+    <span class="n">Q</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">A</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">m</span><span class="p">):</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="n">Q</span><span class="p">[:,</span> <span class="p">:</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">temp_vector</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">q</span> <span class="o">*</span> <span class="n">A</span><span class="p">[:,</span> <span class="n">i</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="n">q</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">Q</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">temp_vector</span>
+        <span class="n">Q</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">Q</span><span class="p">[:,</span> <span class="n">i</span><span class="p">],</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="n">Q</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="QR-Factorization">QR Factorization<a class="anchor-link" href="#QR-Factorization"> </a></h2>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>What is the relationship between the matrices $\mathbf{A}$ and $\mathbf{Q}$ from the Gram-Schmidt process? The relationship between $\vec{a}$ and $\vec{q}_1$ is trivial since we set them equal to one another. The vector $\vec{b}$ is a combination of the orthonormal $\vec{q}_1$ and $\vec{q}_2$, and we know what that relationship is</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+$$\vec{b} = \left(\vec{q}_1^T \vec{b}\right)\vec{q}_1 + \left(\vec{q}_2^\intercal \vec{b}\right)\vec{q}_2$$
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Similarly $\vec{c}$ is the sum of its $\vec{q}_i$'s</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+$$\vec{c} = \left(q_1^T \vec{c}\right)\vec{q}_1 + \left(\vec{q}_2^\intercal \vec{c}\right)\vec{q}_2 + \left(\vec{q}_3^\intercal \vec{c}\right)\vec{q}_3$$
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If we write these relationships in matrix form, we have</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+$$
+\mathbf{A} = \left[\vec{a} \vert \vec{b} \vert \vec{c}\right] = \left[\vec{q}_1 \vert \vec{q}_2 \vert \vec{q}_3\right]
+\begin{bmatrix}\left(\vec{q}_1^\intercal \vec{a}\right) &amp; \left(\vec{q}_1^\intercal \vec{b}\right) &amp; \left(\vec{q}_1^\intercal \vec{c}\right) \\
+0 &amp; \left(\vec{q}_2^\intercal \vec{b}\right) &amp; \left(\vec{q}_2^\intercal \vec{c}\right) \\
+0 &amp; 0 &amp; \left(\vec{q}_3^\intercal \vec{c}\right)
+\end{bmatrix} = \mathbf{QR}
+$$
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="QR-Algorithm-for-computing-eigenvalues">QR Algorithm for computing eigenvalues<a class="anchor-link" href="#QR-Algorithm-for-computing-eigenvalues"> </a></h2>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This algorithm is so simple it's scary. We start with a matrix $\mathbf{A}^{(0)}$ and perform $\mathbf{QR}$ factorization,</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+$$\mathbf{A}^{(0)} = \mathbf{Q}^{(0)}\mathbf{R}^{(0)}$$
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Then we reverse the factors to form the matrix $\mathbf{A}^{(1)}$,</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+$$\mathbf{A}^{(1)} = \mathbf{R}^{(0)}\mathbf{Q}^{(0)} \tag{6}\label{eqn:reverseQR}$$
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can do this because $\mathbf{A}^{(1)}$ is similar to $\mathbf{A}^{(0)}$, we can verify</p>
+$$\mathbf{Q}^{(0)^{-1}}\mathbf{A}^{(0)}\mathbf{Q}^{(0)} = \mathbf{Q}^{(0)^{-1}}(\mathbf{Q}^{(0)}\mathbf{R}^{(0)})\mathbf{Q}^{(0)} = \mathbf{A}^{(1)}$$
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>And we continue this process without changing the eigenvalues. The above process is called the <em>unshifted QR algorithm</em>, and almost always $\mathbf{A}^{(k)}$ approaches a triangular form, its diagonal entries approach its eigenvalues, which are also the eigenalues of $\mathbf{A}^{(0)}$. This algorithm is okay, but we can make it even better by using two refinements</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ol>
+<li><p>We allow shifts, in a similar fashion to the inverse power method. If the number $\alpha^{(k)}$ is close to an eigenvalue, the step in (\ref{eqn:reverseQR}) should be shifted as follows</p>
+<p>$\mathbf{A}^{(k)} - \alpha^{(k)}\mathbf{I} = \mathbf{Q}^{(k)}\mathbf{R}^{(k)}$ and then $\mathbf{A}^{(k+1)} = \mathbf{R}^{(k)}\mathbf{Q}^{(k)} + \alpha^{(k)}\mathbf{I}$</p>
+<p>One popular method of choosing the shifted constant, $\alpha^{(k)}$ is to simply use the $a_{nn}^{(k)}$ entry of the matrix. Another method uses a shifting constant that is the eigenvalue of the matrix</p>
+<p>$$\begin{bmatrix} a_{n-1,n-1}^{(k)} &amp; a_{n-1,n}^{(k)} \\ a_{n,n-1}^{(k)} &amp; a_{nn}^{(k)}\end{bmatrix}$$</p>
+<p>that is closest to $a_{nn}^{(k)}$.</p>
+<p>After a few iterations the matrix $\mathbf{A}^{(k)}$ will come to look as follows:</p>
+<p>$$\mathbf{A}^{(k)} = \begin{bmatrix} * &amp; * &amp; * &amp; * \\ * &amp; * &amp; * &amp; * \\ 0 &amp; * &amp; * &amp; * \\ 0 &amp; 0 &amp; \epsilon &amp; \mu_1 \end{bmatrix}, \quad \mathrm{where} \quad \epsilon&lt;&lt; 1.$$</p>
+<p>$\mu_1$ will be accepted as $\lambda_1$. We will find the next eigenvalue by eliminating the last row and column and performing the same procedure with the smaller submatrix. And continue until all eigenvalues have been found. At this point the $\mathbf{QR}$ algorithm is completely described. If the eigenvectors are desired they are one step away with an inverse power method using the eigenvalues found here.</p>
+</li>
+<li><p>The last thing we can do to greatly improve the $\mathbf{QR}$ algorithm is to make the $\mathbf{QR}$ factorization very fast at each step. This is where the Housholder transformation comes in. It turns out that the $\mathbf{QR}$ factorization generally takes $O\left(n^3\right)$ operations, however for a matrix that is already in tridiagonal form this becomes $O\left(n\right)$ and once the matrix $\mathbf{A}^{(0)}$ is in tridiagonal form, each $\mathbf{A}^{(k)}$ will stay that way at each step.</p>
+</li>
+</ol>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Pseudocode-for-$\mathbf{QR}$-Algorithm-for-computing-eigenvalues">Pseudocode for $\mathbf{QR}$ Algorithm for computing eigenvalues<a class="anchor-link" href="#Pseudocode-for-$\mathbf{QR}$-Algorithm-for-computing-eigenvalues"> </a></h3><p>Starting with a symmetric tridiagonal matrix, we will relabel some of the terms for simplicity:</p>
+$$A = \begin{bmatrix} a_1 &amp; b_2 &amp; 0 &amp; \ldots &amp; 0 \\ b_2 &amp; a_2 &amp; b_3 &amp; \ddots &amp; \vdots \\ 0 &amp; b_3 &amp; \ddots &amp; \ddots &amp; 0 \\ \vdots &amp; \ddots &amp; \ddots &amp; \ddots &amp; b_n \\ 0 &amp; \ldots &amp; 0 &amp; b_n &amp; a_n \end{bmatrix}$$<table>
+<thead><tr>
+<th style="text-align:right">Steps</th>
+<th style="text-align:left"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">1.</td>
+<td style="text-align:left">Set $k = 1$,  Set $\mathtt{SHIFT} = 0$</td>
+</tr>
+<tr>
+<td style="text-align:right">2.</td>
+<td style="text-align:left">While $k \leq M$ do Steps 3,6,13,15,18,22-23,32-34,36-37,46-49,52-54</td>
+</tr>
+<tr>
+<td style="text-align:right">3.</td>
+<td style="text-align:left">$\phantom{--}$ If $\vert b_n \vert \leq TOL$ do Steps 4-5</td>
+</tr>
+<tr>
+<td style="text-align:right">4.</td>
+<td style="text-align:left">$\phantom{----}$ Set $\lambda_n = a_n + \mathtt{SHIFT}$</td>
+</tr>
+<tr>
+<td style="text-align:right">5.</td>
+<td style="text-align:left">$\phantom{----}$ Set $n = n-1$</td>
+</tr>
+<tr>
+<td style="text-align:right">6.</td>
+<td style="text-align:left">$\phantom{--}$ If $</td>
+<td>b_2</td>
+<td>\leq TOL$ do Steps 7-10</td>
+</tr>
+<tr>
+<td style="text-align:right">7.</td>
+<td style="text-align:left">$\phantom{----}$ Set $\lambda_2 = a_1 + \mathtt{SHIFT}$</td>
+</tr>
+<tr>
+<td style="text-align:right">8.</td>
+<td style="text-align:left">$\phantom{----}$ Set $n = n-1$</td>
+</tr>
+<tr>
+<td style="text-align:right">9.</td>
+<td style="text-align:left">$\phantom{----}$ Set $a_1 = a_2$</td>
+</tr>
+<tr>
+<td style="text-align:right">10.</td>
+<td style="text-align:left">$\phantom{----}$ For $j = 2, \ldots, n$ do Steps 11-12</td>
+</tr>
+<tr>
+<td style="text-align:right">11.</td>
+<td style="text-align:left">$\phantom{------}$ Set $a_j = a_{j+1}$</td>
+</tr>
+<tr>
+<td style="text-align:right">12.</td>
+<td style="text-align:left">$\phantom{------}$ Set $b_j = b_{j+1}$</td>
+</tr>
+<tr>
+<td style="text-align:right">13.</td>
+<td style="text-align:left">$\phantom{--}$ If $n = 0$ do Step 14</td>
+</tr>
+<tr>
+<td style="text-align:right">14.</td>
+<td style="text-align:left">$\phantom{----}$ Break out of loop.</td>
+</tr>
+<tr>
+<td style="text-align:right">15.</td>
+<td style="text-align:left">$\phantom{--}$ If $n = 1$ then</td>
+</tr>
+<tr>
+<td style="text-align:right">16.</td>
+<td style="text-align:left">$\phantom{----}$ Set $\lambda_1 = a_1 + \mathtt{SHIFT}$</td>
+</tr>
+<tr>
+<td style="text-align:right">17.</td>
+<td style="text-align:left">$\phantom{----}$ Break out of loop.</td>
+</tr>
+<tr>
+<td style="text-align:right">18.</td>
+<td style="text-align:left">$\phantom{--}$ For $j = 3, \ldots, n-1$ do Step 19</td>
+</tr>
+<tr>
+<td style="text-align:right">19.</td>
+<td style="text-align:left">$\phantom{----}$ If $\vert b_j\vert  \leq TOL$ do Step 20-21</td>
+</tr>
+<tr>
+<td style="text-align:right">20.</td>
+<td style="text-align:left">$\phantom{------}$ Print "Split into $a_1, \ldots, a_{j-1}, b_2, \ldots, b_{j-1}$ and $a_j, \ldots a_n, b_{j+1}, \ldots, b_n$"</td>
+</tr>
+<tr>
+<td style="text-align:right">21.</td>
+<td style="text-align:left">$\phantom{------}$ Break out of loop.</td>
+</tr>
+<tr>
+<td style="text-align:right">22.</td>
+<td style="text-align:left">$\phantom{--}$ Set $B = -(a_{n-1} + a_n), C = a_n a_{n-1} - b_n^2, D = \sqrt{B^2 -4C}$</td>
+</tr>
+<tr>
+<td style="text-align:right">23.</td>
+<td style="text-align:left">$\phantom{--}$ If $B &gt; 0$ do Steps 25-26</td>
+</tr>
+<tr>
+<td style="text-align:right">24.</td>
+<td style="text-align:left">$\phantom{----}$ Set $\mu_1 = -2C/(B+D)$</td>
+</tr>
+<tr>
+<td style="text-align:right">25.</td>
+<td style="text-align:left">$\phantom{----}$ Set $\mu_2 = -(B+D)/2$</td>
+</tr>
+<tr>
+<td style="text-align:right"></td>
+<td style="text-align:left">$\phantom{--}$ Else do Steps 26-27</td>
+</tr>
+<tr>
+<td style="text-align:right">26.</td>
+<td style="text-align:left">$\phantom{----}$ Set $\mu_1 = (D-B)/2$</td>
+</tr>
+<tr>
+<td style="text-align:right">27.</td>
+<td style="text-align:left">$\phantom{----}$ Set $\mu_2 = 2C/(D-B)$</td>
+</tr>
+<tr>
+<td style="text-align:right">28.</td>
+<td style="text-align:left">$\phantom{--}$ If $n = 2$ then do Steps 29-31</td>
+</tr>
+<tr>
+<td style="text-align:right">29.</td>
+<td style="text-align:left">$\phantom{----}$ Set $\lambda_1 = \mu_1 + \mathtt{SHIFT}$</td>
+</tr>
+<tr>
+<td style="text-align:right">30.</td>
+<td style="text-align:left">$\phantom{----}$ Set $\lambda_2 = \mu_2 + \mathtt{SHIFT}$</td>
+</tr>
+<tr>
+<td style="text-align:right">31.</td>
+<td style="text-align:left">$\phantom{----}$ Break out of loop.</td>
+</tr>
+<tr>
+<td style="text-align:right">32.</td>
+<td style="text-align:left">$\phantom{--}$ Choose $S$ so that $\vert S-a_n \vert = \min\left(\vert \mu_1-a\vert, \vert \mu_2-a_2 \vert \right)$.</td>
+</tr>
+<tr>
+<td style="text-align:right">33.</td>
+<td style="text-align:left">$\phantom{--}$ Set $\mathtt{SHIFT} = \mathtt{SHIFT}+S$</td>
+</tr>
+<tr>
+<td style="text-align:right">34.</td>
+<td style="text-align:left">$\phantom{--}$ For $j = 1, \ldots, n$ do Step 35</td>
+</tr>
+<tr>
+<td style="text-align:right">35.</td>
+<td style="text-align:left">$\phantom{----}$ Set $d_j = a_j -S$</td>
+</tr>
+<tr>
+<td style="text-align:right">36.</td>
+<td style="text-align:left">$\phantom{--}$ Set $x_1 = d_1, y_1 = b_2$</td>
+</tr>
+<tr>
+<td style="text-align:right">37.</td>
+<td style="text-align:left">$\phantom{--}$ For $j = 2, \ldots, n$ do Steps 38-43</td>
+</tr>
+<tr>
+<td style="text-align:right">38.</td>
+<td style="text-align:left">$\phantom{----}$ Set $z_{j-1} = (x_{j-1}^2 + b_j^2)^{1/2}$</td>
+</tr>
+<tr>
+<td style="text-align:right">39.</td>
+<td style="text-align:left">$\phantom{----}$ Set $c_j = x_{j-1}/z_{j-1}$</td>
+</tr>
+<tr>
+<td style="text-align:right">40.</td>
+<td style="text-align:left">$\phantom{----}$ Set $s_j = b_j / z_{j-1}$</td>
+</tr>
+<tr>
+<td style="text-align:right">41.</td>
+<td style="text-align:left">$\phantom{----}$ Set $q_{j-1} = c_j y_{j-1} + s_j d_j$</td>
+</tr>
+<tr>
+<td style="text-align:right">42.</td>
+<td style="text-align:left">$\phantom{----}$ Set $x_j = -s_jy_{j-1} + c_jd_j$</td>
+</tr>
+<tr>
+<td style="text-align:right">43.</td>
+<td style="text-align:left">$\phantom{----}$ If $j \neq n$ do Steps 44-45</td>
+</tr>
+<tr>
+<td style="text-align:right">44.</td>
+<td style="text-align:left">$\phantom{------}$ Set $r_{j-1} = s_j b_{j+1}$</td>
+</tr>
+<tr>
+<td style="text-align:right">45.</td>
+<td style="text-align:left">$\phantom{------}$ Set $y_j = c_j b_{j+1}$</td>
+</tr>
+<tr>
+<td style="text-align:right">46.</td>
+<td style="text-align:left">$\phantom{--}$ Set $z_n = x_n$</td>
+</tr>
+<tr>
+<td style="text-align:right">47.</td>
+<td style="text-align:left">$\phantom{--}$ Set $a_1 = s_2 q_1 + c_2 z_1$</td>
+</tr>
+<tr>
+<td style="text-align:right">48.</td>
+<td style="text-align:left">$\phantom{--}$ Set $b_2 = s_2 z_2$</td>
+</tr>
+<tr>
+<td style="text-align:right">49.</td>
+<td style="text-align:left">$\phantom{--}$ For $j = 2, 3, \ldots, n-1$ do Steps 50-51</td>
+</tr>
+<tr>
+<td style="text-align:right">50.</td>
+<td style="text-align:left">$\phantom{----}$ $a_j = s_{j+1}q_j + c_j c_{j+1} z_j$</td>
+</tr>
+<tr>
+<td style="text-align:right">51.</td>
+<td style="text-align:left">$\phantom{----}$ $b_{j+1} = s_{j+1} z_{j+1}$</td>
+</tr>
+<tr>
+<td style="text-align:right">52.</td>
+<td style="text-align:left">$\phantom{--}$ Set $a_n = c_n z_n$</td>
+</tr>
+<tr>
+<td style="text-align:right">53.</td>
+<td style="text-align:left">$\phantom{--}$ Set $k = k+1$</td>
+</tr>
+<tr>
+<td style="text-align:right">54.</td>
+<td style="text-align:left">$\phantom{--}$ If $k = M$ then do Step 55</td>
+</tr>
+<tr>
+<td style="text-align:right">55.</td>
+<td style="text-align:left">$\phantom{----}$ Print "Number of iteration exceeded"</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Python/NumPy-implementation-of-QR-eigenvalue-algorithm">Python/NumPy implementation of QR eigenvalue algorithm<a class="anchor-link" href="#Python/NumPy-implementation-of-QR-eigenvalue-algorithm"> </a></h3><p>The pseudocode above exploits the tridiagonal structure of $\mathbf{A}$ to perform the $\mathbf{QR}$ factorization row-by-row in an efficient manner without using matrix multiplication operations.  However, a likely user of Python will simply use the built in <code>numpy.linalg</code> packaged functions to compute eigenvalues (which use the $\mathbf{QR}$ algorithm); therefore, the implementation below simply uses the matrix operations for clarity in the method.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">QR</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    
+    <span class="n">Q</span> <span class="o">=</span> <span class="n">gram_schmidt</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="n">R</span> <span class="o">=</span> <span class="n">Q</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">A</span> 
+    
+    <span class="k">return</span> <span class="p">(</span><span class="n">Q</span><span class="p">,</span> <span class="n">R</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">eigs_2x2</span><span class="p">(</span><span class="n">A</span><span class="p">):</span>
+    
+    <span class="n">b</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">A</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">]);</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">A</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">A</span><span class="p">[</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">A</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">];</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">b</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">c</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">b</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">c</span> <span class="o">/</span> <span class="p">(</span><span class="n">b</span> <span class="o">+</span> <span class="n">d</span><span class="p">),</span> <span class="o">-</span><span class="p">(</span><span class="n">b</span> <span class="o">+</span> <span class="n">d</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">((</span><span class="n">d</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>  <span class="mi">2</span> <span class="o">*</span> <span class="n">c</span> <span class="o">/</span> <span class="p">(</span><span class="n">d</span> <span class="o">-</span> <span class="n">b</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">QR_eigenvalues</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">max_iterations</span><span class="o">=</span><span class="mi">10000</span><span class="p">,</span> <span class="n">tolerence</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">):</span> 
+
+    <span class="n">n</span> <span class="o">=</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">λ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">double</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">max_iterations</span><span class="p">):</span>
+    
+        <span class="c1">#Check to see if we have converged, then deflate by 1</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">])</span> <span class="o">&lt;=</span> <span class="n">tolerence</span><span class="p">:</span>
+            <span class="n">n</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="n">λ</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">=</span> <span class="n">A</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> 
+            <span class="n">A</span> <span class="o">=</span> <span class="n">A</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    
+        <span class="c1">#Here we are finding the eigenvalues of the lower 2 x 2 submatrix to</span>
+        <span class="c1">#find the best value to shift by to improve convergence rates.</span>
+        <span class="n">μ1</span><span class="p">,</span> <span class="n">μ2</span> <span class="o">=</span> <span class="n">eigs_2x2</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+   
+        <span class="c1">#Since we have a explicit formula for 2x2 case, let&#39;s use it</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">λ</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">μ1</span>
+            <span class="n">λ</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">μ2</span>
+            <span class="k">break</span>
+    
+        <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">μ1</span> <span class="o">-</span> <span class="n">A</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">μ2</span> <span class="o">-</span> <span class="n">A</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]])</span><span class="o">.</span><span class="n">argmin</span><span class="p">()</span>
+        
+        <span class="n">α</span> <span class="o">=</span> <span class="n">μ1</span> <span class="k">if</span> <span class="n">p</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">μ2</span>
+    
+        <span class="n">I</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">eye</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="c1">#Shifted QR decomp</span>
+        <span class="n">Q</span><span class="p">,</span> <span class="n">R</span> <span class="o">=</span> <span class="n">QR</span><span class="p">(</span><span class="n">A</span> <span class="o">-</span> <span class="n">α</span> <span class="o">*</span> <span class="n">I</span><span class="p">)</span>
+        <span class="c1">#Reverse QR</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">R</span> <span class="o">@</span> <span class="n">Q</span> <span class="o">+</span> <span class="n">α</span> <span class="o">*</span> <span class="n">I</span>
+
+    <span class="k">return</span> <span class="n">λ</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+</div>
+
+ 
+
+
+    </main>
+    
