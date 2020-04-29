@@ -1,0 +1,219 @@
+---
+redirect_from:
+  - "/linearalgebra-svd"
+interact_link: content/LinearAlgebra_SVD.ipynb
+kernel_name: python3
+kernel_path: content
+has_widgets: false
+title: |-
+  Singular Value Decomposition
+pagenum: 19
+prev_page:
+  url: /LinearAlgebra_EigenProblem2.html
+next_page:
+  url: 
+suffix: .ipynb
+search: mathbf intercal matrix sigma u svd linalg p matrices v eigenvectors condition vec singular decomposition not eigenvalues np numpy preconditioner iterative scipy q aa mbox method techniques solving linear original positive orthogonal values r least algorithm our x systems preconditioned solvers usually lapack c python value definite however square left right any diagonal rank columns both stable because vector large max min numerical uses processing even qr inverse power gram schmidt define equation b vert used convergence methods sparse where solve computational expense computing expensive system between minimal software operations package called shows equivalent closely associated eigenvalue eigenvector factorization lambda
+
+comment: "***PROGRAMMATICALLY GENERATED, DO NOT EDIT. SEE ORIGINAL FILES IN /content***"
+---
+
+    <main class="jupyter-page">
+    <div id="page-info"><div id="page-title">Singular Value Decomposition</div>
+</div>
+    <div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The singular value decomposition is closely associated with the eigenvalue-eigenvector factorization $\mathbf{Q} \Lambda \mathbf{Q}^\intercal$ of a positive definite matrix. However, we encounter many matrices that are not positive definite and the decomposition is not true. Consider a rectangular matrix (non-square) matrix, the eigenvalues are not defined in this scenario. If we allow the $\mathbf{Q}$ on the left and the $\mathbf{Q}$ on the right to be any two orthogonal matrices $\mathbf{U}$ and $\mathbf{V}^\intercal$, then any matrix will have a decomposition $\mathbf{A=U}\Sigma\mathbf{V}^\intercal$.</p>
+<p>$\Sigma$ has eigenvalues from $\mathbf{A}^\intercal\mathbf{A}$, not from $\mathbf{A}$. These positive entries will be $\sigma_1,\ldots,\sigma_r$. They are the singular values of $\mathbf{A}$. They fill the first $r$ places on the main diagonal of $\Sigma$ when $\mathbf{A}$ has rank $r$. The rest of $\Sigma$ is zero. The columns of $\mathbf{U}$ are the eigenvectors of $\mathbf{AA}^\intercal$, and the columns of $\mathbf{V}$ are the eigenvectors of $\mathbf{A}^\intercal\mathbf{A}$. The $r$ singular values on the diagonal of $\Sigma$ are the square roots of the nonzero eigenvalues of both $\mathbf{AA}^\intercal$ and $\mathbf{A}^\intercal\mathbf{A}$.</p>
+<p>The <em>SVD</em> is really good for numerically stable computations, because $\mathbf{U}$ and $\mathbf{V}$ are orthogonal matrices. They never change the length of a vector. $\Sigma$ could multiply or divide a vector by a large $\sigma$, but at least now we have an idea of exactly what is large and what is small. The ratio of $\sigma_{\mbox{max}} / \sigma_{\mbox{min}}$ is the <em>condition number</em> of a nonsingular matrix. For us as numerical analysts, this might be the most important use of the <em>SVD</em>. Other common uses of the <em>SVD</em> are listed below</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ol>
+<li>Image processing</li>
+<li>Effective rank</li>
+<li>Polar decomposition</li>
+<li>Least squares</li>
+<li>Pseudoinverse</li>
+</ol>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>and even... the algorithm that computes eHarmony.com's 29 Dimensions$\circledR$ of compatability (U.S. Patent 6,735,568)!</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="SVD-Algorithm">SVD Algorithm<a class="anchor-link" href="#SVD-Algorithm"> </a></h2>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We already have elementary forms of all the tools required to calculate a symmetric matrix's <em>SVD</em>. We can use the $\mathbf{QR}$ algorithm to find the eigenvalues of the $\mathbf{AA}^\intercal$ matrix. Then use the inverse Power Method to find the eigenvectors that correspond to the singular values for both the $\mathbf{AA}^\intercal$ and $\mathbf{A}^\intercal\mathbf{A}$. Finally we can use the Gram-Schmidt method to find an orthogonal basis of these eigenvectors to define the $\mathbf{U}$ and $\mathbf{V}$ matrices.  This is the process that is performed in <a href="https://numpy.org/doc/stable/reference/generated/numpy.linalg.svd.html"><code>np.linalg.svd</code></a>.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="More-on-Condition-Number-and-Preconditioning">More on Condition Number and Preconditioning<a class="anchor-link" href="#More-on-Condition-Number-and-Preconditioning"> </a></h2>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>We can use the condition number of a matrix to determine the accuracy of our solution.  For the matrix equation</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+$$\mathbf{A}\vec{x} = \vec{b}$$<p>The relative error is $\Vert \vec{x}\Vert &lt; \sigma_{\mbox{max}} / \sigma_{\mbox{min}} \epsilon_m$</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The goal of matrix preconditioner (we used them for iterative techniques in solving linear systems) is to reduce the condition number of the preconditioned matrix with respect to the original matrix.  These are most useful in iterative techniques because the rate of convergence of most iterative solvers increases as the condition number of the preconditioned matrix decreases.  Preconditioned iterative solvers usually outperform direct methods, especially for sparse matrices.  This is why we typically use iterative solvers for the Finite Element Methods, where the equations of motion generally result in very sparse matrices.</p>
+<p>Instead of solving the original equation above we would solve something like</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+$$\mathbf{P}^{-1} \left(\mathbf{A}\vec{x} - \vec{b}\right) = \vec{0}$$
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>where, $\mathbf{P}$ is the preconditioner.  Usually there is some trade off for the computational expense of computing $\mathbf{P}^{-1}$ that guides our selection of $\mathbf{P}$.  The least computational expensive preconditioner would be $\mathbf{P=I}$, however this does nothing to the original system.  The best preconditioner would be $\mathbf{P}^{-1}=\mathbf{A}^{-1}$, which has a condition number of 1, but this is as computationally expensive as solving the original system.  Therefore, our choice of a preconditioner is usually somewhere in between.  We strive for a minimal number of iterations for convergence and a minimal expense in computing $\mathbf{P}^{-1}$.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Survey-of-Software-for-use-in-Linear-Algebra">Survey of Software for use in Linear Algebra<a class="anchor-link" href="#Survey-of-Software-for-use-in-Linear-Algebra"> </a></h2>
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If you ever find the need to write software that uses a lot of matrix manipulations and/or linear systems solving techniques you can use the subroutine library LAPACK and it's accompanying lower-level operations package called BLAS. These package libraries are written in C and/or FORTRAN and can be called from C/C++ or even Python (although they are used internally by NumPy and SciPy) programs. They run well on shared memory and parallel processing machines. The following table shows equivalent or nearly equivalent commands between LAPACK, Python/NumPy/SciPy. This list is not complete, but shows a few of the operations we have covered while studying numerical techniques for linear systems.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+<div class="jb_cell">
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<table>
+<thead><tr>
+<th style="text-align:center">LAPACK</th>
+<th style="text-align:center">Python/NumPy/SciPy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><code>SGETRF</code></td>
+<td style="text-align:center"><code>scipy.lingalg.lu</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>SGERTS</code></td>
+<td style="text-align:center"><code>np.linalg.solve</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>SPOTRF</code></td>
+<td style="text-align:center"><code>scipy.linalg.cholesky</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>SPOTRI</code></td>
+<td style="text-align:center"><code>np.linalg.inv</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>SSTEQR</code></td>
+<td style="text-align:center"><code>np.linalg.eigvals</code></td>
+</tr>
+<tr>
+<td style="text-align:center"><code>STREVC</code></td>
+<td style="text-align:center"><code>np.linalg.eigvecs</code></td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</div>
+
+ 
+
+
+    </main>
+    
