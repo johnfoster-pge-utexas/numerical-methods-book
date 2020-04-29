@@ -53,7 +53,7 @@
   - url: /ScientificPython_Bokeh
     title: "Bokeh: Interactive visualizations for web pages"
 - url: /NumericalMethods
-  title: "Numerical Methods"
+  title: "Numerical Linear Algebra"
   expand_sections: true
   sections:
   - url: /NumericalMethods_ErrorDescriptors
@@ -68,3 +68,5 @@
     title: "Numerical Solution of a Single Eigenvalue"
   - url: /LinearAlgebra_EigenProblem2
     title: "Numerical Solution for all Eigenvalues"
+ - url: /LinearAlgebra_SVD
+    title: "Singular Value Decomposition"
