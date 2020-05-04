@@ -70,3 +70,5 @@
     title: "Numerical Solution for all Eigenvalues"
   - url: /LinearAlgebra_SVD
     title: "Singular Value Decomposition"
+  - url: /NonlinearRootFinding
+    title: "Nonlinear Equation Root Finding"
